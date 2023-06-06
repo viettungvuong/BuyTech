@@ -16,7 +16,8 @@ class MainActivity : AppCompatActivity() {
 
         searchBtn.setOnClickListener(
             View.OnClickListener {
-
+                var toSearch=searchBar.text.toString() //lay string tu searchbar
+                search(toSearch)
             }
         )
     }
