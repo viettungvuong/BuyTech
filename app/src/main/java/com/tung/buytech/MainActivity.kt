@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     final var fieldPrice="price"
     final var fieldImage="image"
     override fun onCreate(savedInstanceState: Bundle?) {
+        FirebaseApp.initializeApp(this)
+        
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
