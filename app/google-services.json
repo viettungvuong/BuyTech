@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "85998411935",
+    "project_id": "buytech-df4fa",
+    "storage_bucket": "buytech-df4fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85998411935:android:847918e2cf9a72ac7d02aa",
+        "android_client_info": {
+          "package_name": "com.tung.buytech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85998411935-fvvsvkgn89f63matb6v844pdfnrqbm0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKX5-gKqQRucdfH1345FmMRew-tclqLKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85998411935-fvvsvkgn89f63matb6v844pdfnrqbm0d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "85998411935-9a0cib3a4406ss899hvl8jg2mp482c7i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tung.buytech"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
