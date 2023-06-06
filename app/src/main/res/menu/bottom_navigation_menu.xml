@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/page_1"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_media_next"
+        android:title="Favorites"/>
+    <item
+        android:id="@+id/page_2"
+        android:enabled="true"
+        android:icon="@android:drawable/cart"
+        android:title="@string/music"/>
+    <item
+        android:id="@+id/page_3"
+        android:enabled="true"
+        android:icon="@drawable/ic_places"
+        android:title="@string/places"/>
+    <item
+        android:id="@+id/page_4"
+        android:enabled="true"
+        android:icon="@drawable/ic_news"
+        android:title="@string/news"/>
+</menu>
