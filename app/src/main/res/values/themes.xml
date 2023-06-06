@@ -13,8 +13,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
         <!-- Customize your theme here. -->
-        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
-
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item> //quy định style cho bottom navigation bar
     </style>
 
     <style name="SearchButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon">
