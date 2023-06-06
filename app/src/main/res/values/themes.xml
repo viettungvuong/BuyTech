@@ -11,12 +11,24 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+
     </style>
 
     <style name="SearchButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon">
         <item name="iconTint">@android:color/white</item>
-        <item name="backgroundTint">@android:color/holo_blue_light</item>
+        <item name="backgroundTint">#008F4D</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorPrimary">#008F4D</item>
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 
 

@@ -1,4 +1,4 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/teal_200" /> <!-- Replace with your desired background color -->
+    <solid android:color="#008F4D" /> <!-- Replace with your desired background color -->
     <corners android:radius="60dp" /> <!-- Half of the button's width or height -->
 </shape>
