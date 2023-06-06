@@ -2,21 +2,26 @@
     <item
         android:id="@+id/page_1"
         android:enabled="true"
-        android:icon="@android:drawable/ic_media_next"
-        android:title="Favorites"/>
+        android:icon="@drawable/home"
+        android:title="Trang chủ"/>
     <item
         android:id="@+id/page_2"
         android:enabled="true"
-        android:icon="@android:drawable/cart"
-        android:title="@string/music"/>
+        android:icon="@drawable/cart"
+        android:title="Giỏ hàng"/>
     <item
         android:id="@+id/page_3"
         android:enabled="true"
-        android:icon="@drawable/ic_places"
-        android:title="@string/places"/>
+        android:icon="@drawable/favorite"
+        android:title="Yêu thích"/>
     <item
         android:id="@+id/page_4"
         android:enabled="true"
-        android:icon="@drawable/ic_news"
-        android:title="@string/news"/>
+        android:icon="@drawable/sell"
+        android:title="Bán"/>
+    <item
+        android:id="@+id/page_5"
+        android:enabled="true"
+        android:icon="@drawable/account"
+        android:title="Tài khoản"/>
 </menu>
