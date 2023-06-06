@@ -12,6 +12,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 
 import com.google.firebase.ktx.*
+import com.google.firebase.storage.FirebaseStorage
 
 class MainActivity : AppCompatActivity() {
     final var collectionProducts="Items"
@@ -68,7 +69,30 @@ class MainActivity : AppCompatActivity() {
         val res=ProductView(this)
         res.setLabel(document.getString(fieldProduct).toString()) //dat label cho productview
         res.setPrice(document.getString(fieldPrice).toString())
-        res.setProductImage(document.getString(fieldImage).toString())
+        getDownloadUrl(document.getString(fieldImage).toString(),
+            onSuccess = { s ->
+                res.setProductImage(s) //nếu lấy thành công thì set hình ảnh
+        },
+            onFailure = { exception ->
+                // Handle download URL retrieval failure
+                println("Error retrieving download URL: $exception")
+            })
+
         return res
+    }
+
+    //lấy url của ảnh lưu trong Firebase Storage
+    fun getDownloadUrl(fileName: String, onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit) {
+        val storageRef = FirebaseStorage.getInstance().reference
+        val fileRef = storageRef.child(fileName)
+
+        fileRef.downloadUrl
+            .addOnSuccessListener { uri ->
+                val downloadUrl = uri.toString()
+                onSuccess(downloadUrl)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
     }
 }
