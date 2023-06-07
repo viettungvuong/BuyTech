@@ -22,12 +22,12 @@ class MainActivity : AppCompatActivity() {
     final var fieldImage="image"
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
-        
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         var searchBtn=findViewById<Button>(R.id.search)
-        var searchBar=findViewById<TextInputEditText>(R.id.textField)
+        var searchBar=findViewById<TextInputEditText>(R.id.productSearch)
 
         val db = Firebase.firestore
 
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     fun search(productName: String, db: FirebaseFirestore){
         var grid=suggestedProductsGrid()
 
-        var docRef=db.collection("Items")
+        suggestions(productName,db,grid)
     }
 
     fun suggestions(productName: String, db: FirebaseFirestore, grid: GridLayout){
