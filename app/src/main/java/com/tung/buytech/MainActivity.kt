@@ -58,25 +58,26 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.home -> {
                     val intent= Intent(this,MainActivity::class.java)
-                    return@setOnItemSelectedListener true
+                    startActivity(intent)
                 }
                 R.id.cart -> {
                     val intent= Intent(this,Cart::class.java)
-                    return@setOnItemSelectedListener true
+                    startActivity(intent)
                 }
                 R.id.favorite -> {
                     val intent= Intent(this,MainActivity::class.java)
-                    return@setOnItemSelectedListener true
+                    startActivity(intent)
                 }
                 R.id.sell->{
                     val intent= Intent(this,SellPage::class.java)
-                    return@setOnItemSelectedListener true
+                    startActivity(intent)
                 }
                 R.id.account -> {
                     val intent= Intent(this,UserPage::class.java)
-                    return@setOnItemSelectedListener true
+                    startActivity(intent)
                 }
             }
+
             return@setOnItemSelectedListener true
         }
     }
