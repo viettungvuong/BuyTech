@@ -9,6 +9,7 @@ import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -21,16 +22,6 @@ class SellPage  : AppCompatActivity() {
         setContentView(R.layout.sell_product);
 
         val gallery=findViewById<LinearLayout>(R.id.images)
-
-        val addImageBtn=findViewById<Button>(R.id.addImageBtn)
-        addImageBtn.setOnClickListener(
-            View.OnClickListener {
-                addImageToLayout(gallery)
-            }
-        )
-    }
-
-    fun addImageToLayout(gallery: LinearLayout ){
         val pickMultipleMedia =
             registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
                 if (uris.isNotEmpty()) {
@@ -53,6 +44,17 @@ class SellPage  : AppCompatActivity() {
                 }
             }
         //cho chọn tối đa 5 items
+        val addImageBtn=findViewById<Button>(R.id.addImageBtn)
+        addImageBtn.setOnClickListener(
+            View.OnClickListener {
+
+                addImageToLayout(gallery,pickMultipleMedia)
+            }
+        )
+    }
+
+    fun addImageToLayout(gallery: LinearLayout, pickMultipleMedia: ActivityResultLauncher<PickVisualMediaRequest>){
+
         //define pickMultipleMedia rồi tiến hành launch
 
         pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
