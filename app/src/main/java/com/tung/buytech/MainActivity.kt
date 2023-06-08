@@ -98,4 +98,8 @@ class MainActivity : AppCompatActivity() {
                 onFailure(exception)
             }
     }
+
+    fun reformatNumber(price: Int){
+
+    }
 }
