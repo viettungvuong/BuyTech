@@ -2,14 +2,17 @@ package com.tung.buytech
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Button
 import android.widget.GridLayout
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.FirebaseApp
@@ -48,6 +51,34 @@ class MainActivity : AppCompatActivity() {
                 searchBtn.hideKeyboard()
             }
         )
+
+        var navBar=findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        navBar.setOnItemSelectedListener { item ->
+            // do stuff
+            when (item.itemId) {
+                R.id.home -> {
+                    val intent= Intent(this,MainActivity::class.java)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.cart -> {
+                    val intent= Intent(this,Cart::class.java)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.favorite -> {
+                    val intent= Intent(this,MainActivity::class.java)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.sell->{
+                    val intent= Intent(this,SellPage::class.java)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.account -> {
+                    val intent= Intent(this,UserPage::class.java)
+                    return@setOnItemSelectedListener true
+                }
+            }
+            return@setOnItemSelectedListener true
+        }
     }
 
     fun search(productName: String, db: FirebaseFirestore) {
