@@ -1,10 +1,16 @@
 package com.tung.buytech
 
+import android.app.Activity
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.GridLayout
+import androidx.fragment.app.Fragment
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.DocumentReference
@@ -39,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             View.OnClickListener {
                 var toSearch = searchBar.text.toString() //lay string tu searchbar
                 search(toSearch, db)
+                searchBtn.hideKeyboard()
             }
         )
     }
@@ -124,7 +131,9 @@ class MainActivity : AppCompatActivity() {
             val end = min(n + 1, i + 1)
             val s = moneyString.substring(start, end)
             strings.add(s)
+            Log.d("Number",strings[strings.size-1])
             strings.add(",")
+            Log.d("Comma",strings[strings.size-1])
         }
 
         if (strings[strings.size - 1] == ",") {
@@ -133,8 +142,18 @@ class MainActivity : AppCompatActivity() {
 
         strings.reverse() //đảo ngược mảng
 
-        moneyString = strings.joinToString();
+        moneyString=""
+
+        for (i in 0..strings.size-1){
+            moneyString+=strings[i]
+        }
+        Log.d("MoneyString",moneyString)
         return moneyString;
         //gio ta phai cho no xuat dung chieu
     }
+}
+
+fun View.hideKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
 }
