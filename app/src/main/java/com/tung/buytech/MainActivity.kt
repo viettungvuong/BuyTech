@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         val res = ProductView(this)
         res.setLabel(document.getString(fieldProduct).toString()) //dat label cho productview
         var price=document.getString(fieldPrice).toString()
-        res.setPrice(reformatNumber(parseInt(price)))
+        res.setPrice(reformatNumber(parseInt(price))+" VNĐ")
         getDownloadUrl(document.getString(fieldImage).toString(),
             onSuccess = { s ->
                 res.setProductImage(s) //nếu lấy thành công thì set hình ảnh

@@ -74,7 +74,7 @@
         android:rowCount="2"
         android:columnCount="2"
         app:layout_constraintTop_toBottomOf="@+id/search"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
