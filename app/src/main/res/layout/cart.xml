@@ -12,6 +12,16 @@
         android:layout_marginHorizontal="20dp">
 
     </androidx.recyclerview.widget.RecyclerView>
+    
+    <Button
+        android:id="@+id/checkoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#009E60"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
