@@ -127,7 +127,7 @@
 
         </HorizontalScrollView>
 
-xx
+
         <Button
             android:id="@+id/addImageBtn"
             android:layout_width="wrap_content"
@@ -137,6 +137,18 @@ xx
             android:text="Thêm ảnh" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/sellBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:backgroundTint="#009E60"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="100dp"
+        android:text="Bán" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

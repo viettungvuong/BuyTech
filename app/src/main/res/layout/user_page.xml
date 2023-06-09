@@ -11,6 +11,7 @@
         android:layout_marginLeft="50dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:src="@drawable/phone_number"
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
