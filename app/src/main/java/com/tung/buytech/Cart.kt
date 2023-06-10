@@ -16,5 +16,6 @@ class Cart: AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
         val adapter = CartRecyclerAdapter(AppController.productList)
         recyclerView.adapter = adapter
+        //gán adapter vào recyclerview
     }
 }

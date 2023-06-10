@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import java.util.*
 
-class CartRecyclerAdapter(private val itemList: ArrayList<AppController.Product>) :
+class CartRecyclerAdapter(private val itemList: LinkedList<AppController.Product>) :
     RecyclerView.Adapter<CartRecyclerAdapter.CartViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
