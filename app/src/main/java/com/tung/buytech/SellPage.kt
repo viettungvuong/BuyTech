@@ -20,6 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import com.tung.buytech.AppController.Companion.db
+import com.tung.buytech.AppController.Companion.storageRef
 import java.io.File
 import java.util.LinkedList
 
@@ -27,8 +29,8 @@ import java.util.LinkedList
 class SellPage  : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        var storageRef = Firebase.storage.reference
-        var images = LinkedList<Uri>()
+
+        var images = LinkedList<String>()
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sell_product);
@@ -39,7 +41,7 @@ class SellPage  : AppCompatActivity() {
                 if (uris.isNotEmpty()) {
                     Log.d("PhotoPicker", "Number of items selected: ${uris.size}")
                     for (uri in uris){
-                        images.add(uri)  //thêm tên file vào
+                        images.add(uri.toString())  //thêm tên file vào
                         var newImg=ImageView(this)
                         Glide.with(this)
                             .load(uri)
@@ -51,7 +53,9 @@ class SellPage  : AppCompatActivity() {
                         params.setMargins(10,10,10,10);
                         newImg.setLayoutParams(params)
                         gallery.addView(newImg) //thêm ảnh vào phần image view
+                        uploadImage(storageRef,uri) //upload ảnh lên
                     }
+                    sellItem(db,images) //up lên firebase
                 } else {
                     Log.d("PhotoPicker", "No media selected")
                 }
@@ -73,7 +77,7 @@ class SellPage  : AppCompatActivity() {
         pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
     }
 
-    fun sellItem(db: FirebaseFirestore){
+    fun sellItem(db: FirebaseFirestore, images: LinkedList<String>){
         val productName=findViewById<TextInputEditText>(R.id.productName).text
         val productPrice=findViewById<TextInputEditText>(R.id.productPrice)
         val tag=findViewById<TextInputEditText>(R.id.tag).text.toString()
@@ -83,6 +87,7 @@ class SellPage  : AppCompatActivity() {
             "name" to productName,
             "price" to productPrice,
             "tag" to arrayListOf<String>(tag),
+            "image" to images,
         )
 
         db.collection("Items")

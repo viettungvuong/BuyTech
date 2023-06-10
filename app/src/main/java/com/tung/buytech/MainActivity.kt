@@ -23,12 +23,14 @@ import com.google.firebase.firestore.ktx.firestore
 
 import com.google.firebase.ktx.*
 import com.google.firebase.storage.FirebaseStorage
+import com.tung.buytech.AppController.Companion.db
 import java.lang.Integer.max
 import java.lang.Integer.parseInt
 import java.util.LinkedList
 import kotlin.math.min
 
 class MainActivity : AppCompatActivity() {
+
     final var collectionProducts = "Items"
     final var fieldProduct = "name"
     final var fieldPrice = "price"
@@ -42,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         var searchBtn = findViewById<Button>(R.id.search)
         var searchBar = findViewById<TextInputEditText>(R.id.productSearch)
 
-        val db = Firebase.firestore
 
         searchBtn.setOnClickListener(
             View.OnClickListener {
