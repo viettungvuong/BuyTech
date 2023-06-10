@@ -14,6 +14,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,6 +32,8 @@ class SellPage  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         var images = LinkedList<String>()
+
+
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sell_product);
@@ -53,9 +56,8 @@ class SellPage  : AppCompatActivity() {
                         params.setMargins(10,10,10,10);
                         newImg.setLayoutParams(params)
                         gallery.addView(newImg) //thêm ảnh vào phần image view
-                        uploadImage(storageRef,uri) //upload ảnh lên
+                        //uploadImage(storageRef,uri) //upload ảnh lên
                     }
-                    sellItem(db,images) //up lên firebase
                 } else {
                     Log.d("PhotoPicker", "No media selected")
                 }
@@ -64,8 +66,17 @@ class SellPage  : AppCompatActivity() {
         val addImageBtn=findViewById<Button>(R.id.addImageBtn)
         addImageBtn.setOnClickListener(
             View.OnClickListener {
-
                 addImageToLayout(gallery,pickMultipleMedia)
+            }
+        )
+
+        val sellBtn=findViewById<Button>(R.id.sellBtn)
+        sellBtn.setOnClickListener(
+            View.OnClickListener {
+                for (image in images){
+                    uploadImage(storageRef,image) //upload từng hình lên
+                }
+                sellItem(db,images)
             }
         )
     }
@@ -73,12 +84,17 @@ class SellPage  : AppCompatActivity() {
     fun addImageToLayout(gallery: LinearLayout, pickMultipleMedia: ActivityResultLauncher<PickVisualMediaRequest>){
 
         //define pickMultipleMedia rồi tiến hành launch
+       try{
+           pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
+       }
+       catch (e: java.lang.Exception){
+           Log.d("Exception",e.toString())
+       }
 
-        pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
     }
 
     fun sellItem(db: FirebaseFirestore, images: LinkedList<String>){
-        val productName=findViewById<TextInputEditText>(R.id.productName).text
+        val productName=findViewById<TextInputEditText>(R.id.productName).text.toString()
         val productPrice=findViewById<TextInputEditText>(R.id.productPrice)
         val tag=findViewById<TextInputEditText>(R.id.tag).text.toString()
 
@@ -100,11 +116,11 @@ class SellPage  : AppCompatActivity() {
             }
     }
 
-    fun uploadImage(storageRef: StorageReference, file: Uri){
+    fun uploadImage(storageRef: StorageReference, file: String){
         var fullFileName = AppController.userId+"/"+file.toString()
         val imageRef = storageRef.child(fullFileName)
 
-        var uploadTask = imageRef.putFile(file)
+        var uploadTask = imageRef.putFile(file.toUri())
 
         uploadTask.addOnFailureListener {
             // upload thất bại
