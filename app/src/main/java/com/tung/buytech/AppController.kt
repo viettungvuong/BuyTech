@@ -13,17 +13,6 @@ class AppController {
         public var imageFile: String = imageFile
         //khúc này là constructor của class
 
-        fun getName(): String{
-            return this.name
-        }
-
-        fun getPrice(): Int{
-            return this.price;
-        }
-
-        fun getImage(): String{
-            return this.imageFile
-        }
     }
 
 
