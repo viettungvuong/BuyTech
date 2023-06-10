@@ -82,7 +82,14 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:entries="@array/shippingOption"
+            android:layout_marginLeft="20dp"
+            />
+        
 
 
         <HorizontalScrollView

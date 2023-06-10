@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BuyTech</string>
+
+    <string-array name="shippingOption">
+        <item>Tự liên hệ</item>
+    </string-array>
 </resources>
