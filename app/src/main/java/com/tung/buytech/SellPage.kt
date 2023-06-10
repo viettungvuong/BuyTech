@@ -1,5 +1,6 @@
 package com.tung.buytech
 
+import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -16,13 +17,18 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import java.io.File
 import java.util.LinkedList
 
 
 class SellPage  : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        var images = LinkedList<String>()
+        var storageRef = Firebase.storage.reference
+        var images = LinkedList<Uri>()
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sell_product);
@@ -33,7 +39,7 @@ class SellPage  : AppCompatActivity() {
                 if (uris.isNotEmpty()) {
                     Log.d("PhotoPicker", "Number of items selected: ${uris.size}")
                     for (uri in uris){
-                        images.add(uri.toString())  //thêm tên file vào
+                        images.add(uri)  //thêm tên file vào
                         var newImg=ImageView(this)
                         Glide.with(this)
                             .load(uri)
@@ -87,5 +93,18 @@ class SellPage  : AppCompatActivity() {
             .addOnFailureListener { e ->
 
             }
+    }
+
+    fun uploadImage(storageRef: StorageReference, file: Uri){
+        var fullFileName = AppController.userId+"/"+file.toString()
+        val imageRef = storageRef.child(fullFileName)
+
+        var uploadTask = imageRef.putFile(file)
+
+        uploadTask.addOnFailureListener {
+            // upload thất bại
+        }.addOnSuccessListener { taskSnapshot ->
+           // upload thành công
+        }
     }
 }

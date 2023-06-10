@@ -6,6 +6,7 @@ class AppController {
     companion object {
         @JvmField
         val productList: LinkedList<Product> = LinkedList()
+        var userId: String = String() //chứa userID
     }
     class Product(name: String, price: Int, imageFile: String ){
         public var name: String = name
