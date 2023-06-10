@@ -10,7 +10,7 @@ class AppController {
     class Product(name: String, price: Int, imageFile: String ){
         public var name: String = name
         public var price: Int = price
-        public var iamgeFile: String = imageFile
+        public var imageFile: String = imageFile
         //khúc này là constructor của class
 
         fun getName(): String{
@@ -22,7 +22,7 @@ class AppController {
         }
 
         fun getImage(): String{
-            return this.iamgeFile
+            return this.imageFile
         }
     }
 
