@@ -116,7 +116,12 @@ class MainActivity : AppCompatActivity() {
         res.setLabel(document.getString(fieldProduct).toString()) //dat label cho productview
         var price=document.getString(fieldPrice).toString()
         res.setPrice(reformatNumber(parseInt(price))+" VNĐ")
-        getDownloadUrl(document.getString(fieldImage).toString(),
+
+        var imageUrl=""
+        imageUrl=(document.get(fieldImage) as ArrayList<String>).first()
+        //lấy phần tử đầu tiên của array field "Image"
+
+        getDownloadUrl(imageUrl,
             onSuccess = { s ->
                 res.setProductImage(s) //nếu lấy thành công thì set hình ảnh
             },
