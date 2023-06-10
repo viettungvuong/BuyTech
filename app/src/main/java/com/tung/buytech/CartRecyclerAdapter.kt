@@ -14,7 +14,7 @@ class CartRecyclerAdapter(private val itemList: ArrayList<AppController.Product>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_in_cart,
+            R.layout.item_in_cart, //lấy layout item_in_cart làm holder
             parent,
             false
         )
@@ -33,11 +33,13 @@ class CartRecyclerAdapter(private val itemList: ArrayList<AppController.Product>
     inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val itemInCart: ItemInCart = itemView as ItemInCart
+        //itemincart là class chứa view hiện thông tin sản phẩm
 
         fun bind(product: AppController.Product) {
             itemInCart.setProductImage(product.imageFile)
             itemInCart.setLabel(product.name)
             itemInCart.setPrice(product.price.toString())
+            //gán thông tin từ product vào itemincart
         }
     }
 }
