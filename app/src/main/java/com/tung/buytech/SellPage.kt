@@ -16,10 +16,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.LinkedList
 
 
 class SellPage  : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        var images = LinkedList<String>()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sell_product);
 
@@ -29,6 +33,7 @@ class SellPage  : AppCompatActivity() {
                 if (uris.isNotEmpty()) {
                     Log.d("PhotoPicker", "Number of items selected: ${uris.size}")
                     for (uri in uris){
+                        images.add(uri.toString())  //thêm tên file vào
                         var newImg=ImageView(this)
                         Glide.with(this)
                             .load(uri)
@@ -65,13 +70,13 @@ class SellPage  : AppCompatActivity() {
     fun sellItem(db: FirebaseFirestore){
         val productName=findViewById<TextInputEditText>(R.id.productName).text
         val productPrice=findViewById<TextInputEditText>(R.id.productPrice)
-        val tag=findViewById<TextInputEditText>(R.id.tag)
+        val tag=findViewById<TextInputEditText>(R.id.tag).text.toString()
 
         // Add a new document with a generated id.
         val data = hashMapOf(
             "name" to productName,
             "price" to productPrice,
-            "tag" to tag,
+            "tag" to arrayListOf<String>(tag),
         )
 
         db.collection("Items")
