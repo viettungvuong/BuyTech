@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
 
 class ItemInCart @JvmOverloads constructor(
     context: Context,
@@ -22,6 +23,20 @@ class ItemInCart @JvmOverloads constructor(
         imageView = findViewById(R.id.product_image)
         labelTextView = findViewById(R.id.product_label)
         priceTextView = findViewById(R.id.product_price)
+    }
+
+    fun setProductImage(imageUrl: String) {
+        Glide.with(context)
+            .load(imageUrl)
+            .into(imageView)
+    }
+
+    fun setLabel(label: String) {
+        labelTextView.text = label
+    }
+
+    fun setPrice(price: String) {
+        priceTextView.text = price
     }
 
 }
