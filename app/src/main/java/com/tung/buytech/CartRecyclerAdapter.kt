@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
 
-class CartRecyclerAdapter(private val dataList: List<String>) : RecyclerView.Adapter<CartRecyclerAdapter.ViewHolder>() {
+class CartRecyclerAdapter(private val dataList: LinkedList<AppController.Product>) : RecyclerView.Adapter<CartRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_in_cart, parent, false)

@@ -3,6 +3,10 @@ package com.tung.buytech
 import java.util.LinkedList
 
 class AppController {
+    companion object {
+        @JvmField
+        val productList: LinkedList<Product> = LinkedList()
+    }
     class Product(name: String, price: Int, imageFile: String ){
         public var name: String = name
         public var price: Int = price
@@ -23,6 +27,5 @@ class AppController {
     }
 
 
-    var personList: LinkedList<Product> = LinkedList()
 
 }
