@@ -16,7 +16,7 @@ class ItemInCart @JvmOverloads constructor(
 
     init {
         // Inflate the layout for the custom view
-        LayoutInflater.from(context).inflate(R.layout.view_product, this, true)
+        LayoutInflater.from(context).inflate(R.layout.item_in_cart, this, true)
 
         // Get references to the child views
         imageView = findViewById(R.id.product_image)
