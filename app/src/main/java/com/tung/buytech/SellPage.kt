@@ -31,7 +31,7 @@ class SellPage  : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        var images = LinkedList<String>()
+        var images = LinkedList<Uri>()
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sell_product);
@@ -42,7 +42,7 @@ class SellPage  : AppCompatActivity() {
                 if (uris.isNotEmpty()) {
                     Log.d("PhotoPicker", "Number of items selected: ${uris.size}")
                     for (uri in uris){
-                        images.add(uri.toString())  //thêm tên file vào
+
                         var newImg=ImageView(this)
                         Glide.with(this)
                             .load(uri)
@@ -54,7 +54,7 @@ class SellPage  : AppCompatActivity() {
                         params.setMargins(10,10,10,10);
                         newImg.setLayoutParams(params)
                         gallery.addView(newImg) //thêm ảnh vào phần image view
-                        //uploadImage(storageRef,uri) //upload ảnh lên
+                        images.add(uri)  //thêm tên file vào
                     }
                 } else {
                     Log.d("PhotoPicker", "No media selected")
@@ -91,17 +91,23 @@ class SellPage  : AppCompatActivity() {
 
     }
 
-    fun sellItem(db: FirebaseFirestore, images: LinkedList<String>){
+    fun sellItem(db: FirebaseFirestore, images: LinkedList<Uri>){
         val productName=findViewById<TextInputEditText>(R.id.productName).text.toString()
         val productPrice=findViewById<TextInputEditText>(R.id.productPrice).text.toString()
         val tag=findViewById<TextInputEditText>(R.id.tag).text.toString()
+
+        var filterImages: LinkedList<String> = LinkedList()
+
+        for (i in 0..images.lastIndex){
+            filterImages.add(filterFileNameFromUri(images[i]))
+        }
 
         // Add a new document with a generated id.
         val data = hashMapOf(
             "name" to productName,
             "price" to productPrice,
             "tag" to arrayListOf<String>(tag),
-            "image" to images,
+            "image" to filterImages,
         )
 
         db.collection("Items")
@@ -114,16 +120,24 @@ class SellPage  : AppCompatActivity() {
             }
     }
 
-    fun uploadImage(storageRef: StorageReference, file: String){
-        var fullFileName = AppController.userId+"/"+file.toString()
+    fun uploadImage(storageRef: StorageReference, file: Uri){
+        var newFileName=filterFileNameFromUri(file) //cái này chỉ để đặt tên
+        var fullFileName = AppController.userId+"/"+newFileName
         val imageRef = storageRef.child(fullFileName)
 
-        var uploadTask = imageRef.putFile(file.toUri())
+        var uploadTask = imageRef.putFile(file)
 
         uploadTask.addOnFailureListener {
             // upload thất bại
         }.addOnSuccessListener { taskSnapshot ->
            // upload thành công
         }
+    }
+
+    fun filterFileNameFromUri(uri: Uri): String{
+        var uriStr=uri.toString()
+        val ssplit=uriStr.split("/")
+        return ssplit[ssplit.lastIndex]
+        //lọc filename lấy từ cuối
     }
 }
