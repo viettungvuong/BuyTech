@@ -33,8 +33,6 @@ class SellPage  : AppCompatActivity() {
 
         var images = LinkedList<String>()
 
-
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sell_product);
 
@@ -95,7 +93,7 @@ class SellPage  : AppCompatActivity() {
 
     fun sellItem(db: FirebaseFirestore, images: LinkedList<String>){
         val productName=findViewById<TextInputEditText>(R.id.productName).text.toString()
-        val productPrice=findViewById<TextInputEditText>(R.id.productPrice)
+        val productPrice=findViewById<TextInputEditText>(R.id.productPrice).text.toString()
         val tag=findViewById<TextInputEditText>(R.id.tag).text.toString()
 
         // Add a new document with a generated id.
