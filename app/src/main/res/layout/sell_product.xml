@@ -89,7 +89,7 @@
             android:entries="@array/shippingOption"
             android:layout_marginLeft="20dp"
             />
-        
+
 
 
         <HorizontalScrollView
