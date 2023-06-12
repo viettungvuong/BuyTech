@@ -46,14 +46,7 @@ class SellPage  : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                var str: String
-                str=""
-                try {
-                    // The comma in the format specifier does the trick
-                    str = String.format("%,d", s.toString().toLong())
-                } catch (e: NumberFormatException) {
-                }
-                priceInput.setText(str)
+
             }
         })
 
