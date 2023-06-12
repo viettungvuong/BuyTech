@@ -48,8 +48,8 @@ class SellPage  : AppCompatActivity() {
                             .load(uri)
                             .into(newImg)
                         val params = LinearLayout.LayoutParams(
-                            128,
-                            128 //set width và height
+                            180,
+                            180 //set width và height
                         )
                         params.setMargins(10,10,10,10);
                         newImg.setLayoutParams(params)
