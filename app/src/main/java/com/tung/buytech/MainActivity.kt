@@ -26,6 +26,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.tung.buytech.AppController.Companion.db
 import java.lang.Integer.max
 import java.lang.Integer.parseInt
+import java.lang.Long.parseLong
 import java.util.LinkedList
 import kotlin.math.min
 
@@ -117,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         val res = ProductView(this)
         res.setLabel(document.getString(fieldProduct).toString()) //dat label cho productview
         var price=document.getString(fieldPrice).toString()
-        res.setPrice(reformatNumber(parseInt(price))+" VNĐ")
+        res.setPrice(reformatNumber(parseLong(price))+" VNĐ")
 
         var imageUrl=""
         imageUrl=(document.get(fieldImage) as ArrayList<String>).first()
@@ -154,7 +155,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    public fun reformatNumber(money: Int): String {
+    public fun reformatNumber(money: Long): String {
         if (money <= 100)
             return money.toString()
 

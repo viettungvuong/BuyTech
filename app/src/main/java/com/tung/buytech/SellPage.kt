@@ -13,7 +13,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.set
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,7 +45,18 @@ class SellPage  : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                priceInput.removeTextChangedListener(this)
 
+                val originalString = s.toString()
+
+                if (!originalString.isEmpty()) {
+                    val longVal = originalString.toLong()
+                    val formattedString: String = mainActivity.reformatNumber(longVal)
+                    priceInput.setText(formattedString)
+                    priceInput.setSelection(formattedString.length)
+                }
+
+                priceInput.addTextChangedListener(this)
             }
         })
 
