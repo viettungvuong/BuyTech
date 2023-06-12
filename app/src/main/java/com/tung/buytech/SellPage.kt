@@ -2,33 +2,26 @@ package com.tung.buytech
 
 import android.net.Uri
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
-import androidx.core.text.isDigitsOnly
+import androidx.core.text.set
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
 import com.tung.buytech.AppController.Companion.db
 import com.tung.buytech.AppController.Companion.storageRef
-import java.io.File
-import java.util.LinkedList
-import com.tung.buytech.MainActivity
+import java.util.*
+
 
 class SellPage  : AppCompatActivity() {
 
@@ -53,7 +46,14 @@ class SellPage  : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-
+                var str: String
+                str=""
+                try {
+                    // The comma in the format specifier does the trick
+                    str = String.format("%,d", s.toString().toLong())
+                } catch (e: NumberFormatException) {
+                }
+                priceInput.setText(str)
             }
         })
 
