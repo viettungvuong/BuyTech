@@ -56,7 +56,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="50dp"
-                android:hint="Giá bán" />
+                android:hint="Giá bán"
+                android:inputType="number"
+                android:text="0"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
