@@ -3,6 +3,8 @@ package com.tung.buytech
 import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -25,7 +27,7 @@ import com.tung.buytech.AppController.Companion.db
 import com.tung.buytech.AppController.Companion.storageRef
 import java.io.File
 import java.util.LinkedList
-
+import com.tung.buytech.MainActivity
 
 class SellPage  : AppCompatActivity() {
 
@@ -33,9 +35,27 @@ class SellPage  : AppCompatActivity() {
 
         var images = LinkedList<Uri>()
 
+        val mainActivity = MainActivity()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sell_product);
         supportActionBar?.hide()
+
+        val priceInput=findViewById<TextInputEditText>(R.id.productPrice)
+        priceInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // No action needed in this example.
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // No action needed in this example.
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                priceInput.setText(mainActivity.reformatNumber(s.toString().toInt()))
+            }
+        })
+
 
         val gallery=findViewById<LinearLayout>(R.id.images)
         val pickMultipleMedia =

@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun reformatNumber(money: Int): String {
+    public fun reformatNumber(money: Int): String {
         if (money <= 100)
             return money.toString()
 
