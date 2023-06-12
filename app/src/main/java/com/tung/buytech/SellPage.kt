@@ -17,6 +17,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.core.text.isDigitsOnly
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
@@ -48,11 +49,11 @@ class SellPage  : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // No action needed in this example.
+
             }
 
             override fun afterTextChanged(s: Editable?) {
-                priceInput.setText(mainActivity.reformatNumber(s.toString().toInt()))
+
             }
         })
 
