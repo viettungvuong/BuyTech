@@ -35,6 +35,7 @@ class SellPage  : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sell_product);
+        supportActionBar?.hide()
 
         val gallery=findViewById<LinearLayout>(R.id.images)
         val pickMultipleMedia =
