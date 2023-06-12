@@ -36,21 +36,23 @@ class SellPage  : AppCompatActivity() {
 
         val priceInput=findViewById<TextInputEditText>(R.id.productPrice)
         priceInput.addTextChangedListener(object : TextWatcher {
+            //có thể để biến ở anonymous class
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // No action needed in this example.
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
+
             }
 
             override fun afterTextChanged(s: Editable?) {
                 priceInput.removeTextChangedListener(this)
 
-                val originalString = s.toString()
+                val originalString = s.toString().replace(",","")
 
                 if (!originalString.isEmpty()) {
-                    val longVal = originalString.toLong()
+                    val longVal=originalString.toLong()
                     val formattedString: String = mainActivity.reformatNumber(longVal)
                     priceInput.setText(formattedString)
                     priceInput.setSelection(formattedString.length)
