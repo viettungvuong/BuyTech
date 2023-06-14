@@ -35,18 +35,20 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="101dp"
-            android:layout_height="55dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Product"
             android:textAlignment="center"
+            android:textSize="30dp"
             />
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="101dp"
-            android:layout_height="55dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Price"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="30dp"/>
 
     </LinearLayout>
 
@@ -55,6 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/listPriceProduct">
 
         <Button
