@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.account -> {
-                    val intent= Intent(this,UserPage::class.java)
+                    
                     startActivity(intent)
                 }
             }
