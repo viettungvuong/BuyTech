@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.account -> {
-                    
+
                     startActivity(intent)
                 }
             }
