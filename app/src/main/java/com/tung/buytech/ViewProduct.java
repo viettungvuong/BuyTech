@@ -1,10 +1,19 @@
 package com.tung.buytech;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.concurrent.Future;
 
 public class ViewProduct extends AppCompatActivity {
 
@@ -16,7 +25,7 @@ public class ViewProduct extends AppCompatActivity {
         Intent intent=getIntent();
         String s=intent.getStringExtra("ProductName");
         Long price=intent.getLongExtra("ProductPrice",0);
-        int productId=intent.getIntExtra("ProductId",0);
+        String productId=intent.getStringExtra("ProductId");
 
         TextView productName,productPrice,productDescription;
         productName=findViewById(R.id.productLabel);
@@ -28,7 +37,21 @@ public class ViewProduct extends AppCompatActivity {
         productDescription.setText(getDescription(productId)); //lấy mô tả sản phẩm
     }
 
-    String getDescription(int productId){
+    String getDescription(String productId){
+        FirebaseFirestore db=AppController.getDb(); //truy cập kotlin từ file java
+        DocumentReference docRef = db.collection("Items").document(productId);
 
+        // Retrieve the document
+        Task<DocumentSnapshot> document = docRef.get();
+
+        // Retrieve the value of a specific field
+        if (document.getResult().exists()) {
+            DocumentSnapshot doc= document.getResult();
+            String description = doc.getString("description");
+            return description;
+        } else {
+            System.out.println("Document not found.");
+            return null;
+        }
     }
 }

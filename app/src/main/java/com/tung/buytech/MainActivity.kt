@@ -32,10 +32,16 @@ import kotlin.math.min
 
 class MainActivity : AppCompatActivity() {
 
-    final var collectionProducts = "Items"
-    final var fieldProduct = "name"
-    final var fieldPrice = "price"
-    final var fieldImage = "image"
+    var collectionProducts = "Items"
+    var fieldProduct = "name"
+    var fieldPrice = "price"
+    var fieldImage = "image"
+
+
+    public fun getCollectionName(): String{
+        return collectionProducts
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
 
@@ -116,6 +122,7 @@ class MainActivity : AppCompatActivity() {
 
     fun productView(document: QueryDocumentSnapshot): ProductView {
         val res = ProductView(this)
+
         res.setLabel(document.getString(fieldProduct).toString()) //dat label cho productview
         var price=document.getString(fieldPrice).toString()
         res.setPrice(reformatNumber(parseLong(price))+" VNĐ")
