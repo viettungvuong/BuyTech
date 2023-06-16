@@ -53,5 +53,6 @@ public class ViewProduct extends AppCompatActivity {
             System.out.println("Document not found.");
             return null;
         }
+        
     }
 }
