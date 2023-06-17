@@ -58,6 +58,7 @@ public class ViewProduct extends AppCompatActivity {
         // Retrieve the document
         Task<DocumentSnapshot> document = docRef.get(); //Task là một dạng asynchronous (ví dụ như Runnable)
 
+        
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
