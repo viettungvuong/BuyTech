@@ -48,6 +48,8 @@ class ProductView @JvmOverloads constructor(
         imageView = findViewById(R.id.product_image)
         labelTextView = findViewById(R.id.product_label)
         priceTextView = findViewById(R.id.product_price)
+
+        addView(button) //thêm button
     }
 
     fun setProductImage(imageUrl: String) {
