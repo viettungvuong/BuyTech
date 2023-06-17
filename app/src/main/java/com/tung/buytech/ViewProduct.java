@@ -23,7 +23,7 @@ public class ViewProduct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_product);
 
-        getActionBar().hide();
+        getActionBar().hide(); //hide thanh bar ghi tên app ở đầu
 
         Intent intent=getIntent();
         String s=intent.getStringExtra("ProductName");
