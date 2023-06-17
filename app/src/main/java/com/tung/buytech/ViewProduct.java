@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,15 +45,13 @@ public class ViewProduct extends AppCompatActivity {
         // Retrieve the document
         Task<DocumentSnapshot> document = docRef.get(); //Task là một dạng asynchronous (ví dụ như Runnable)
 
-        // Retrieve the value of a specific field
-        if (document.getResult().exists()) {
-            DocumentSnapshot doc= document.getResult();
-            String description = doc.getString("description");
-            return description;
-        } else {
-            System.out.println("Document not found.");
-            return null;
+        String description="";
+
+        if (document.isSuccessful()){
+            description = document.getResult().getString("description");
         }
+
+        return description;
 
     }
 }
