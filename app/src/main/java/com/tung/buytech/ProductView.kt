@@ -22,6 +22,8 @@ class ProductView @JvmOverloads constructor(
 
     private var button: Button=Button(context)
 
+
+
     init {
 
         // Inflate the layout for the custom view
@@ -31,7 +33,7 @@ class ProductView @JvmOverloads constructor(
         button.setBackgroundColor(0) //biến button trong suốt
         button.setOnClickListener(
             View.OnClickListener {
-                val intent: Intent= Intent(context,ViewProduct)
+                val intent: Intent= Intent(context,ViewProduct::class.java)
             }
         )
 
