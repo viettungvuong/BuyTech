@@ -22,8 +22,10 @@ class ProductView @JvmOverloads constructor(
 
     private var button: Button=Button(context)
 
-    private var productName: String=String()
+    private var productName: String=""
     private var productPrice: Long=0
+
+    private val productId: String=""
 
     init {
 
@@ -35,6 +37,10 @@ class ProductView @JvmOverloads constructor(
         button.setOnClickListener(
             View.OnClickListener {
                 val intent: Intent= Intent(context,ViewProduct::class.java)
+                intent.putExtra("ProductName",productName)
+                intent.putExtra("ProductPrice",productPrice)
+                intent.putExtra("ProductId",productId)
+                context.startActivity(intent) //mở intent
             }
         )
 
