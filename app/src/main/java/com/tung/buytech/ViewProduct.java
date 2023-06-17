@@ -51,12 +51,12 @@ public class ViewProduct extends AppCompatActivity {
     }
 
     void getDescription(String productId, TextView descriptionText){ //lấy description
+
         FirebaseFirestore db=AppController.getDatabaseInstance(); //truy cập kotlin từ file java
         DocumentReference docRef = db.collection("Items").document(productId);
 
         // Retrieve the document
         Task<DocumentSnapshot> document = docRef.get(); //Task là một dạng asynchronous (ví dụ như Runnable)
-
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
