@@ -126,11 +126,13 @@ class MainActivity : AppCompatActivity() {
         val res = ProductView(this)
 
         //đặt các thông tin cho productview
+        Log.d("ID:",document.id)
         res.setId(document.id) //lấy tên của document
         res.setLabel(document.getString(fieldProduct).toString()) //dat label cho productview
         var price=document.getString(fieldPrice).toString()
         res.setPrice(reformatNumber(parseLong(price))+" VNĐ")
 
+        //lấy ảnh
         var imageUrl=""
         imageUrl=(document.get(fieldImage) as ArrayList<String>).first()
         //lấy phần tử đầu tiên của array field "Image"
