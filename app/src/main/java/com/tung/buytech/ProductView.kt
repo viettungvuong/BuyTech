@@ -22,7 +22,8 @@ class ProductView @JvmOverloads constructor(
 
     private var button: Button=Button(context)
 
-
+    private var productName: String=String()
+    private var productPrice: Long=0
 
     init {
 
@@ -50,10 +51,12 @@ class ProductView @JvmOverloads constructor(
     }
 
     fun setLabel(label: String) {
+        productName=label
         labelTextView.text = label
     }
 
     fun setPrice(price: String) {
+        productPrice=price.toLong()
         priceTextView.text = price
     }
 }
