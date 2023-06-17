@@ -11,10 +11,10 @@ class AppController {
         @JvmField
         val productList: LinkedList<Product> = LinkedList()
         var userId: String = String() //chứa userID
-        val db = Firebase.firestore
+        var db = Firebase.firestore
         val storageRef = Firebase.storage.reference
 
-        @JvmStatic fun getDb(): FirebaseFirestore {
+        @JvmStatic fun getDatabaseInstance(): FirebaseFirestore {
             return this.db
         }
     }

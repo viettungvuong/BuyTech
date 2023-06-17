@@ -38,7 +38,7 @@ public class ViewProduct extends AppCompatActivity {
     }
 
     String getDescription(String productId){ //lấy description
-        FirebaseFirestore db=AppController.getDb(); //truy cập kotlin từ file java
+        FirebaseFirestore db=AppController.getDatabaseInstance(); //truy cập kotlin từ file java
         DocumentReference docRef = db.collection("Items").document(productId);
 
         // Retrieve the document
