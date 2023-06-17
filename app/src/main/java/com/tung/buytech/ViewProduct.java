@@ -23,6 +23,8 @@ public class ViewProduct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_product);
 
+        getActionBar().hide();
+
         Intent intent=getIntent();
         String s=intent.getStringExtra("ProductName");
         String price=intent.getStringExtra("ProductPrice");
