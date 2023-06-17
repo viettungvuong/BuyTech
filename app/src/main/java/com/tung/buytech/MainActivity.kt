@@ -126,6 +126,7 @@ class MainActivity : AppCompatActivity() {
         val res = ProductView(this)
 
         //đặt các thông tin cho productview
+        res.setId(document.id) //lấy tên của document
         res.setLabel(document.getString(fieldProduct).toString()) //dat label cho productview
         var price=document.getString(fieldPrice).toString()
         res.setPrice(reformatNumber(parseLong(price))+" VNĐ")
