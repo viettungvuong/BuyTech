@@ -3,6 +3,7 @@ package com.tung.buytech
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -10,7 +11,7 @@ import com.bumptech.glide.Glide
 
 class ProductView @JvmOverloads constructor(
     context: Context,
-) : LinearLayout(context) {
+) : LinearLayout(context), Button(context) {
 
     private val imageView: ImageView
     private val labelTextView: TextView
