@@ -38,13 +38,16 @@ public class ViewProduct extends AppCompatActivity {
 
         productName.setText(s);
         productPrice.setText(price);
+
+        //mô tả sản phẩm
         getDescription(productId,productDescription); //lấy mô tả sản phẩm
-        productDescription.setTextSize(30);
+        productDescription.setTextSize(20);
         LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        layoutParams.setMarginStart(20);
+        layoutParams.setMarginStart(50);
+        productDescription.setLayoutParams(layoutParams);
     }
 
     void getDescription(String productId, TextView descriptionText){ //lấy description
