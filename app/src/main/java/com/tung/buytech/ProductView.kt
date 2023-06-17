@@ -8,18 +8,28 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.google.api.Distribution.BucketOptions.Linear
 
 class ProductView @JvmOverloads constructor(
     context: Context,
-) : LinearLayout(context), Button(context) {
+) : LinearLayout(context) {
 
     private val imageView: ImageView
     private val labelTextView: TextView
     private val priceTextView: TextView
 
+    private var button: Button=Button(context)
+
     init {
+
         // Inflate the layout for the custom view
         LayoutInflater.from(context).inflate(R.layout.view_product, this, true)
+
+        var layoutParams: LinearLayout.LayoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT)
+        button.setBackgroundColor(0) //biến button trong suốt
+        button.setOnClickListener(
+            
+        )
 
         // Get references to the child views
         imageView = findViewById(R.id.product_image)
