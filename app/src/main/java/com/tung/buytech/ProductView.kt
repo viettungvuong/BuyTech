@@ -24,7 +24,7 @@ class ProductView @JvmOverloads constructor(
     private var productName: String=""
     private var productPrice: String=""
 
-    private val productId: String=""
+    private var productId: String=""
     private var listener: OnClickListener? = null
     init {
 
@@ -56,6 +56,9 @@ class ProductView @JvmOverloads constructor(
     }
 
 
+    fun setId(id: String){
+        productId=id
+    }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_UP) {
