@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +39,12 @@ public class ViewProduct extends AppCompatActivity {
         productName.setText(s);
         productPrice.setText(price);
         getDescription(productId,productDescription); //lấy mô tả sản phẩm
+        productDescription.setTextSize(30);
+        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.setMarginStart(20);
     }
 
     void getDescription(String productId, TextView descriptionText){ //lấy description
