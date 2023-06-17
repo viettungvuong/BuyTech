@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         //chiến thuật là ta sẽ gom lại những cái sản phẩm có tên đó
         //ta sẽ cho biết giá trung bình, giá cao nhất và giá rẻ nhất
         grid.removeAllViews() //xoá hết mọi view
-        
+
         db.collection(collectionProducts)
             .whereEqualTo(fieldProduct, productName)
             .get()

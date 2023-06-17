@@ -24,7 +24,7 @@ public class ViewProduct extends AppCompatActivity {
 
         Intent intent=getIntent();
         String s=intent.getStringExtra("ProductName");
-        Long price=intent.getLongExtra("ProductPrice",0);
+        String price=intent.getStringExtra("ProductPrice");
         String productId=intent.getStringExtra("ProductId");
 
         TextView productName,productPrice,productDescription;
@@ -33,7 +33,7 @@ public class ViewProduct extends AppCompatActivity {
         productDescription=findViewById(R.id.productDescription);
 
         productName.setText(s);
-        productPrice.setText(price.toString());
+        productPrice.setText(price);
         productDescription.setText(getDescription(productId)); //lấy mô tả sản phẩm
     }
 

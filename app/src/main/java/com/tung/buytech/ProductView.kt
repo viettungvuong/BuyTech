@@ -23,7 +23,7 @@ class ProductView @JvmOverloads constructor(
     private var button: Button=Button(context)
 
     private var productName: String=""
-    private var productPrice: Long=0
+    private var productPrice: String=""
 
     private val productId: String=""
 
@@ -64,7 +64,7 @@ class ProductView @JvmOverloads constructor(
     }
 
     fun setPrice(price: String) {
-        productPrice=price.toLong()
+        productPrice=price
         priceTextView.text = price
     }
 }
