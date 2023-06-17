@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,26 +37,36 @@ public class ViewProduct extends AppCompatActivity {
 
         productName.setText(s);
         productPrice.setText(price);
-        productDescription.setText(getDescription(productId)); //lấy mô tả sản phẩm
+        getDescription(productId,productDescription); //lấy mô tả sản phẩm
     }
 
-    String getDescription(String productId){ //lấy description
+    void getDescription(String productId, TextView descriptionText){ //lấy description
         FirebaseFirestore db=AppController.getDatabaseInstance(); //truy cập kotlin từ file java
         DocumentReference docRef = db.collection("Items").document(productId);
 
         // Retrieve the document
         Task<DocumentSnapshot> document = docRef.get(); //Task là một dạng asynchronous (ví dụ như Runnable)
 
-        String description="";
 
-        if (document.isSuccessful()){
-            description = document.getResult().getString("description");
-        }
-        else{
-            description="Error";
-        }
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("Docexists", "DocumentSnapshot data: " + document.getData());
+                        Log.d("Docexists2", "DocumentSnapshot data: " + document.get("description"));
+                        descriptionText.setText(document.get("description").toString()); //set text
+                    } else {
+                        Log.d("Docnodoc", "No such document");
+                    }
+                } else {
+                    Log.d("Docfailed", "get failed with ", task.getException());
+                }
+            }
+        });
 
-        return description;
+
 
     }
 }
