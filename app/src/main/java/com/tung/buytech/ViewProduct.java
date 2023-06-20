@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -58,7 +59,7 @@ public class ViewProduct extends AppCompatActivity {
         // Retrieve the document
         Task<DocumentSnapshot> document = docRef.get(); //Task là một dạng asynchronous (ví dụ như Runnable)
 
-        
+
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -77,7 +78,9 @@ public class ViewProduct extends AppCompatActivity {
             }
         });
 
+    }
 
-
+    void getImage(String productId, ImageView imageView){
+        
     }
 }
