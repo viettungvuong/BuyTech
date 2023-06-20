@@ -37,6 +37,8 @@ class ProductView @JvmOverloads constructor(
 
         setProductImage(product.imageFile)
         setPrice(AppController.reformatNumber(product.price)+" VNĐ")
+        setId(product.productId)
+        setLabel(product.name)
 
         // Get references to the child views
         imageView = findViewById(R.id.product_image)

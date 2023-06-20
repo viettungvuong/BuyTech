@@ -135,7 +135,9 @@ class MainActivity : AppCompatActivity() {
         val id = document.id //lấy tên của document
         val name = document.getString(fieldProduct).toString() //dat label cho productview
         var price=document.getLong(fieldPrice)
-
+        if (price==null){
+            price=0
+        }
 
         //lấy ảnh
         var imageUrl=""
