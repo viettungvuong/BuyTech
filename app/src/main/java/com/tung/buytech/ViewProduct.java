@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +32,7 @@ public class ViewProduct extends AppCompatActivity {
         String s=intent.getStringExtra("ProductName");
         String price=intent.getStringExtra("ProductPrice");
         String productId=intent.getStringExtra("ProductId");
+        String productImage=intent.getStringExtra("ProductImage");
 
         TextView productName,productPrice,productDescription;
         productName=findViewById(R.id.productLabel);
@@ -80,7 +82,10 @@ public class ViewProduct extends AppCompatActivity {
 
     }
 
-    void getImage(String productId, ImageView imageView){
-        
+    //đặt hình ảnh
+    void getImage(String productId, String productImage, ImageView imageView){
+        Glide.with(this)
+                .load(productImage)
+                .into(imageView);
     }
 }

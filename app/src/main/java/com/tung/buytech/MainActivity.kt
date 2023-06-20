@@ -168,6 +168,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    //reformat định dạng số
     public fun reformatNumber(money: Long): String {
         if (money <= 100)
             return money.toString()
