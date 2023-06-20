@@ -32,7 +32,7 @@ class AppController {
     class Favorite(name: String, price: Int, imageFile: String, productId: String): Product(name,price,imageFile,productId){
         //ktra thong tin mat hang
         fun updateStatus(){
-            db.collection(collectionProducts).document(productId)
+            val document = db.collection(collectionProducts).document(productId)
         }
     }
 
