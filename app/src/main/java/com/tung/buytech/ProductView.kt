@@ -26,6 +26,8 @@ class ProductView @JvmOverloads constructor(
 
     private var productId: String=""
     private var listener: OnClickListener? = null
+
+    private var imageUrl: String=""
     init {
 
         // Inflate the layout for the custom view
@@ -40,6 +42,7 @@ class ProductView @JvmOverloads constructor(
     }
 
     fun setProductImage(imageUrl: String) {
+        this.imageUrl=imageUrl
         Glide.with(context)
             .load(imageUrl)
             .into(imageView)
@@ -85,6 +88,7 @@ class ProductView @JvmOverloads constructor(
             intent.putExtra("ProductName",productName)
             intent.putExtra("ProductPrice",productPrice)
             intent.putExtra("ProductId",productId)
+            intent.putExtra("ProductImage",imageUrl)
             context.startActivity(intent) //mở intent
         }
     }
