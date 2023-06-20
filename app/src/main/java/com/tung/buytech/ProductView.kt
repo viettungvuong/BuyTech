@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 
 
 class ProductView @JvmOverloads constructor(
-    context: Context,
+    context: Context, product: AppController.Product
 ) : LinearLayout(context) {
 
     private val imageView: ImageView
@@ -32,6 +32,11 @@ class ProductView @JvmOverloads constructor(
 
         // Inflate the layout for the custom view
         LayoutInflater.from(context).inflate(R.layout.view_product, this, true)
+
+        val currentProduct = product
+
+        setProductImage(product.imageFile)
+        setPrice(AppController.reformatNumber(product.price)+" VNĐ")
 
         // Get references to the child views
         imageView = findViewById(R.id.product_image)

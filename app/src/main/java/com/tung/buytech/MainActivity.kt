@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         var fieldProduct = "name"
         var fieldPrice = "price"
         var fieldImage = "image"
+
+
     }
 
 
@@ -126,29 +128,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun productView(document: QueryDocumentSnapshot): ProductView {
-        val res = ProductView(this)
+
 
         //đặt các thông tin cho productview
         Log.d("ID:",document.id)
-        res.setId(document.id) //lấy tên của document
-        res.setLabel(document.getString(fieldProduct).toString()) //dat label cho productview
-        var price=document.getString(fieldPrice).toString()
-        res.setPrice(reformatNumber(parseLong(price))+" VNĐ")
+        val id = document.id //lấy tên của document
+        val name = document.getString(fieldProduct).toString() //dat label cho productview
+        var price=document.getLong(fieldPrice)
+
 
         //lấy ảnh
         var imageUrl=""
         imageUrl=(document.get(fieldImage) as ArrayList<String>).first()
         //lấy phần tử đầu tiên của array field "Image"
 
+        var image=""
+
         getDownloadUrl(imageUrl,
             onSuccess = { s ->
-                res.setProductImage(s) //nếu lấy thành công thì set hình ảnh
+               image=s //nếu lấy thành công thì set hình ảnh
             },
             onFailure = { exception ->
                 // Handle download URL retrieval failure
                 println("Error retrieving download URL: $exception")
             })
-
+        var product=AppController.Product(name, price ,image,id)
+        val res = ProductView(this, product)
         return res
     }
 
@@ -171,43 +176,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    //reformat định dạng số
-    public fun reformatNumber(money: Long): String {
-        if (money <= 100)
-            return money.toString()
 
-
-        var moneyString = money.toString();
-
-        val strings = ArrayList<String>()
-
-        val n = moneyString.length - 1;
-
-        for (i in n downTo 0 step 3) {
-            val start = max(i - 2, 0)
-            val end = min(n + 1, i + 1)
-            val s = moneyString.substring(start, end)
-            strings.add(s)
-            Log.d("Number",strings[strings.size-1])
-            strings.add(",")
-            Log.d("Comma",strings[strings.size-1])
-        }
-
-        if (strings[strings.size - 1] == ",") {
-            strings.removeAt(strings.size - 1);
-        }
-
-        strings.reverse() //đảo ngược mảng
-
-        moneyString=""
-
-        for (i in 0..strings.size-1){
-            moneyString+=strings[i]
-        }
-        Log.d("MoneyString",moneyString)
-        return moneyString;
-        //gio ta phai cho no xuat dung chieu
-    }
 }
 
 fun View.hideKeyboard() {

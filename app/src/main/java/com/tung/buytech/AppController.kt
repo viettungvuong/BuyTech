@@ -1,11 +1,13 @@
 package com.tung.buytech
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.tung.buytech.MainActivity.Companion.collectionProducts
 import java.util.LinkedList
+import kotlin.math.min
 
 class AppController {
     companion object {
@@ -18,10 +20,49 @@ class AppController {
         @JvmStatic fun getDatabaseInstance(): FirebaseFirestore {
             return this.db
         }
+
+        @JvmStatic
+        //reformat định dạng số
+        public fun reformatNumber(money: Long): String {
+            if (money <= 100)
+                return money.toString()
+
+
+            var moneyString = money.toString();
+
+            val strings = ArrayList<String>()
+
+            val n = moneyString.length - 1;
+
+            for (i in n downTo 0 step 3) {
+                val start = Integer.max(i - 2, 0)
+                val end = min(n + 1, i + 1)
+                val s = moneyString.substring(start, end)
+                strings.add(s)
+                Log.d("Number",strings[strings.size-1])
+                strings.add(",")
+                Log.d("Comma",strings[strings.size-1])
+            }
+
+            if (strings[strings.size - 1] == ",") {
+                strings.removeAt(strings.size - 1);
+            }
+
+            strings.reverse() //đảo ngược mảng
+
+            moneyString=""
+
+            for (i in 0..strings.size-1){
+                moneyString+=strings[i]
+            }
+            Log.d("MoneyString",moneyString)
+            return moneyString;
+            //gio ta phai cho no xuat dung chieu
+        }
     }
-    open class Product(name: String, price: Int, imageFile: String, productId: String ){
+    open class Product(name: String, price: Long, imageFile: String, productId: String ){
         public var name: String = name
-        public var price: Int = price
+        public var price: Long = price
         public var imageFile: String = imageFile
         public var productId: String= productId
         //khúc này là constructor của class
@@ -29,7 +70,7 @@ class AppController {
     }
 
     //inheritance
-    class Favorite(name: String, price: Int, imageFile: String, productId: String): Product(name,price,imageFile,productId){
+    class Favorite(name: String, price: Long, imageFile: String, productId: String): Product(name,price,imageFile,productId){
         //ktra thong tin mat hang
         fun updateStatus(){
             val document = db.collection(collectionProducts).document(productId)
