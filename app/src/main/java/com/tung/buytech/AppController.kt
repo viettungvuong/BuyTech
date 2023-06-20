@@ -18,7 +18,7 @@ class AppController {
             return this.db
         }
     }
-    class Product(name: String, price: Int, imageFile: String ){
+    open class Product(name: String, price: Int, imageFile: String ){
         public var name: String = name
         public var price: Int = price
         public var imageFile: String = imageFile
@@ -26,6 +26,9 @@ class AppController {
 
     }
 
+    //inheritance
+    class Favorite(name: String, price: Int, imageFile: String): Product(name,price,imageFile){
 
+    }
 
 }
