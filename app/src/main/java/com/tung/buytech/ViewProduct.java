@@ -43,6 +43,10 @@ public class ViewProduct extends AppCompatActivity {
         productName.setText(s);
         productPrice.setText(price);
 
+        //đặt hình ảnh sản phẩm
+        ImageView imgView=findViewById(R.id.imageView);
+        getImage(productImage,imgView);
+
         //mô tả sản phẩm
         getDescription(productId,productDescription); //lấy mô tả sản phẩm
         productDescription.setTextSize(20);
@@ -99,7 +103,7 @@ public class ViewProduct extends AppCompatActivity {
     }
 
     //đặt hình ảnh
-    void getImage(String productId, String productImage, ImageView imageView){
+    void getImage(String productImage, ImageView imageView){
         Glide.with(this)
                 .load(productImage)
                 .into(imageView);
