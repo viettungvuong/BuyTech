@@ -78,6 +78,7 @@ class ProductView @JvmOverloads constructor(
         return super.dispatchKeyEvent(event)
     }
 
+    //tạo onclicklistener
     override fun setOnClickListener(listener: OnClickListener?) {
         this.listener = listener
     }
