@@ -4,6 +4,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.tung.buytech.MainActivity.Companion.collectionProducts
 import java.util.LinkedList
 
 class AppController {
@@ -28,7 +29,10 @@ class AppController {
 
     //inheritance
     class Favorite(name: String, price: Int, imageFile: String): Product(name,price,imageFile){
-
+        //ktra thong tin mat hang
+        fun updateStatus(){
+            db.collection(collectionProducts)
+        }
     }
 
 }

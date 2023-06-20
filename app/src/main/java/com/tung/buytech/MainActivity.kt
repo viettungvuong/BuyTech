@@ -31,11 +31,14 @@ import java.util.LinkedList
 import kotlin.math.min
 
 class MainActivity : AppCompatActivity() {
+    companion object{
+        @JvmField
+        var collectionProducts = "Items"
+        var fieldProduct = "name"
+        var fieldPrice = "price"
+        var fieldImage = "image"
+    }
 
-    var collectionProducts = "Items"
-    var fieldProduct = "name"
-    var fieldPrice = "price"
-    var fieldImage = "image"
 
 
     public fun getCollectionName(): String{
