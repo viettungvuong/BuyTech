@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,6 +52,21 @@ public class ViewProduct extends AppCompatActivity {
         );
         layoutParams.setMarginStart(50);
         productDescription.setLayoutParams(layoutParams);
+
+        Button purchaseBtn=findViewById(R.id.buttonPurchase);
+        Button favoriteBtn=findViewById(R.id.buttonFavorite);
+
+        purchaseBtn.setOnClickListener(
+                v->{
+                    //xuất ra thông tin của người mua
+                }
+        );
+
+        favoriteBtn.setOnClickListener(
+                v->{
+
+                }
+        );
     }
 
     void getDescription(String productId, TextView descriptionText){ //lấy description
