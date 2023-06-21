@@ -37,8 +37,6 @@ class MainActivity : AppCompatActivity() {
         var fieldProduct = "name"
         var fieldPrice = "price"
         var fieldImage = "image"
-
-
     }
 
 
