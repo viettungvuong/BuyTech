@@ -53,7 +53,7 @@ class SellPage  : AppCompatActivity() {
 
                 if (!originalString.isEmpty()) {
                     val longVal=originalString.toLong()
-                    val formattedString: String = mainActivity.reformatNumber(longVal)
+                    val formattedString: String = AppController.reformatNumber(longVal)
                     priceInput.setText(formattedString)
                     priceInput.setSelection(formattedString.length)
                 }
