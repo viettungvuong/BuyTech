@@ -17,6 +17,8 @@ class AppController {
         var db = Firebase.firestore
         val storageRef = Firebase.storage.reference
 
+        var favorites: ArrayList<Favorite>  =ArrayList()
+
         @JvmStatic fun getDatabaseInstance(): FirebaseFirestore {
             return this.db
         }
@@ -86,7 +88,11 @@ class AppController {
 
     //inheritance
     class Favorite(name: String, price: Long, imageFile: String, productId: String): Product(name,price,imageFile,productId){
+        fun notifyMe(){
+            //thông báo khi hết hàng
+            var notification = "Mặt hàng đã hết :("
 
+        }
     }
 
 }
