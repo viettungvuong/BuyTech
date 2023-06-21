@@ -66,27 +66,27 @@ class AppController {
         public var imageFile: String = imageFile
         public var productId: String= productId
         //khúc này là constructor của class
-
-    }
-
-    //inheritance
-    class Favorite(name: String, price: Long, imageFile: String, productId: String): Product(name,price,imageFile,productId){
         //ktra thong tin mat hang
         //observer design pattern
         fun updateStatus(){
             val docRef = db.collection(collectionProducts).document(productId)
             docRef.addSnapshotListener{
-                snapshot,e->
-                   if (snapshot!=null&&snapshot.exists()){
-                       val inStock = Integer.parseInt(snapshot.getString("In stock"))
-                       var sold= false
-                       if (inStock>0){
-                           sold=true //đã bán hết sản phẩm
-                       }
+                    snapshot,e->
+                if (snapshot!=null&&snapshot.exists()){
+                    val inStock = Integer.parseInt(snapshot.getString("In stock"))
+                    var sold= false
+                    if (inStock>0){
+                        sold=true //đã bán hết sản phẩm
+                    }
 
-                   }
+                }
             }
         }
+    }
+
+    //inheritance
+    class Favorite(name: String, price: Long, imageFile: String, productId: String): Product(name,price,imageFile,productId){
+
     }
 
 }
