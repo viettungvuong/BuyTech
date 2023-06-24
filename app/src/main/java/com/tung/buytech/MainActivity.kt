@@ -24,14 +24,18 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.*
 import com.google.firebase.storage.FirebaseStorage
 import com.tung.buytech.AppController.Companion.db
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.Integer.max
 import java.lang.Integer.parseInt
 import java.lang.Long.parseLong
 import java.util.LinkedList
+import kotlin.coroutines.suspendCoroutine
 import kotlin.math.min
 
 class MainActivity : AppCompatActivity() {
-    companion object{
+    companion object {
         @JvmField
         var collectionProducts = "Items"
         var fieldProduct = "name"
@@ -40,8 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-    public fun getCollectionName(): String{
+    public fun getCollectionName(): String {
         return collectionProducts
     }
 
@@ -64,24 +67,24 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        var navBar=findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        var navBar = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         navBar.setOnItemSelectedListener { item ->
             // do stuff
             when (item.itemId) {
                 R.id.home -> {
-                    val intent= Intent(this,MainActivity::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.cart -> {
-                    val intent= Intent(this,Cart::class.java)
+                    val intent = Intent(this, Cart::class.java)
                     startActivity(intent)
                 }
                 R.id.favorite -> {
-                    val intent= Intent(this,MainActivity::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.sell->{
-                    val intent= Intent(this,SellPage::class.java)
+                R.id.sell -> {
+                    val intent = Intent(this, SellPage::class.java)
                     startActivity(intent)
                 }
                 R.id.account -> {
@@ -127,57 +130,48 @@ class MainActivity : AppCompatActivity() {
 
     fun productView(document: QueryDocumentSnapshot): ProductView {
         //đặt các thông tin cho productview
-        Log.d("ID:",document.id)
+
+        Log.d("ID:", document.id)
         val id = document.id //lấy tên của document
         val name = document.getString(fieldProduct).toString() //dat label cho productview
-        var price=document.getLong(fieldPrice)
-        if (price==null){
-            price=0
+        var price = document.getLong(fieldPrice)
+        if (price == null) {
+            price = 0
         }
 
-        //lấy ảnh
-        var imageUrl=""
-        imageUrl=(document.get(fieldImage) as ArrayList<String>).first()
+        //lấy tên file ảnh
+        var imageUrl = ""
+        imageUrl = (document.get(fieldImage) as ArrayList<String>).first()
         //lấy phần tử đầu tiên của array field "Image"
 
-        var image=""
 
-        getDownloadUrl(imageUrl,
-            onSuccess = { s ->
-               image=s //nếu lấy thành công thì set hình ảnh
-            },
-            onFailure = { exception ->
-                // Handle download URL retrieval failure
-                println("Error retrieving download URL: $exception")
-            })
-        var product=AppController.Product(name, price ,image, id)
+        var product = AppController.Product(name, price, imageUrl, id)
         val res = ProductView(this, product)
         return res
     }
 
     //lấy url của ảnh lưu trong Firebase Storage
-    fun getDownloadUrl(
-        fileName: String,
-        onSuccess: (String) -> Unit,
-        onFailure: (Exception) -> Unit
-    ) {
-        val storageRef = FirebaseStorage.getInstance().reference
-        val fileRef = storageRef.child(fileName)
+    suspend fun getDownloadUrl(fileName: String): String {
+        return suspendCoroutine { continuation ->
+            val storageRef = FirebaseStorage.getInstance().reference
+            val fileRef = storageRef.child(fileName)
 
-        fileRef.downloadUrl
-            .addOnSuccessListener { uri ->
-                val downloadUrl = uri.toString()
-                onSuccess(downloadUrl)
-            }
-            .addOnFailureListener { exception ->
-                onFailure(exception)
-            }
+            fileRef.downloadUrl
+                .addOnSuccessListener { uri ->
+                    val downloadUrl = uri.toString()
+                    continuation.resumeWith(Result.success(downloadUrl))
+                }
+                .addOnFailureListener { exception ->
+                    continuation.resumeWith(Result.failure(exception))
+                }
+        }
     }
 
 
-}
 
-fun View.hideKeyboard() {
-    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.hideSoftInputFromWindow(windowToken, 0)
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
 }
