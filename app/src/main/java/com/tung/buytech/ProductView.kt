@@ -28,7 +28,7 @@ class ProductView @JvmOverloads constructor(
     private val priceTextView: TextView
 
     private var productName: String=""
-    private var productPrice: String=""
+    private var productPrice: Long=0
 
     private var productId: String=""
     private var imageUrl: String=""
@@ -46,6 +46,8 @@ class ProductView @JvmOverloads constructor(
         imageView = findViewById(R.id.product_image)
         labelTextView = findViewById(R.id.product_label)
         priceTextView = findViewById(R.id.product_price)
+
+        productPrice=product.price
 
         setProductImage(product.imageUrl)
         setPrice(AppController.reformatNumber(product.price)+" VNĐ")
@@ -84,7 +86,6 @@ class ProductView @JvmOverloads constructor(
     }
 
     fun setPrice(price: String) {
-        productPrice=price
         priceTextView.text = price
     }
 
