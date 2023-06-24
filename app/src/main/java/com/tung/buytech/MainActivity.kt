@@ -151,21 +151,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //lấy url của ảnh lưu trong Firebase Storage
-    suspend fun getDownloadUrl(fileName: String): String {
-        return suspendCoroutine { continuation ->
-            val storageRef = FirebaseStorage.getInstance().reference
-            val fileRef = storageRef.child(fileName)
 
-            fileRef.downloadUrl
-                .addOnSuccessListener { uri ->
-                    val downloadUrl = uri.toString()
-                    continuation.resumeWith(Result.success(downloadUrl))
-                }
-                .addOnFailureListener { exception ->
-                    continuation.resumeWith(Result.failure(exception))
-                }
-        }
-    }
 
 
 

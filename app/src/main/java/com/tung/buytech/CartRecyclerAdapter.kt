@@ -36,7 +36,7 @@ class CartRecyclerAdapter(private val itemList: LinkedList<AppController.Product
         //itemincart là class chứa view hiện thông tin sản phẩm
 
         fun bind(product: AppController.Product) {
-            itemInCart.setProductImage(product.imageFile)
+            itemInCart.setProductImage(product.imageUrl)
             itemInCart.setLabel(product.name)
             itemInCart.setPrice(product.price.toString())
             //gán thông tin từ product vào itemincart

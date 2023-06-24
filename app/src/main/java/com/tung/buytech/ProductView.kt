@@ -2,6 +2,7 @@ package com.tung.buytech
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -11,6 +12,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.coroutines.suspendCoroutine
 
 
 class ProductView @JvmOverloads constructor(
@@ -36,14 +42,12 @@ class ProductView @JvmOverloads constructor(
 
         val currentProduct = product
 
-
-
         // Get references to the child views
         imageView = findViewById(R.id.product_image)
         labelTextView = findViewById(R.id.product_label)
         priceTextView = findViewById(R.id.product_price)
 
-        setProductImage(product.imageFile)
+        setProductImage(product.imageUrl)
         setPrice(AppController.reformatNumber(product.price)+" VNĐ")
         setId(product.productId)
         setLabel(product.name)
@@ -53,9 +57,24 @@ class ProductView @JvmOverloads constructor(
 
     fun setProductImage(imageUrl: String) {
         this.imageUrl=imageUrl
-        Glide.with(context)
-            .load(imageUrl)
-            .into(imageView)
+        //lấy link ảnh trên storage
+        var imageFromStorage = ""
+        val scope = CoroutineScope(Dispatchers.Main)
+        scope.launch {
+            try {
+                imageFromStorage = getDownloadUrl(imageUrl)
+                // Proceed with the rest of the code, such as creating the `ProductView` instance
+                Log.d("ImageUrlSuccess", imageFromStorage)
+                Glide.with(context)
+                    .load(imageFromStorage)
+                    .into(imageView)
+                // Continue with the rest of the code, e.g., create `ProductView` instance
+            } catch (exception: Exception) {
+                // Handle the exception if download URL retrieval fails
+                println("Error retrieving download URL: ${exception.message}")
+            }
+        }
+
     }
 
     fun setLabel(label: String) {
@@ -101,6 +120,22 @@ class ProductView @JvmOverloads constructor(
             intent.putExtra("ProductId",productId)
             intent.putExtra("ProductImage",imageUrl)
             context.startActivity(intent) //mở intent
+        }
+    }
+
+    suspend fun getDownloadUrl(fileName: String): String {
+        return suspendCoroutine { continuation ->
+            val storageRef = FirebaseStorage.getInstance().reference
+            val fileRef = storageRef.child(fileName)
+
+            fileRef.downloadUrl
+                .addOnSuccessListener { uri ->
+                    val downloadUrl = uri.toString()
+                    continuation.resumeWith(Result.success(downloadUrl))
+                }
+                .addOnFailureListener { exception ->
+                    continuation.resumeWith(Result.failure(exception))
+                }
         }
     }
 }

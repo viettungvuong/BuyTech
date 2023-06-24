@@ -70,10 +70,10 @@ class AppController {
             //gio ta phai cho no xuat dung chieu
         }
     }
-    open class Product(name: String, price: Long, imageFile: String, productId: String ){
+    open class Product(name: String, price: Long, imageUrl: String, productId: String ){
         public var name: String = name
         public var price: Long = price
-        public var imageFile: String = imageFile
+        public var imageUrl: String = imageUrl
         public var productId: String= productId
         //khúc này là constructor của class
         //ktra thong tin mat hang
