@@ -93,6 +93,22 @@ class AppController {
         fun addToFavorite(favorites: ArrayList<Favorite>, favorite: Favorite){
             favorites.add(favorite)
             //thêm vào danh sách favorites
+
+            // Add a new document with a generated id.
+            val data = hashMapOf(
+                "id" to favorite.productId,
+            )
+
+            db.collection("Favorites")
+                .document(userId) //chỗ này đặt tên cái userid
+                .set(data)
+                .addOnSuccessListener { documentReference ->
+
+                }
+                .addOnFailureListener { e ->
+
+                }
+
         }
 
     }
