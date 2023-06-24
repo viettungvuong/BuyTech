@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.tung.buytech.AppController.Companion.addToFavorite
 import com.tung.buytech.AppController.Companion.getDatabaseInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,14 +17,22 @@ import kotlinx.coroutines.launch
 
 
 class ViewProductMain : AppCompatActivity() {
+    companion object{
+        @JvmField
+        var currentProduct: AppController.Product?=null
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_product)
         val intent = intent
-        val s = intent.getStringExtra("ProductName")
-        val price = intent.getStringExtra("ProductPrice")
-        val productId = intent.getStringExtra("ProductId")
+        val name = intent.getStringExtra("ProductName")!!
+        val price = intent.getLongExtra("ProductPrice",0)
+        val productId = intent.getStringExtra("ProductId")!!
         val productImage = intent.getStringExtra("ProductImage")!!
+
+        //tạo product tương ứng
+        currentProduct=AppController.Product(name,price,productImage,productId)
+
         val productName: TextView
         val productPrice: TextView
         val productDescription: TextView
@@ -31,8 +40,8 @@ class ViewProductMain : AppCompatActivity() {
         productName = findViewById(R.id.productLabel)
         productPrice = findViewById(R.id.priceLabel)
         productDescription = findViewById(R.id.productDescription)
-        productName.text = s
-        productPrice.text = price
+        productName.text = name
+        productPrice.text = price.toString()
 
         //đặt hình ảnh sản phẩm
         val imgView = findViewById<ImageView>(R.id.imageView)
@@ -45,12 +54,18 @@ class ViewProductMain : AppCompatActivity() {
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
+
         layoutParams.marginStart = 50
         productDescription.layoutParams = layoutParams
         val purchaseBtn = findViewById<Button>(R.id.buttonPurchase)
         val favoriteBtn = findViewById<Button>(R.id.buttonFavorite)
+
         purchaseBtn.setOnClickListener { v: View? -> }
-        favoriteBtn.setOnClickListener { v: View? -> }
+        favoriteBtn.setOnClickListener { v: View? ->
+            //thêm vào favorite
+            val favorite= AppController.Favorite(currentProduct!!)
+            addToFavorite(AppController.favorites,favorite)
+        }
     }
 
     fun getDescription(productId: String?, descriptionText: TextView) { //lấy description

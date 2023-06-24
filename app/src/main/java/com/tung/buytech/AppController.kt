@@ -89,6 +89,12 @@ class AppController {
             }
         }
 
+        @JvmStatic
+        fun addToFavorite(favorites: ArrayList<Favorite>, favorite: Favorite){
+            favorites.add(favorite)
+            //thêm vào danh sách favorites
+        }
+
     }
     open class Product(name: String, price: Long, imageUrl: String, productId: String ){
         public var name: String = name
@@ -116,6 +122,10 @@ class AppController {
 
     //inheritance
     class Favorite(name: String, price: Long, imageFile: String, productId: String): Product(name,price,imageFile,productId){
+        constructor(product: Product) : this(product.name,product.price,product.imageUrl,product.productId) {
+            //constructor thứ hai của class
+        }
+
         fun notifyMe(){
             //thông báo khi hết hàng
             var notification = "Mặt hàng đã hết :("
@@ -123,10 +133,7 @@ class AppController {
         }
     }
 
-    fun addToFavorite(favorites: ArrayList<Favorite>, favorite: Favorite){
-        favorites.add(favorite)
-        //thêm vào danh sách favorites
-    }
+
 
     //thread java
     class UpdateThread: Runnable{
@@ -136,6 +143,10 @@ class AppController {
            //threadpool
 
         }
+
+    }
+
+    fun buy(){
 
     }
 
