@@ -3,10 +3,7 @@ package com.tung.buytech
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.tung.buytech.AppController.Companion.addToFavorite
@@ -65,6 +62,10 @@ class ViewProductMain : AppCompatActivity() {
             //thêm vào favorite
             val favorite= AppController.Favorite(currentProduct!!)
             addToFavorite(AppController.favorites,favorite)
+
+            val duration = Toast.LENGTH_SHORT
+            val toast = Toast.makeText(this, "Đã thêm vào danh sách yêu thích", duration) // in Activity
+            toast.show()
         }
     }
 
