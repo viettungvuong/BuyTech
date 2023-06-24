@@ -115,7 +115,7 @@ class ProductView @JvmOverloads constructor(
 
     fun clickProduct(): OnClickListener{
         return View.OnClickListener {
-            val intent: Intent= Intent(context,ViewProduct::class.java)
+            val intent: Intent= Intent(context,ViewProductMain::class.java)
             intent.putExtra("ProductName",productName)
             intent.putExtra("ProductPrice",productPrice)
             intent.putExtra("ProductId",productId)
