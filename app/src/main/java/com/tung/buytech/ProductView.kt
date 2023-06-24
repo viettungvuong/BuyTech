@@ -57,12 +57,13 @@ class ProductView @JvmOverloads constructor(
 
     fun setProductImage(imageUrl: String) {
         this.imageUrl=imageUrl
+
         //lấy link ảnh trên storage
         var imageFromStorage = ""
         val scope = CoroutineScope(Dispatchers.Main)
         scope.launch {
             try {
-                imageFromStorage = getDownloadUrl(imageUrl)
+                imageFromStorage = AppController.getDownloadUrl(imageUrl)
                 // Proceed with the rest of the code, such as creating the `ProductView` instance
                 Log.d("ImageUrlSuccess", imageFromStorage)
                 Glide.with(context)
@@ -123,20 +124,6 @@ class ProductView @JvmOverloads constructor(
         }
     }
 
-    suspend fun getDownloadUrl(fileName: String): String {
-        return suspendCoroutine { continuation ->
-            val storageRef = FirebaseStorage.getInstance().reference
-            val fileRef = storageRef.child(fileName)
 
-            fileRef.downloadUrl
-                .addOnSuccessListener { uri ->
-                    val downloadUrl = uri.toString()
-                    continuation.resumeWith(Result.success(downloadUrl))
-                }
-                .addOnFailureListener { exception ->
-                    continuation.resumeWith(Result.failure(exception))
-                }
-        }
-    }
 }
 

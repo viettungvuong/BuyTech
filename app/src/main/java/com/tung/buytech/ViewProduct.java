@@ -1,5 +1,7 @@
 package com.tung.buytech;
 
+import static java.sql.DriverManager.println;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,7 +21,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+
+import kotlinx.coroutines.CoroutineScope;
+import kotlinx.coroutines.Dispatchers;
 
 public class ViewProduct extends AppCompatActivity {
 
@@ -102,9 +111,30 @@ public class ViewProduct extends AppCompatActivity {
     }
 
     //đặt hình ảnh
-    void getImage(String productImage, ImageView imageView){
-        Glide.with(this)
-                .load(productImage)
-                .into(imageView);
+    void getImage(String imageUrl, ImageView imageView){
+        //lấy link ảnh trên storage
+        String imageFromStorage = "";
+        Callable<String> task = () -> AppController.getDownloadUrl(imageUrl);
+
+        FutureTask<String> future = new FutureTask<>(task);
+        new Thread(future).start();
+
+        try {
+            imageFromStorage = future.get(); // Blocks and waits for the result
+            // Proceed with the rest of the code
+            Log.d("ImageUrlSuccess", imageFromStorage);
+            Glide.with(this)
+                    .load(imageFromStorage)
+                    .into(imageView);
+            // Continue with the rest of the code
+        } catch (InterruptedException e) {
+            // Handle interrupted exception
+            System.out.println("Task was interrupted: " + e.getMessage());
+        } catch (ExecutionException e) {
+            // Handle execution exception
+            System.out.println("Error executing task: " + e.getMessage());
+        }
+
+
     }
 }

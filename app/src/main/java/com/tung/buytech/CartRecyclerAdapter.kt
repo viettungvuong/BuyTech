@@ -42,5 +42,5 @@ class CartRecyclerAdapter(private val itemList: LinkedList<AppController.Product
             //gán thông tin từ product vào itemincart
         }
     }
-    
+
 }

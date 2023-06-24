@@ -4,10 +4,12 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.tung.buytech.MainActivity.Companion.collectionProducts
 import java.util.LinkedList
 import java.util.concurrent.Executors
+import kotlin.coroutines.suspendCoroutine
 import kotlin.math.min
 
 class AppController {
@@ -69,6 +71,24 @@ class AppController {
             return moneyString;
             //gio ta phai cho no xuat dung chieu
         }
+
+        @JvmStatic
+        suspend fun getDownloadUrl(fileName: String): String {
+            return suspendCoroutine { continuation ->
+                val storageRef = FirebaseStorage.getInstance().reference
+                val fileRef = storageRef.child(fileName)
+
+                fileRef.downloadUrl
+                    .addOnSuccessListener { uri ->
+                        val downloadUrl = uri.toString()
+                        continuation.resumeWith(Result.success(downloadUrl))
+                    }
+                    .addOnFailureListener { exception ->
+                        continuation.resumeWith(Result.failure(exception))
+                    }
+            }
+        }
+
     }
     open class Product(name: String, price: Long, imageUrl: String, productId: String ){
         public var name: String = name
@@ -118,5 +138,6 @@ class AppController {
         }
 
     }
+
 
 }
