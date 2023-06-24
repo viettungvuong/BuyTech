@@ -36,15 +36,17 @@ class ProductView @JvmOverloads constructor(
 
         val currentProduct = product
 
-        setProductImage(product.imageFile)
-        setPrice(AppController.reformatNumber(product.price)+" VNĐ")
-        setId(product.productId)
-        setLabel(product.name)
+
 
         // Get references to the child views
         imageView = findViewById(R.id.product_image)
         labelTextView = findViewById(R.id.product_label)
         priceTextView = findViewById(R.id.product_price)
+
+        setProductImage(product.imageFile)
+        setPrice(AppController.reformatNumber(product.price)+" VNĐ")
+        setId(product.productId)
+        setLabel(product.name)
 
         listener=clickProduct()
     }

@@ -126,8 +126,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun productView(document: QueryDocumentSnapshot): ProductView {
-
-
         //đặt các thông tin cho productview
         Log.d("ID:",document.id)
         val id = document.id //lấy tên của document
@@ -152,7 +150,7 @@ class MainActivity : AppCompatActivity() {
                 // Handle download URL retrieval failure
                 println("Error retrieving download URL: $exception")
             })
-        var product=AppController.Product(name, price ,image,id)
+        var product=AppController.Product(name, price ,image, id)
         val res = ProductView(this, product)
         return res
     }
