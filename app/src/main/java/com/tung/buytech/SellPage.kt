@@ -132,7 +132,7 @@ class SellPage  : AppCompatActivity() {
         // Add a new document with a generated id.
         val data = hashMapOf(
             "name" to productName,
-            "price" to productPrice.toLong(),
+            "price" to productPrice.toInt(),
             "tag" to arrayListOf<String>(tag),
             "image" to filterImages,
         )

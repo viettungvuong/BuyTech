@@ -25,9 +25,10 @@ class ProductView @JvmOverloads constructor(
     private var productPrice: String=""
 
     private var productId: String=""
-    private var listener: OnClickListener? = null
-
     private var imageUrl: String=""
+
+
+    private var listener: OnClickListener? = null //thêm listener để productView bấm được
     init {
 
         // Inflate the layout for the custom view

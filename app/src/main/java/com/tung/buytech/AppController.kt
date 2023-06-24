@@ -7,6 +7,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.tung.buytech.MainActivity.Companion.collectionProducts
 import java.util.LinkedList
+import java.util.concurrent.Executors
 import kotlin.math.min
 
 class AppController {
@@ -18,6 +19,13 @@ class AppController {
         val storageRef = Firebase.storage.reference
 
         var favorites: ArrayList<Favorite>  =ArrayList()
+
+        var updateThreads =  Executors.newSingleThreadScheduledExecutor()
+        //thread pool
+
+
+        //danh sách favorites
+        //dùng arrayList là vì có thể random access
 
         @JvmStatic fun getDatabaseInstance(): FirebaseFirestore {
             return this.db
@@ -93,6 +101,22 @@ class AppController {
             var notification = "Mặt hàng đã hết :("
 
         }
+    }
+
+    fun addToFavorite(favorites: ArrayList<Favorite>, favorite: Favorite){
+        favorites.add(favorite)
+        //thêm vào danh sách favorites
+    }
+
+    //thread java
+    class UpdateThread: Runnable{
+
+
+        public override fun run() {
+           //threadpool
+
+        }
+
     }
 
 }
