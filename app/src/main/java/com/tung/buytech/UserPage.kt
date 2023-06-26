@@ -110,20 +110,24 @@ class UserPage : AppCompatActivity() {
                 val credential = EmailAuthProvider
                     .getCredential(user!!.email.toString(), confirmPasswordEditText.text.toString())
 
+                var reauthenticateSuccess=false
+
                 user!!.reauthenticate(credential)
                     .addOnCompleteListener {
-                        changePasswordDialog()
-                    }
-                    .addOnFailureListener{
-                        Toast.makeText(
-                            this,
-                            "Không thể xác minh tài khoản",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                        dialogInterface.dismiss()
+                        reauthenticateSuccess=true
                     }
 
-                // Do something with the entered text
+                if (!reauthenticateSuccess){
+                    Toast.makeText(
+                        this,
+                        "Không thể xác minh tài khoản",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+                else{
+                    changePasswordDialog()
+                    //cho phép đổi mật khẩu sau khi xác minh xong
+                }
                 dialogInterface.dismiss()
             }
             .setNegativeButton("Huỷ") { dialogInterface: DialogInterface, _: Int ->
