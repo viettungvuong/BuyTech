@@ -89,7 +89,7 @@ class UserLogin : AppCompatActivity() {
 
         return View.OnClickListener {
             if (signIn){
-                AccountFunctions.signIn(user, password)
+                AccountFunctions.signIn(this, this, user, password)
             }
             else{
                 AccountFunctions.signUp(user, password)
