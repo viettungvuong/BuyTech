@@ -149,7 +149,7 @@ class SellPage  : AppCompatActivity() {
 
     fun uploadImage(storageRef: StorageReference, file: Uri){
         var newFileName=filterFileNameFromUri(file) //cái này chỉ để đặt tên
-        var fullFileName = AppController.userId+"/"+newFileName
+        var fullFileName = AppController.user.uid+"/"+newFileName
         val imageRef = storageRef.child(fullFileName)
 
         var uploadTask = imageRef.putFile(file)
