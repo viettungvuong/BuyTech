@@ -32,6 +32,19 @@
                 android:textSize="30dp"
                 android:textAlignment="center"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:text="Thay đổi mật khẩu"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#FF0000"
+                android:text="Đăng xuất"/>
+
         </LinearLayout>
 
 
