@@ -1,6 +1,7 @@
 package com.tung.buytech
 
 import android.util.Log
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -103,11 +104,18 @@ class AppController {
                 .document(userId) //chỗ này đặt tên cái userid
                 .set(data)
                 .addOnSuccessListener { documentReference ->
-
                 }
                 .addOnFailureListener { e ->
-
                 }
+        }
+
+        @JvmStatic
+        fun signOut(){
+            Firebase.auth.signOut() //đăng xuất
+        }
+
+        @JvmStatic
+        fun changePassword(){
 
         }
 

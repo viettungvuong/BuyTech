@@ -1,6 +1,7 @@
 package com.tung.buytech
 
 import android.os.Bundle
+import android.widget.Button
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -15,7 +16,8 @@ class UserPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_page);
 
-
+        val signOutBtn = findViewById<Button>(R.id.signOutBtn)
+        val changePasswordBtn = findViewById<Button>(R.id.changePasswordBtn)
     }
 
 
