@@ -13,7 +13,8 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
         <!-- Customize your theme here. -->
-        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item> //quy định style cho bottom navigation bar
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+        //quy định style cho bottom navigation bar
     </style>
 
     <style name="SearchButtonStyle" parent="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon">
@@ -29,6 +30,15 @@
         <item name="colorPrimary">#008F4D</item>
         <item name="colorOnPrimary">@color/white</item>
     </style>
+
+    <style name="Theme.BuyTech.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.BuyTech.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.BuyTech.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>
