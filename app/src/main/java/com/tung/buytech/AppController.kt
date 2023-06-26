@@ -111,45 +111,8 @@ class AppController {
                 }
         }
 
-        @JvmStatic
-        fun reauthenticate(){
-            val user = Firebase.auth.currentUser!!
-
-            var username=""
-            var password=""
-
-            //hiện dialog
-
-            val credential = EmailAuthProvider
-                .getCredential(username, password)
-
-            user.reauthenticate(credential)
-                .addOnCompleteListener { Log.d(TAG, "User re-authenticated.") }
-        }
-
-        @JvmStatic
-        fun signOut(){
-            Firebase.auth.signOut() //đăng xuất
-        }
-
-        @JvmStatic
-        fun changePassword(){
-            reauthenticate() //phải reauthenticate rồi mới đổi password được
-
-            val user = Firebase.auth.currentUser
-            val newPassword = ""
-
-            //hiện dialgo
-
-            user!!.updatePassword(newPassword)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "User password updated.")
-                    }
-                }
-        }
-
     }
+
     open class Product(name: String, price: Long, imageUrl: String, productId: String ){
         public var name: String = name
         public var price: Long = price

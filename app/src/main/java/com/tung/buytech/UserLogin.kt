@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.View.OnClickListener
 import android.widget.Button
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -62,7 +64,19 @@ class UserLogin : AppCompatActivity() {
                     }
             }
         })
+    }
 
+    fun loginOnClick(signIn: Boolean, userInput: TextInputEditText, passwordInput: TextInputEditText): OnClickListener{
+        val user = userInput.text.toString()
+        val password=passwordInput.text.toString()
 
+        return View.OnClickListener {
+            if (signIn){
+                AccountFunctions.signIn(user, password)
+            }
+            else{
+                AccountFunctions.signUp(user, password)
+            }
+        }
     }
 }
