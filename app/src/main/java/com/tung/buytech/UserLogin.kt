@@ -92,7 +92,7 @@ class UserLogin : AppCompatActivity() {
                 AccountFunctions.signIn(this, this, user, password)
             }
             else{
-                AccountFunctions.signUp(user, password)
+                AccountFunctions.signUp(this, this, user, password)
             }
         }
     }

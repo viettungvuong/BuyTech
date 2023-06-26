@@ -50,8 +50,23 @@ class AccountFunctions {
         }
 
         @JvmStatic
-        fun signUp(username: String, password: String){
-
+        fun signUp(activity: Activity, context: Context, username: String, password: String){
+            auth.createUserWithEmailAndPassword(username, password)
+                .addOnCompleteListener(activity) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "createUserWithEmail:success")
+                        val user = auth.currentUser
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                        Toast.makeText(
+                            context,
+                            "Authentication failed.",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+                }
         }
 
         @JvmStatic
