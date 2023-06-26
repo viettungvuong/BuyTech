@@ -88,12 +88,18 @@ class AccountFunctions {
         }
 
         @JvmStatic
-        fun signOut(){
+        fun signOut(context: Context){
             Firebase.auth.signOut() //đăng xuất
+
+            Toast.makeText(
+                context,
+                "Đã đăng xuất thành công",
+                Toast.LENGTH_SHORT,
+            ).show()
         }
 
         @JvmStatic
-        fun changePassword(newPassword: String){
+        fun changePassword(context: Context, newPassword: String){
             val user = Firebase.auth.currentUser
 
             reauthenticate(user!!.email.toString(), newPassword) //phải reauthenticate rồi mới đổi password được
@@ -101,7 +107,11 @@ class AccountFunctions {
             user!!.updatePassword(newPassword)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Log.d(ContentValues.TAG, "User password updated.")
+                        Toast.makeText(
+                            context,
+                            "Đã đổi mật khẩu thành công",
+                            Toast.LENGTH_SHORT,
+                        ).show()
                     }
                 }
         }
