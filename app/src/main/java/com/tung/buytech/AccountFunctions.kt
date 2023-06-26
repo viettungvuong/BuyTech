@@ -3,11 +3,14 @@ package com.tung.buytech
 import android.content.ContentValues
 import android.util.Log
 import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class AccountFunctions {
     companion object{
+        lateinit var auth: FirebaseAuth
+
         @JvmStatic
         fun reauthenticate(username: String, password: String){
             val user = Firebase.auth.currentUser!!
