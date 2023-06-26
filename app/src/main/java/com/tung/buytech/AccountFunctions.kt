@@ -37,12 +37,17 @@ class AccountFunctions {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success")
                         val user = auth.currentUser
+                        Toast.makeText(
+                            context,
+                            "Đã đăng nhập thành công",
+                            Toast.LENGTH_SHORT,
+                        ).show()
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.exception)
                         Toast.makeText(
                             context,
-                            "Authentication failed.",
+                            "Không thể đăng nhập",
                             Toast.LENGTH_SHORT,
                         ).show()
                     }
@@ -57,12 +62,17 @@ class AccountFunctions {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
                         val user = auth.currentUser
+                        Toast.makeText(
+                            context,
+                            "Tạo tài khoản thành công",
+                            Toast.LENGTH_SHORT,
+                        ).show()
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.exception)
                         Toast.makeText(
                             context,
-                            "Authentication failed.",
+                            "Không thể tạo tài khoản",
                             Toast.LENGTH_SHORT,
                         ).show()
                     }
