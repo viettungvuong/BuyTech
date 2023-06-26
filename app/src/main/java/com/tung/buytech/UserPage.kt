@@ -57,7 +57,7 @@ class UserPage : AppCompatActivity() {
         changePasswordBtn.setOnClickListener(
             View.OnClickListener {
                 if (Firebase.auth.currentUser!=null) //phải đăng nhập tài khoản rồi mới được
-                      showChangePasswordDialog()
+                      confirmAccountDialog() //xác thực trước
                 else{
                     Toast.makeText(
                         this,
@@ -70,8 +70,9 @@ class UserPage : AppCompatActivity() {
     }
 
     //show một dialog để đổi password
-    private fun showChangePasswordDialog() {
+    private fun changePasswordDialog() {
         val dialogView = layoutInflater.inflate(R.layout.change_password, null)
+
 
         val newPasswordEditText = dialogView.findViewById<TextInputEditText>(R.id.newPassword)
 
@@ -80,18 +81,46 @@ class UserPage : AppCompatActivity() {
             .setTitle("Thay đổi mật khẩu")
             .setPositiveButton("Thay đổi") { dialogInterface: DialogInterface, _: Int ->
 
-                //bước reauthenticate (xác nhận tài khoản hiện tại)
-                val activityResultContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                    if (result.resultCode == Activity.RESULT_OK) {
-                        val data: Intent? = result.data
-                        //nếu kết quả trả về là oke
-                        //ta tiến hành đổi password
-                        AccountFunctions.changePassword(this, newPasswordEditText.text.toString())
-                    }
-                }
+                AccountFunctions.changePassword(this, newPasswordEditText.text.toString())
+                dialogInterface.dismiss()
+            }
+            .setNegativeButton("Huỷ") { dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.dismiss()
+            }
 
-                val intent = Intent(this, UserConfirm::class.java)
-                activityResultContract.launch(intent)
+        val dialog = dialogBuilder.create()
+        dialog.show()
+    }
+
+    private fun confirmAccountDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.activity_user_confirm, null)
+
+        val accountName = dialogView.findViewById<TextInputEditText>(R.id.username)
+        val confirmPasswordEditText = dialogView.findViewById<TextInputEditText>(R.id.password)
+
+        val user = Firebase.auth.currentUser
+        accountName.setText(user!!.email)
+
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setTitle("Xác nhận tác khoản")
+            .setPositiveButton("Xác nhận") { dialogInterface: DialogInterface, _: Int ->
+
+                //bước reauthenticate (xác nhận tài khoản hiện tại)
+                val credential = EmailAuthProvider
+                    .getCredential(user!!.email.toString(), confirmPasswordEditText.text.toString())
+
+                Firebase.auth.currentUser!!.reauthenticate(credential)
+                    .addOnCompleteListener {
+                        changePasswordDialog()
+                    }
+                    .addOnFailureListener{
+                        Toast.makeText(
+                            this,
+                            "Không thể xác minh tài khoản",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
 
                 // Do something with the entered text
                 dialogInterface.dismiss()
@@ -103,5 +132,6 @@ class UserPage : AppCompatActivity() {
         val dialog = dialogBuilder.create()
         dialog.show()
     }
+
 
 }
