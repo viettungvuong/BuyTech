@@ -36,7 +36,7 @@ class AccountFunctions {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success")
-                        val user = auth.currentUser
+                        AppController.user = auth.currentUser!!
                         Toast.makeText(
                             context,
                             "Đã đăng nhập thành công",
@@ -61,7 +61,7 @@ class AccountFunctions {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
-                        val user = auth.currentUser
+                        AppController.user = auth.currentUser!!
                         Toast.makeText(
                             context,
                             "Tạo tài khoản thành công",
