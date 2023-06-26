@@ -2,11 +2,14 @@ package com.tung.buytech
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -36,7 +39,7 @@ class UserPage : AppCompatActivity() {
 
         val userText = findViewById<TextView>(R.id.userText)
 
-        var userName = "" //hiện cái gì ở màn hình
+        var userName = "" //hiện cái gì ở màn hình (phần tên)
 
         val user = Firebase.auth.currentUser
         if (user==null){
@@ -76,6 +79,18 @@ class UserPage : AppCompatActivity() {
 
         val newPasswordEditText = dialogView.findViewById<TextInputEditText>(R.id.newPassword)
 
+        //để khi gõ xong là tắt bàn phím
+        newPasswordEditText.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // do something, e.g. set your TextView here via .setText()
+                val imm: InputMethodManager =
+                    v.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
         val dialogBuilder = AlertDialog.Builder(this)
             .setView(dialogView)
             .setTitle("Thay đổi mật khẩu")
@@ -100,6 +115,17 @@ class UserPage : AppCompatActivity() {
 
         val user = Firebase.auth.currentUser
         accountName.setText(user!!.email)
+
+        confirmPasswordEditText.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // do something, e.g. set your TextView here via .setText()
+                val imm: InputMethodManager =
+                    v.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+                return@OnEditorActionListener true
+            }
+            false
+        })
 
         val dialogBuilder = AlertDialog.Builder(this)
             .setView(dialogView)
