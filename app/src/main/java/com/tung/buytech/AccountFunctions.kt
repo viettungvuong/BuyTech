@@ -9,11 +9,8 @@ import com.google.firebase.ktx.Firebase
 class AccountFunctions {
     companion object{
         @JvmStatic
-        fun reauthenticate(){
+        fun reauthenticate(username: String, password: String){
             val user = Firebase.auth.currentUser!!
-
-            var username=""
-            var password=""
 
             //hiện dialog
 
@@ -40,13 +37,10 @@ class AccountFunctions {
         }
 
         @JvmStatic
-        fun changePassword(){
-            reauthenticate() //phải reauthenticate rồi mới đổi password được
-
+        fun changePassword(newPassword: String){
             val user = Firebase.auth.currentUser
-            val newPassword = ""
 
-            //hiện dialgo
+            reauthenticate(user!!.email.toString(), newPassword) //phải reauthenticate rồi mới đổi password được
 
             user!!.updatePassword(newPassword)
                 .addOnCompleteListener { task ->
