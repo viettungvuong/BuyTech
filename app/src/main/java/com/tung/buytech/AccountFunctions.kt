@@ -34,7 +34,7 @@ class AccountFunctions {
                         activity.startActivity(intent)
 
                     } else {
-                        // If sign in fails, display a message to the user.
+                        // If sign in fails, display a message t@o the user.
                         Log.w(TAG, "signInWithEmail:failure", task.exception)
                         Toast.makeText(
                             context,

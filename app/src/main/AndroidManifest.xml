@@ -12,18 +12,18 @@
         android:theme="@style/Theme.BuyTech"
         tools:targetApi="31">
         <activity
+            android:name=".PurchaseScreen"
+            android:exported="false" />
+        <activity
             android:name=".UserLogin"
             android:exported="true"
             android:theme="@style/Theme.BuyTech.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-/>
         <activity
             android:name=".UserPage"
             android:exported="false"
@@ -49,9 +49,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity android:name=".Cart" />
         <activity android:name=".SellPage" />
     </application>

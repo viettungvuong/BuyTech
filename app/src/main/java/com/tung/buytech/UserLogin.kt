@@ -71,11 +71,13 @@ class UserLogin : AppCompatActivity() {
                             val signInMethods = task.result?.signInMethods //nếu null thì là không có tài khoản
                             if (signInMethods.isNullOrEmpty()) {
                                 //không có tài khoản
-                                loginBtn.setText("Đăng kí")
                                 loginInstance=false
+                                loginBtn.setText("Đăng kí")
+
                             } else {
-                                loginBtn.setText("Đăng nhập")
                                 loginInstance=true
+                                loginBtn.setText("Đăng nhập")
+
                                 //có tài khoản
                             }
                         }/* else {
