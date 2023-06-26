@@ -24,15 +24,15 @@ class UserConfirm: AppCompatActivity() {
 
         val loginBtn = findViewById<Button>(R.id.signInBtn)
 
-        userInput.setText(AppController.user.email)
+        userInput.setText(Firebase.auth.currentUser!!.email)
 
         loginBtn.setOnClickListener(
             View.OnClickListener {
                 //hiện dialog
                 val credential = EmailAuthProvider
-                    .getCredential(AppController.user.email.toString(), passwordInput.text.toString())
+                    .getCredential(Firebase.auth.currentUser!!.email.toString(), passwordInput.text.toString())
 
-                AppController.user.reauthenticate(credential)
+                Firebase.auth.currentUser!!.reauthenticate(credential)
                     .addOnCompleteListener {
                         val resultIntent = Intent()
                         setResult(Activity.RESULT_OK, resultIntent)
