@@ -25,10 +25,11 @@ class UserLogin : AppCompatActivity() {
             startActivity(intent)
             //vào luôn main activity
         }
-        AccountFunctions.auth= Firebase.auth //initialize authentication thư viện
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AccountFunctions.auth= Firebase.auth //initialize authentication thư viện
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_login)
 
