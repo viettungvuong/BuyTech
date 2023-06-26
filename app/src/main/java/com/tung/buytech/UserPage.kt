@@ -36,7 +36,7 @@ class UserPage : AppCompatActivity() {
 
         val userText = findViewById<TextView>(R.id.userText)
 
-        var userName = ""
+        var userName = "" //hiện cái gì ở màn hình
 
         val user = Firebase.auth.currentUser
         if (user==null){
