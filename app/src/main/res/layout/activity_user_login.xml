@@ -33,7 +33,6 @@
                     android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
                     android:maxLines="1"
                     android:hint="Email đăng nhập"
                     />
@@ -56,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:hint="Mật khẩu"
+                    android:maxLines="1"
                     android:imeOptions="actionDone"
                     />
 

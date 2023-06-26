@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.inputmethod.EditorInfo
@@ -106,10 +107,9 @@ class UserLogin : AppCompatActivity() {
     }
 
     fun loginOnClick(signIn: Boolean, userInput: TextInputEditText, passwordInput: TextInputEditText): OnClickListener{
-        val user = userInput.text.toString()
-        val password=passwordInput.text.toString()
-
         return View.OnClickListener {
+            val user = userInput.text.toString()
+            val password=passwordInput.text.toString()
             if (signIn){
                 AccountFunctions.signIn(this, this, user, password)
             }
