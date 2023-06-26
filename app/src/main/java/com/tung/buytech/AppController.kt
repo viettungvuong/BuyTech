@@ -3,6 +3,7 @@ package com.tung.buytech
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -19,7 +20,7 @@ class AppController {
     companion object {
         @JvmField
         val productList: LinkedList<Product> = LinkedList()
-        var userId: String = String() //chứa userID
+        lateinit var user: FirebaseUser
         var db = Firebase.firestore
         val storageRef = Firebase.storage.reference
 
@@ -103,7 +104,7 @@ class AppController {
             )
 
             db.collection("Favorites")
-                .document(userId) //chỗ này đặt tên cái userid
+                .document(user.uid) //chỗ này đặt tên cái userid
                 .set(data)
                 .addOnSuccessListener { documentReference ->
                 }
