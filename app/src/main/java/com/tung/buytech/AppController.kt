@@ -115,8 +115,8 @@ class AppController {
         fun reauthenticate(){
             val user = Firebase.auth.currentUser!!
 
-            var username: String=""
-            var password: String=""
+            var username=""
+            var password=""
 
             //hiện dialog
 
@@ -134,7 +134,19 @@ class AppController {
 
         @JvmStatic
         fun changePassword(){
+            reauthenticate() //phải reauthenticate rồi mới đổi password được
 
+            val user = Firebase.auth.currentUser
+            val newPassword = ""
+
+            //hiện dialgo
+
+            user!!.updatePassword(newPassword)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "User password updated.")
+                    }
+                }
         }
 
     }
