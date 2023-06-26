@@ -85,7 +85,6 @@ class UserPage : AppCompatActivity() {
                     if (result.resultCode == Activity.RESULT_OK) {
                         val data: Intent? = result.data
                         //nếu kết quả trả về là oke
-                        
                         //ta tiến hành đổi password
                         AccountFunctions.changePassword(this, newPasswordEditText.text.toString())
                     }
