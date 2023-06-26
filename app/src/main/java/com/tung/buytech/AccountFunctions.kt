@@ -18,19 +18,6 @@ class AccountFunctions {
         lateinit var auth: FirebaseAuth
 
         @JvmStatic
-        fun reauthenticate(username: String, password: String){
-            val user = Firebase.auth.currentUser!!
-
-            //hiện dialog
-
-            val credential = EmailAuthProvider
-                .getCredential(username, password)
-
-            user.reauthenticate(credential)
-                .addOnCompleteListener { Log.d(ContentValues.TAG, "User re-authenticated.") }
-        }
-
-        @JvmStatic
         fun signIn(activity: Activity, context: Context, username: String, password: String){
             auth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener(activity) { task ->
@@ -102,7 +89,6 @@ class AccountFunctions {
         fun changePassword(context: Context, newPassword: String){
             val user = Firebase.auth.currentUser
 
-            reauthenticate(user!!.email.toString(), newPassword) //phải reauthenticate rồi mới đổi password được
 
             user!!.updatePassword(newPassword)
                 .addOnCompleteListener { task ->
