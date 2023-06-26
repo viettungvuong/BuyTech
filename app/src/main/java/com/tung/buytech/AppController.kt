@@ -1,6 +1,8 @@
 package com.tung.buytech
 
+import android.content.ContentValues.TAG
 import android.util.Log
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -107,6 +109,22 @@ class AppController {
                 }
                 .addOnFailureListener { e ->
                 }
+        }
+
+        @JvmStatic
+        fun reauthenticate(){
+            val user = Firebase.auth.currentUser!!
+
+            var username: String=""
+            var password: String=""
+
+            //hiện dialog
+
+            val credential = EmailAuthProvider
+                .getCredential(username, password)
+
+            user.reauthenticate(credential)
+                .addOnCompleteListener { Log.d(TAG, "User re-authenticated.") }
         }
 
         @JvmStatic
