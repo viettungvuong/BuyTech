@@ -34,7 +34,7 @@ class UserLogin : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        var loginInstance=true //kiểm tra sẽ đăng nhập hay đăng kí
+        var loginInstance=false //kiểm tra sẽ đăng nhập hay đăng kí
         AccountFunctions.auth= Firebase.auth //initialize authentication thư viện
 
         super.onCreate(savedInstanceState)
