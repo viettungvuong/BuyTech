@@ -36,7 +36,17 @@ class UserPage : AppCompatActivity() {
 
         val userText = findViewById<TextView>(R.id.userText)
 
-        userText.setText(AppController.user.uid?:"Chưa đăng nhập")
+        var userName = ""
+
+        val user = Firebase.auth.currentUser
+        if (user==null){
+            userName="Chưa đăng nhập"
+        }
+        else{
+            userName=user!!.email.toString()
+        }
+
+        userText.setText(userName)
 
         signOutBtn.setOnClickListener(
             View.OnClickListener {
@@ -46,11 +56,20 @@ class UserPage : AppCompatActivity() {
 
         changePasswordBtn.setOnClickListener(
             View.OnClickListener {
-                showChangePasswordDialog()
+                if (Firebase.auth.currentUser!=null) //phải đăng nhập tài khoản rồi mới được
+                      showChangePasswordDialog()
+                else{
+                    Toast.makeText(
+                        this,
+                        "Chưa đăng nhập nên không thể đổi mật khẩu",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
             }
         )
     }
 
+    //show một dialog để đổi password
     private fun showChangePasswordDialog() {
         val dialogView = layoutInflater.inflate(R.layout.change_password, null)
 
@@ -60,13 +79,13 @@ class UserPage : AppCompatActivity() {
             .setView(dialogView)
             .setTitle("Thay đổi mật khẩu")
             .setPositiveButton("Thay đổi") { dialogInterface: DialogInterface, _: Int ->
-                //bước reauthenticate (xác nhận tài khoản hiện tại)
 
+                //bước reauthenticate (xác nhận tài khoản hiện tại)
                 val activityResultContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == Activity.RESULT_OK) {
                         val data: Intent? = result.data
                         //nếu kết quả trả về là oke
-
+                        //ta tiến hành đổi password
                         AccountFunctions.changePassword(this, newPasswordEditText.text.toString())
                     }
                 }

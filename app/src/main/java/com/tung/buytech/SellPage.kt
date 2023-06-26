@@ -15,7 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.tung.buytech.AppController.Companion.db
 import com.tung.buytech.AppController.Companion.storageRef
@@ -149,7 +151,7 @@ class SellPage  : AppCompatActivity() {
 
     fun uploadImage(storageRef: StorageReference, file: Uri){
         var newFileName=filterFileNameFromUri(file) //cái này chỉ để đặt tên
-        var fullFileName = AppController.user.uid+"/"+newFileName
+        var fullFileName = Firebase.auth.currentUser!!.uid+"/"+newFileName
         val imageRef = storageRef.child(fullFileName)
 
         var uploadTask = imageRef.putFile(file)
