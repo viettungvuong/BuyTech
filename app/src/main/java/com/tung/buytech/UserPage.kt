@@ -110,7 +110,7 @@ class UserPage : AppCompatActivity() {
                 val credential = EmailAuthProvider
                     .getCredential(user!!.email.toString(), confirmPasswordEditText.text.toString())
 
-                Firebase.auth.currentUser!!.reauthenticate(credential)
+                user!!.reauthenticate(credential)
                     .addOnCompleteListener {
                         changePasswordDialog()
                     }
@@ -120,6 +120,7 @@ class UserPage : AppCompatActivity() {
                             "Không thể xác minh tài khoản",
                             Toast.LENGTH_SHORT,
                         ).show()
+                        dialogInterface.dismiss()
                     }
 
                 // Do something with the entered text
