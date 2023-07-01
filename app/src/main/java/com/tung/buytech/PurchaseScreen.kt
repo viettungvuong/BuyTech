@@ -24,11 +24,25 @@ class PurchaseScreen : AppCompatActivity() {
 
     //định vị
     fun navigate(address: String){
-
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(reformatLocation(address))
+        }
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
     }
 
     //tính năng chat
     fun chat(seller: String){
 
+    }
+
+    fun reformatLocation(address: String): String{
+        var res=" ";
+        val words = address.split(' ') //tách từ
+        for (word in words){
+            res= "$res$word+" //thêm dấu +
+        }
+        return res
     }
 }
