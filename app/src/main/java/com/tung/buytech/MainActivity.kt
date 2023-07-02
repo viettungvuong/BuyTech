@@ -23,7 +23,9 @@ import com.google.firebase.firestore.ktx.firestore
 
 import com.google.firebase.ktx.*
 import com.google.firebase.storage.FirebaseStorage
+import com.google.rpc.Help.Link
 import com.tung.buytech.AppController.Companion.db
+import com.tung.buytech.AppController.Companion.getDatabaseInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -103,26 +105,43 @@ class MainActivity : AppCompatActivity() {
         suggestions(productName, db, grid)
     }
 
-    class AutoComplete{
-        fun autoCompleteAt(currentlyTyping: String, currentListOfTagsAndKeywords: ArrayList<String>, pos: Int): ArrayList<String>{
-            currentListOfTagsAndKeywords.sorted()
-            //sort lại danh sách các từ khoá có thể ở hiện tại theo thứ tự chữ cái
+    class AutoComplete {
+        lateinit var currentListOfTagsAndKeywords: ArrayList<String>
 
+        init {
+            //duyệt trong collection Products
+            val collectionRef = getDatabaseInstance().collection("Products").get()
+
+            collectionRef.addOnSuccessListener { result ->
+                for (document in result) {
+                    //thêm tag của một sản phẩm
+                    val currentWords = document["tag"] as LinkedList<String>
+
+                    for (word in currentWords) {
+                        currentListOfTagsAndKeywords.add(word)
+                    }
+                }
+            }
+
+            //sort lại danh sách các từ khoá có thể ở hiện tại theo thứ tự chữ cái
+            currentListOfTagsAndKeywords.sorted()
+        } //cái init này hoạt động như là một constructor
+
+        fun autoCompleteAt(currentlyTyping: String, pos: Int): ArrayList<String> {
             //bài này ta dùng thuật toán 2 pointer
             //vì đã sort list lại rồi
             //ta chỉ cần tìm phạm vi (từ đầu đến cuối) của các từ khoá có thể có của những kí tự đang nhập
-            while (currentListOfTagsAndKeywords.isNotEmpty()&&currentListOfTagsAndKeywords.first()[pos]!=currentlyTyping.last()){
+            while (currentListOfTagsAndKeywords.isNotEmpty() && currentListOfTagsAndKeywords.first()[pos] != currentlyTyping.last()) {
                 currentListOfTagsAndKeywords.removeFirst()
             }
 
-            while (currentListOfTagsAndKeywords.isNotEmpty()&&currentListOfTagsAndKeywords.last()[pos]!=currentlyTyping.last()){
+            while (currentListOfTagsAndKeywords.isNotEmpty() && currentListOfTagsAndKeywords.last()[pos] != currentlyTyping.last()) {
                 currentListOfTagsAndKeywords.removeLast();
             }
 
             return currentListOfTagsAndKeywords
         }
     }
-
 
 
     //hiện kết quả tìm kiếm
