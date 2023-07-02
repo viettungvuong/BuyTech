@@ -103,6 +103,23 @@ class MainActivity : AppCompatActivity() {
         suggestions(productName, db, grid)
     }
 
+    fun autoCompleteAt(currentlyTyping: String, currentListOfTagsAndKeywords: ArrayList<String>, pos: Int){
+        currentListOfTagsAndKeywords.sorted()
+        //sort lại danh sách các từ khoá có thể ở hiện tại theo thứ tự chữ cái
+
+        //bài này ta dùng thuật toán 2 pointer
+        //vì đã sort list lại rồi
+        //ta chỉ cần tìm phạm vi (từ đầu đến cuối) của các từ khoá có thể có của những kí tự đang nhập
+        while (currentListOfTagsAndKeywords.isNotEmpty()&&currentListOfTagsAndKeywords.first()[pos]!=currentlyTyping.last()){
+            currentListOfTagsAndKeywords.removeFirst()
+        }
+
+        while (currentListOfTagsAndKeywords.isNotEmpty()&&currentListOfTagsAndKeywords.last()[pos]!=currentlyTyping.last()){
+            currentListOfTagsAndKeywords.removeLast();
+        }
+    }
+
+    //hiện kết quả tìm kiếm
     fun suggestions(productName: String, db: FirebaseFirestore, grid: GridLayout) {
         //chiến thuật là ta sẽ gom lại những cái sản phẩm có tên đó
         //ta sẽ cho biết giá trung bình, giá cao nhất và giá rẻ nhất
@@ -149,11 +166,6 @@ class MainActivity : AppCompatActivity() {
         val res = ProductView(this, product)
         return res
     }
-
-    //lấy url của ảnh lưu trong Firebase Storage
-
-
-
 
 
     fun View.hideKeyboard() {
