@@ -6,6 +6,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import com.google.android.gms.tasks.Task
 import com.tung.buytech.AppController.Companion.getDatabaseInstance
@@ -38,6 +40,22 @@ class PurchaseScreen
         sellerText.text= seller
         locationText.text= location
         phoneNumberText.text= phoneNumber
+
+        val btnLocation = findViewById<Button>(R.id.navigation)
+        val btnCall = findViewById<Button>(R.id.call)
+        val btnMessage = findViewById<Button>(R.id.message)
+
+        btnLocation.setOnClickListener(
+            View.OnClickListener {
+                navigate(location)
+            }
+        )
+
+        btnCall.setOnClickListener(
+            View.OnClickListener {
+                call(phoneNumber)
+            }
+        )
     }
 
     fun loadInformation(product: AppController.Product){
