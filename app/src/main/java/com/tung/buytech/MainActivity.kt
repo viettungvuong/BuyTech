@@ -32,7 +32,8 @@ import kotlinx.coroutines.launch
 import java.lang.Integer.max
 import java.lang.Integer.parseInt
 import java.lang.Long.parseLong
-import java.util.LinkedList
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.suspendCoroutine
 import kotlin.math.min
 
@@ -106,9 +107,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     class AutoComplete {
-        lateinit var currentListOfTagsAndKeywords: ArrayList<String>
+
+        lateinit var stackAutoComplete: Stack<ArrayList<String>>
+        //stack là để phòng trường hợp người dùng xoá từ thì phải pop ra để lấy lại cái vừa trc đó
 
         init {
+            lateinit var currentListOfTagsAndKeywords: ArrayList<String>
+
             //duyệt trong collection Products
             val collectionRef = getDatabaseInstance().collection("Products").get()
 
@@ -125,21 +130,29 @@ class MainActivity : AppCompatActivity() {
 
             //sort lại danh sách các từ khoá có thể ở hiện tại theo thứ tự chữ cái
             currentListOfTagsAndKeywords.sorted()
+
+            stackAutoComplete.add(currentListOfTagsAndKeywords)
+            //thêm list ban đầu vào stack
         } //cái init này hoạt động như là một constructor
 
+        //khi nhập thêm một kí tự mới thì sẽ gọi hàm này
         fun autoCompleteAt(currentlyTyping: String, pos: Int): ArrayList<String> {
+            var currentList = stackAutoComplete.peek()
             //bài này ta dùng thuật toán 2 pointer
             //vì đã sort list lại rồi
             //ta chỉ cần tìm phạm vi (từ đầu đến cuối) của các từ khoá có thể có của những kí tự đang nhập
-            while (currentListOfTagsAndKeywords.isNotEmpty() && currentListOfTagsAndKeywords.first()[pos] != currentlyTyping.last()) {
-                currentListOfTagsAndKeywords.removeFirst()
+            while (currentList.isNotEmpty() && currentList.first()[pos] != currentlyTyping.last()) {
+                currentList.removeFirst()
             }
 
-            while (currentListOfTagsAndKeywords.isNotEmpty() && currentListOfTagsAndKeywords.last()[pos] != currentlyTyping.last()) {
-                currentListOfTagsAndKeywords.removeLast();
+            while (currentList.isNotEmpty() && currentList.last()[pos] != currentlyTyping.last()) {
+                currentList.removeLast();
             }
 
-            return currentListOfTagsAndKeywords
+            stackAutoComplete.push(currentList)
+            //thêm vào stack
+
+            return currentList
         }
     }
 
