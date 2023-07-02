@@ -31,7 +31,13 @@ class PurchaseScreen
 
         loadInformation(currentProduct)
 
-        val sellerText = findViewById<TextView>(R.id.sell)
+        val sellerText = findViewById<TextView>(R.id.seller)
+        val locationText = findViewById<TextView>(R.id.location)
+        val phoneNumberText = findViewById<TextView>(R.id.phoneNumber)
+
+        sellerText.text= seller
+        locationText.text= location
+        phoneNumberText.text= phoneNumber
     }
 
     fun loadInformation(product: AppController.Product){
