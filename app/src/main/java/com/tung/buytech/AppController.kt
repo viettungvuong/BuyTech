@@ -25,14 +25,13 @@ class AppController {
         var db = Firebase.firestore
         val storageRef = Firebase.storage.reference
 
-        var favorites: ArrayList<Favorite>  =ArrayList()
+
+        lateinit var autoComplete: AutoComplete
+
+        lateinit var favorites: ArrayList<Favorite>
 
         var updateThreads =  Executors.newSingleThreadScheduledExecutor()
         //thread pool
-
-
-        //danh sách favorites
-        //dùng arrayList là vì có thể random access
 
         @JvmStatic fun getDatabaseInstance(): FirebaseFirestore {
             return this.db
