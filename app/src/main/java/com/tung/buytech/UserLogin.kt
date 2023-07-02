@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -23,6 +24,7 @@ import com.tung.buytech.AccountFunctions.Companion.auth
 class UserLogin : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
+        FirebaseApp.initializeApp(this)
         val currentUser = auth.currentUser
         if (currentUser != null) {
             //đã đăng nhập rồi
