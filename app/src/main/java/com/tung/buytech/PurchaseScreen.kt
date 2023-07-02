@@ -9,13 +9,15 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.Task
 import com.tung.buytech.AppController.Companion.getDatabaseInstance
 
 class PurchaseScreen
-@JvmOverloads constructor(
+constructor(
     context: Context, product: AppController.Product
-) :AppCompatActivity() {
+) : DialogFragment(R.layout.activity_purchase_screen) {
     companion object
     {
         @JvmStatic
@@ -27,23 +29,22 @@ class PurchaseScreen
     init { //những cái trong constructor dùng được từ init
         val currentProduct = product
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_purchase_screen)
 
         loadInformation(currentProduct)
 
-        val sellerText = findViewById<TextView>(R.id.seller)
-        val locationText = findViewById<TextView>(R.id.location)
-        val phoneNumberText = findViewById<TextView>(R.id.phoneNumber)
+        val sellerText = view.findViewById<TextView>(R.id.seller)
+        val locationText = view.findViewById<TextView>(R.id.location)
+        val phoneNumberText = view.findViewById<TextView>(R.id.phoneNumber)
 
         sellerText.text= seller
         locationText.text= location
         phoneNumberText.text= phoneNumber
 
-        val btnLocation = findViewById<Button>(R.id.navigation)
-        val btnCall = findViewById<Button>(R.id.call)
-        val btnMessage = findViewById<Button>(R.id.message)
+        val btnLocation = view.findViewById<Button>(R.id.navigation)
+        val btnCall = view.findViewById<Button>(R.id.call)
+        val btnMessage = view.findViewById<Button>(R.id.message)
 
         btnLocation.setOnClickListener(
             View.OnClickListener {
@@ -82,9 +83,7 @@ class PurchaseScreen
         val intent = Intent(Intent.ACTION_DIAL).apply {
             data = Uri.parse("tel:$phoneNumber")
         }
-        if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
-        }
     }
 
     //định vị
@@ -92,9 +91,7 @@ class PurchaseScreen
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(reformatLocation(address))
         }
-        if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
-        }
     }
 
     //tính năng chat
