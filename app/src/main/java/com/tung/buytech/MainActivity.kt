@@ -103,21 +103,27 @@ class MainActivity : AppCompatActivity() {
         suggestions(productName, db, grid)
     }
 
-    fun autoCompleteAt(currentlyTyping: String, currentListOfTagsAndKeywords: ArrayList<String>, pos: Int){
-        currentListOfTagsAndKeywords.sorted()
-        //sort lại danh sách các từ khoá có thể ở hiện tại theo thứ tự chữ cái
+    class AutoComplete{
+        fun autoCompleteAt(currentlyTyping: String, currentListOfTagsAndKeywords: ArrayList<String>, pos: Int): ArrayList<String>{
+            currentListOfTagsAndKeywords.sorted()
+            //sort lại danh sách các từ khoá có thể ở hiện tại theo thứ tự chữ cái
 
-        //bài này ta dùng thuật toán 2 pointer
-        //vì đã sort list lại rồi
-        //ta chỉ cần tìm phạm vi (từ đầu đến cuối) của các từ khoá có thể có của những kí tự đang nhập
-        while (currentListOfTagsAndKeywords.isNotEmpty()&&currentListOfTagsAndKeywords.first()[pos]!=currentlyTyping.last()){
-            currentListOfTagsAndKeywords.removeFirst()
-        }
+            //bài này ta dùng thuật toán 2 pointer
+            //vì đã sort list lại rồi
+            //ta chỉ cần tìm phạm vi (từ đầu đến cuối) của các từ khoá có thể có của những kí tự đang nhập
+            while (currentListOfTagsAndKeywords.isNotEmpty()&&currentListOfTagsAndKeywords.first()[pos]!=currentlyTyping.last()){
+                currentListOfTagsAndKeywords.removeFirst()
+            }
 
-        while (currentListOfTagsAndKeywords.isNotEmpty()&&currentListOfTagsAndKeywords.last()[pos]!=currentlyTyping.last()){
-            currentListOfTagsAndKeywords.removeLast();
+            while (currentListOfTagsAndKeywords.isNotEmpty()&&currentListOfTagsAndKeywords.last()[pos]!=currentlyTyping.last()){
+                currentListOfTagsAndKeywords.removeLast();
+            }
+
+            return currentListOfTagsAndKeywords
         }
     }
+
+
 
     //hiện kết quả tìm kiếm
     fun suggestions(productName: String, db: FirebaseFirestore, grid: GridLayout) {
