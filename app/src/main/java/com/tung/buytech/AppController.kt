@@ -25,7 +25,7 @@ class AppController {
         var db = Firebase.firestore
         val storageRef = Firebase.storage.reference
 
-
+        @JvmStatic
         lateinit var autoComplete: AutoComplete
 
         lateinit var favorites: ArrayList<Favorite>
