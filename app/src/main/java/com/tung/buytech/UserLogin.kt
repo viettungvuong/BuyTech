@@ -36,7 +36,7 @@ class UserLogin : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        var loginInstance=false //kiểm tra sẽ đăng nhập hay đăng kí
+
         AccountFunctions.auth= Firebase.auth //initialize authentication thư viện
 
         super.onCreate(savedInstanceState)
@@ -64,7 +64,7 @@ class UserLogin : AppCompatActivity() {
                     // không phải định dạng email
                     return
                 }
-
+                var loginInstance=false //kiểm tra sẽ đăng nhập hay đăng kí
                 // Check if an account with the corresponding email exists on Firebase Authentication
                 val auth = FirebaseAuth.getInstance()
                 auth.fetchSignInMethodsForEmail(input)
@@ -82,16 +82,8 @@ class UserLogin : AppCompatActivity() {
 
                                 //có tài khoản
                             }
-                        }/* else {
-                            val exception = task.exception
-                            if (exception is FirebaseAuthInvalidCredentialsException) {
-                                // Invalid email format
-                                // Handle accordingly
-                            } else {
-                                // Error occurred while checking account existence
-                                // Handle accordingly
-                            }
-                        }*/
+                        }
+                        loginBtn.setOnClickListener(loginOnClick(loginInstance,userInput, passwordInput))
                     }
             }
         })
@@ -107,13 +99,15 @@ class UserLogin : AppCompatActivity() {
             false
         })
 
-        loginBtn.setOnClickListener(loginOnClick(loginInstance,userInput, passwordInput))
+
     }
 
     fun loginOnClick(signIn: Boolean, userInput: TextInputEditText, passwordInput: TextInputEditText): OnClickListener{
         return View.OnClickListener {
             val user = userInput.text.toString()
             val password=passwordInput.text.toString()
+            Log.d("Sign in", signIn.toString())
+
             if (signIn){
                 AccountFunctions.signIn(this, this, user, password)
             }
