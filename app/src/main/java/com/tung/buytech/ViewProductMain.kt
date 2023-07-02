@@ -62,16 +62,6 @@ class ViewProductMain : AppCompatActivity() {
         val purchaseBtn = findViewById<Button>(R.id.buttonPurchase)
         val favoriteBtn = findViewById<Button>(R.id.buttonFavorite)
 
-        val fragmentContainerView = findViewById<FragmentContainerView>(R.id.fragment_container_view)
-
-        // Create an instance of the PurchaseScreen fragment
-        val purchaseScreenFragment = PurchaseScreen(this, currentProduct!!)
-
-        // Add the fragment to the FragmentContainerView
-        supportFragmentManager.beginTransaction()
-            .add(fragmentContainerView.id, purchaseScreenFragment)
-            .commit()
-
         purchaseBtn.setOnClickListener { v: View? ->
             val purchaseScreen = PurchaseScreen(this, currentProduct!!)
             purchaseScreen.show(supportFragmentManager, "purchase_screen") //hiện fragment
