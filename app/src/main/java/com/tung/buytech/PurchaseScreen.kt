@@ -34,6 +34,7 @@ constructor(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireActivity())
         val view = requireActivity().layoutInflater.inflate(R.layout.activity_purchase_screen, null)
+        //inflate file xml layout và đặt nó là view
         builder.setView(view)
 
         val sellerText = view.findViewById<TextView>(R.id.seller)
