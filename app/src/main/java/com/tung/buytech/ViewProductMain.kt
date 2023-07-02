@@ -5,6 +5,9 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.bumptech.glide.Glide
 import com.tung.buytech.AppController.Companion.addToFavorite
 import com.tung.buytech.AppController.Companion.getDatabaseInstance
@@ -21,11 +24,17 @@ class ViewProductMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_product)
+
         val intent = intent
         val name = intent.getStringExtra("ProductName")!!
         val price = intent.getLongExtra("ProductPrice",0)
         val productId = intent.getStringExtra("ProductId")!!
         val productImage = intent.getStringExtra("ProductImage")!!
+
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            add<PurchaseScreen>(R.id.fragment_container_view)
+        }
 
         //tạo product tương ứng
         currentProduct=AppController.Product(name,price,productImage,productId)
@@ -57,7 +66,11 @@ class ViewProductMain : AppCompatActivity() {
         val purchaseBtn = findViewById<Button>(R.id.buttonPurchase)
         val favoriteBtn = findViewById<Button>(R.id.buttonFavorite)
 
-        purchaseBtn.setOnClickListener { v: View? -> }
+        purchaseBtn.setOnClickListener { v: View? ->
+            val purchaseScreen = PurchaseScreen(this, currentProduct!!)
+            purchaseScreen.show(supportFragmentManager, "purchase_screen") //hiện fragment
+        }
+
         favoriteBtn.setOnClickListener { v: View? ->
             //thêm vào favorite
             val favorite= AppController.Favorite(currentProduct!!)

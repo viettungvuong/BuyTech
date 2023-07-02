@@ -7,16 +7,13 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.coroutines.suspendCoroutine
 
 
 class ProductView @JvmOverloads constructor(
@@ -38,7 +35,7 @@ class ProductView @JvmOverloads constructor(
     init {
 
         // Inflate the layout for the custom view
-        LayoutInflater.from(context).inflate(R.layout.view_product, this, true)
+        LayoutInflater.from(context).inflate(R.layout.product_view, this, true)
 
         val currentProduct = product
 
