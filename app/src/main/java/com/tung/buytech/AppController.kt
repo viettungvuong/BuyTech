@@ -164,12 +164,11 @@ class AppController {
     }
 
     fun buy(){
-
+        //hiện purchase screen
     }
 
 
     class AutoComplete {
-
         lateinit var stackAutoComplete: Stack<ArrayList<String>>
         //stack là để phòng trường hợp người dùng xoá từ thì phải pop ra để lấy lại cái vừa trc đó
 
