@@ -74,10 +74,10 @@ constructor(
                     //khi hàm loadInformation xong nó sẽ gọi callback
                     callback()
                 } else {
-                    Log.d("Docnodoc", "No such document")
+
                 }
             } else {
-                Log.d("Docfailed", "get failed with ", task.exception)
+
             }
         }
     }
