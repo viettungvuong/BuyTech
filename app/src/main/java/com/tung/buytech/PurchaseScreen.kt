@@ -36,7 +36,7 @@ constructor(
         val view = requireActivity().layoutInflater.inflate(R.layout.activity_purchase_screen, null)
         builder.setView(view)
 
-        loadInformation(currentProduct)
+        loadInformation(currentProduct) //tìm các thông tin khác liên quan tới sản phẩm
 
         val sellerText = view.findViewById<TextView>(R.id.seller)
         val locationText = view.findViewById<TextView>(R.id.location)

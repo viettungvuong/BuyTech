@@ -31,11 +31,6 @@ class ViewProductMain : AppCompatActivity() {
         val productId = intent.getStringExtra("ProductId")!!
         val productImage = intent.getStringExtra("ProductImage")!!
 
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            add<PurchaseScreen>(R.id.fragment_container_view)
-        }
-
         //tạo product tương ứng
         currentProduct=AppController.Product(name,price,productImage,productId)
 
