@@ -122,20 +122,22 @@ class AppController {
         //khúc này là constructor của class
         //ktra thong tin mat hang
         //observer design pattern
-        fun updateStatus(){
-            val docRef = db.collection(collectionProducts).document(productId)
-            docRef.addSnapshotListener{
-                    snapshot,e->
-                if (snapshot!=null&&snapshot.exists()){
-                    val inStock = Integer.parseInt(snapshot.getString("In stock"))
-                    var sold= false
-                    if (inStock>0){
-                        sold=true //đã bán hết sản phẩm
-                    }
 
+        public var sold= false //đã bán hay chưa
+
+        fun updateSoldStatus(){
+            val docRef = db.collection(collectionProducts).document(productId)
+            docRef.addSnapshotListener { snapshot, e ->
+                if (snapshot != null && snapshot.exists()) {
+                    val inStock = Integer.parseInt(snapshot.getString("In stock"))
+
+                    if (inStock > 0) {
+                        this.sold = true //đã bán hết sản phẩm
+                    }
                 }
             }
         }
+
     }
 
     //inheritance
