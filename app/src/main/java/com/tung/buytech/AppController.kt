@@ -30,10 +30,11 @@ class AppController {
 
         lateinit var favorites: ArrayList<Favorite>
 
-        var updateThreads =  Executors.newSingleThreadScheduledExecutor()
+        var updateThreads = Executors.newSingleThreadScheduledExecutor()
         //thread pool
 
-        @JvmStatic fun getDatabaseInstance(): FirebaseFirestore {
+        @JvmStatic
+        fun getDatabaseInstance(): FirebaseFirestore {
             return this.db
         }
 
@@ -55,9 +56,9 @@ class AppController {
                 val end = min(n + 1, i + 1)
                 val s = moneyString.substring(start, end)
                 strings.add(s)
-                Log.d("Number",strings[strings.size-1])
+                Log.d("Number", strings[strings.size - 1])
                 strings.add(",")
-                Log.d("Comma",strings[strings.size-1])
+                Log.d("Comma", strings[strings.size - 1])
             }
 
             if (strings[strings.size - 1] == ",") {
@@ -66,12 +67,12 @@ class AppController {
 
             strings.reverse() //đảo ngược mảng
 
-            moneyString=""
+            moneyString = ""
 
-            for (i in 0..strings.size-1){
-                moneyString+=strings[i]
+            for (i in 0..strings.size - 1) {
+                moneyString += strings[i]
             }
-            Log.d("MoneyString",moneyString)
+            Log.d("MoneyString", moneyString)
             return moneyString;
             //gio ta phai cho no xuat dung chieu
         }
@@ -94,7 +95,7 @@ class AppController {
         }
 
         @JvmStatic
-        fun addToFavorite(favorites: ArrayList<Favorite>, favorite: Favorite){
+        fun addToFavorite(favorites: ArrayList<Favorite>, favorite: Favorite) {
             favorites.add(favorite)
             //thêm vào danh sách favorites
 
@@ -114,39 +115,50 @@ class AppController {
 
     }
 
-    open class Product(name: String, price: Long, imageUrl: String, productId: String ): java.io.Serializable{
+    open class Product(name: String, price: Long, imageUrl: String, productId: String) :
+        java.io.Serializable {
         public var name: String = name
         public var price: Long = price
         public var imageUrl: String = imageUrl
-        public var productId: String= productId
+        public var productId: String = productId
         //khúc này là constructor của class
         //ktra thong tin mat hang
         //observer design pattern
 
-        public var sold= false //đã bán hay chưa
+        public var sold = false //đã bán hay chưa
 
-        fun updateSoldStatus(){
-            val docRef = db.collection(collectionProducts).document(productId)
-            docRef.addSnapshotListener { snapshot, e ->
-                if (snapshot != null && snapshot.exists()) {
-                    val inStock = Integer.parseInt(snapshot.getString("In stock"))
+        fun updateSoldStatus() {
+            val docRef = db.collection(collectionProducts).document(productId).get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val document = task.result
+                        if (document.exists()) {
+                            val inStock = Integer.parseInt(document.getString("stock"))
 
-                    if (inStock > 0) {
-                        this.sold = true //đã bán hết sản phẩm
+                            if (inStock > 0) {
+                                this.sold = true //đã bán hết sản phẩm
+                            }
+                        }
                     }
+
                 }
-            }
         }
 
     }
 
     //inheritance
-    class Favorite(name: String, price: Long, imageFile: String, productId: String): Product(name,price,imageFile,productId){
-        constructor(product: Product) : this(product.name,product.price,product.imageUrl,product.productId) {
+    class Favorite(name: String, price: Long, imageFile: String, productId: String) :
+        Product(name, price, imageFile, productId) {
+        constructor(product: Product) : this(
+            product.name,
+            product.price,
+            product.imageUrl,
+            product.productId
+        ) {
             //constructor thứ hai của class
         }
 
-        fun notifyMe(){
+        fun notifyMe() {
             //thông báo khi hết hàng
             var notification = "Mặt hàng đã hết :("
 
@@ -154,18 +166,17 @@ class AppController {
     }
 
 
-
     //thread java
     //thread để kiểm tra tình trạng món hàng
-    class UpdateThread: Runnable{
+    class UpdateThread : Runnable {
         public override fun run() {
-           //threadpool
+            //threadpool
 
         }
 
     }
 
-    fun buy(){
+    fun buy() {
         //hiện purchase screen
     }
 
@@ -219,7 +230,7 @@ class AppController {
         }
 
         //khi xoá kí tự thì autocomplete bằng cách pop stack
-        fun autoCompleteRemove(): ArrayList<String>{
+        fun autoCompleteRemove(): ArrayList<String> {
             return stackAutoComplete.pop() //lấy từ stack ra
         }
     }
