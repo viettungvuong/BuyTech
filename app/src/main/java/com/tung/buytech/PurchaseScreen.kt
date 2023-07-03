@@ -74,11 +74,7 @@ constructor(
                     //do cái này là async function nên ta bỏ vào phần isSuccessful
                     //khi hàm loadInformation xong nó sẽ gọi callback
                     callback()
-                } else {
-
                 }
-            } else {
-
             }
         }
     }
