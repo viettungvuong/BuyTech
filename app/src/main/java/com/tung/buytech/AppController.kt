@@ -114,7 +114,7 @@ class AppController {
 
     }
 
-    open class Product(name: String, price: Long, imageUrl: String, productId: String ){
+    open class Product(name: String, price: Long, imageUrl: String, productId: String ): java.io.Serializable{
         public var name: String = name
         public var price: Long = price
         public var imageUrl: String = imageUrl
