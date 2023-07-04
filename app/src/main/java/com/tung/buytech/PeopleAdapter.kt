@@ -1,4 +1,7 @@
 package com.tung.buytech
 
-class PeopleAdapter {
+import androidx.recyclerview.widget.RecyclerView
+
+class PeopleAdapter: RecyclerView.Adapter<> {
+
 }

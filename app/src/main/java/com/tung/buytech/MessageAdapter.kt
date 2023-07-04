@@ -1,4 +1,6 @@
 package com.tung.buytech
 
-class MessageAdapter {
+import androidx.recyclerview.widget.RecyclerView
+
+class MessageAdapter: RecyclerView.Adapter<> {
 }

@@ -240,4 +240,13 @@ class AppController {
         }
     }
 
+    class People(userId: String){
+
+    }
+
+    class Message(content: String, a: People, b: People){
+
+    }
+
+
 }
