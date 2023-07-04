@@ -143,7 +143,6 @@ class AppController {
 
                 }
         }
-
     }
 
     //inheritance
