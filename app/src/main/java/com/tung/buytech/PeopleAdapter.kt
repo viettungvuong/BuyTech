@@ -1,5 +1,6 @@
 package com.tung.buytech
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +14,8 @@ class PeopleAdapter(private val list: LinkedList<AppController.People>): Recycle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleHolder {
-
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.people_view,parent)
+        return PeopleHolder(itemView)
     }
 
     override fun getItemCount(): Int {

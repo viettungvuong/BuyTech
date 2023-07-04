@@ -1,5 +1,6 @@
 package com.tung.buytech
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +14,8 @@ class MessageAdapter(private val list: LinkedList<AppController.Message>): Recyc
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageHolder {
-        TODO("Not yet implemented")
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.message_view,parent)
+        return MessageHolder(itemView)
     }
 
     override fun getItemCount(): Int {
