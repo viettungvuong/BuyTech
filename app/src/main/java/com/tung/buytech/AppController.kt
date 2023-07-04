@@ -127,7 +127,7 @@ class AppController {
 
         public var sold = false //đã bán hay chưa
 
-        fun updateSoldStatus() {
+        fun updateSoldStatus(callback: () -> Unit) {
             val docRef = db.collection(collectionProducts).document(productId).get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -160,7 +160,13 @@ class AppController {
 
         fun notifyMe() {
             //thông báo khi hết hàng
-            var notification = "Mặt hàng đã hết :("
+            updateSoldStatus(){
+                if (sold){
+                    var notification = "Mặt hàng đã hết :("
+                    //nếu đã hết hàng thì thông báo
+                }
+
+            } //dùng hàm callback để khi nào xong rồi mới báo
 
         }
     }
