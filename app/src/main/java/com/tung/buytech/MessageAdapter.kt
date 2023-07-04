@@ -2,5 +2,5 @@ package com.tung.buytech
 
 import androidx.recyclerview.widget.RecyclerView
 
-class MessageAdapter: RecyclerView.Adapter<> {
+class MessageAdapter: RecyclerView.Adapter<AppController.Message> {
 }
