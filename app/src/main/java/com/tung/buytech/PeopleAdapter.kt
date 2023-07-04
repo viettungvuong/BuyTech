@@ -17,7 +17,7 @@ class PeopleAdapter(private val list: LinkedList<AppController.People>): Recycle
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return list.size
     }
 
     override fun onBindViewHolder(holder: PeopleHolder, position: Int) {

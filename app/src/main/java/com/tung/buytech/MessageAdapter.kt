@@ -17,7 +17,7 @@ class MessageAdapter(private val list: LinkedList<AppController.Message>): Recyc
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return list.size
     }
 
     override fun onBindViewHolder(holder: MessageHolder, position: Int) {
