@@ -7,7 +7,9 @@ import java.util.*
 
 class PeopleAdapter(private val list: LinkedList<AppController.People>): RecyclerView.Adapter<PeopleAdapter.PeopleHolder>()  {
     inner class PeopleHolder(val peopleView: View): RecyclerView.ViewHolder(peopleView){
+        fun bind(messageView: View){
 
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleHolder {
