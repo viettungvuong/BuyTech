@@ -7,7 +7,7 @@ import java.util.*
 
 class PeopleAdapter(private val list: LinkedList<AppController.People>): RecyclerView.Adapter<PeopleAdapter.PeopleHolder>()  {
     inner class PeopleHolder(val peopleView: View): RecyclerView.ViewHolder(peopleView){
-        fun bind(messageView: View){
+        fun bind(people: AppController.People){
 
         }
     }
@@ -21,6 +21,7 @@ class PeopleAdapter(private val list: LinkedList<AppController.People>): Recycle
     }
 
     override fun onBindViewHolder(holder: PeopleHolder, position: Int) {
-        TODO("Not yet implemented")
+        val currentItem = list[position] //lấy vật ở vị trí thứ position trong list
+        holder.bind(currentItem)
     }
 }

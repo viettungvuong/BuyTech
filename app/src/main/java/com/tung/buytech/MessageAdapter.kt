@@ -7,7 +7,7 @@ import java.util.LinkedList
 
 class MessageAdapter(private val list: LinkedList<AppController.Message>): RecyclerView.Adapter<MessageAdapter.MessageHolder>() {
     inner class MessageHolder(val messageView: View): RecyclerView.ViewHolder(messageView){
-        fun bind(messageView: View){
+        fun bind(message: AppController.Message){
 
         }
     }
@@ -21,7 +21,8 @@ class MessageAdapter(private val list: LinkedList<AppController.Message>): Recyc
     }
 
     override fun onBindViewHolder(holder: MessageHolder, position: Int) {
-        TODO("Not yet implemented")
+        val currentItem = list[position] //lấy vật ở vị trí thứ position trong list
+        holder.bind(currentItem)
     }
 
 }
