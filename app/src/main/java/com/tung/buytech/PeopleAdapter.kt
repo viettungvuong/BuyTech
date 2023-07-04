@@ -13,7 +13,7 @@ class PeopleAdapter(private val list: LinkedList<AppController.People>): Recycle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleHolder {
-        TODO("Not yet implemented")
+
     }
 
     override fun getItemCount(): Int {
