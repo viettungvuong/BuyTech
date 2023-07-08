@@ -22,6 +22,17 @@ class CartRecyclerAdapter(private val itemList: LinkedList<out AppController.Pro
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val currentItem = itemList[position] //lấy vật ở vị trí thứ position trong list
+        holder.itemView.setOnClickListener(
+            View.OnClickListener {
+                //thêm on click Listener
+                if (itemList[position] is AppController.Product){
+
+                }
+                else if (itemList[position] is AppController.Favorite){
+
+                }
+            }
+        )
         holder.bind(currentItem)
     }
 
