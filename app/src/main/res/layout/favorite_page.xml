@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="20dp">
+        android:layout_marginHorizontal="20dp"
+        android:id="@+id/favRecyclerView">
         
     </androidx.recyclerview.widget.RecyclerView>
 
