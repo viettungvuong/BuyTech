@@ -27,9 +27,11 @@ class AppController {
 
         @JvmStatic
         lateinit var autoComplete: AutoComplete
-
-        lateinit var favorites: ArrayList<Favorite>
-
+        @JvmStatic
+        lateinit var favorites: LinkedList<Favorite>
+        @JvmStatic
+        lateinit var cart: LinkedList<Product> //giỏ hàng
+        @JvmStatic
         var updateThreads = Executors.newSingleThreadScheduledExecutor()
         //thread pool
 

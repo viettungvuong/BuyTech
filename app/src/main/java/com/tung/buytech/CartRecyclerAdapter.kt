@@ -41,7 +41,7 @@ class CartRecyclerAdapter(private val itemList: LinkedList<AppController.Product
             itemInCart.setProductImage(product.imageUrl)
             itemInCart.setLabel(product.name)
             itemInCart.setPrice(product.price.toString())
-            //gán thông tin từ product vào ItemInCart
+            //gán thông tin từ product vào ItemInCart (ItemInCart là layout_
             //ItemInCart là layout của holder
         }
     }

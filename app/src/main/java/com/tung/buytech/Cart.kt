@@ -15,7 +15,7 @@ class Cart: AppCompatActivity() {
         //đặt recyclerView ở định dạng linearLayout
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
         recyclerView.layoutManager = layoutManager
-        val adapter = CartRecyclerAdapter(AppController.productList)
+        val adapter = CartRecyclerAdapter(AppController.cart)
         recyclerView.adapter = adapter
         //gán adapter vào recyclerview
     }
