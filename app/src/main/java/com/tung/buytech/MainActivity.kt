@@ -101,8 +101,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun search(productName: String, db: FirebaseFirestore) {
-        var grid = suggestedProductsGrid()
+        var grid =  findViewById<GridLayout>(R.id.suggestedProducts)
 
+        //search và thêm vào grid
         suggestions(productName, db, grid)
     }
 
@@ -130,10 +131,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun suggestedProductsGrid(): GridLayout {
-        return findViewById(R.id.suggestedProducts)
-    }
-
+    //productview là hiện tóm tắt thông tin sản phẩm sau khi tìm kiếm
     fun productView(document: QueryDocumentSnapshot): ProductView {
         //đặt các thông tin cho productview
 

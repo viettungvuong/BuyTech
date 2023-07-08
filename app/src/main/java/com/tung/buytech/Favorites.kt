@@ -14,7 +14,7 @@ class Favorites: AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
         val recyclerView=findViewById<RecyclerView>(R.id.favRecyclerView)
         recyclerView.layoutManager = layoutManager
-        val adapter=CartRecyclerAdapter(AppController.favorites)
+        val adapter=CartRecyclerAdapter(this,AppController.favorites)
         recyclerView.adapter=adapter
     }
 }

@@ -1,5 +1,7 @@
 package com.tung.buytech
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import java.util.*
 
-class CartRecyclerAdapter(private val itemList: LinkedList<out AppController.Product>) :
+class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList<out AppController.Product>) :
     RecyclerView.Adapter<CartRecyclerAdapter.CartViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
@@ -25,12 +27,13 @@ class CartRecyclerAdapter(private val itemList: LinkedList<out AppController.Pro
         holder.itemView.setOnClickListener(
             View.OnClickListener {
                 //thêm on click Listener
-                if (itemList[position] is AppController.Product){
-
-                }
-                else if (itemList[position] is AppController.Favorite){
-
-                }
+                val product =  itemList[position]
+                val intent: Intent= Intent(context,ViewProductMain::class.java)
+                intent.putExtra("ProductName",product.name)
+                intent.putExtra("ProductPrice",product.price)
+                intent.putExtra("ProductId",product.productId)
+                intent.putExtra("ProductImage",product.imageUrl)
+                context.startActivity(intent) //mở intent
             }
         )
         holder.bind(currentItem)
