@@ -6,6 +6,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -102,13 +103,15 @@ class AppController {
             //thêm vào danh sách favorites
 
             // Add a new document with a generated id.
-            val data = hashMapOf(
-                "id" to favorite.productId,
+            val data = arrayOf(
+                favorite.productId,
             )
+
+
 
             db.collection("favorites")
                 .document(Firebase.auth.currentUser!!.uid) //chỗ này đặt tên cái userid
-                .set(data)
+                .update("products", FieldValue.arrayUnion(*data))
                 .addOnSuccessListener { documentReference ->
                 }
                 .addOnFailureListener { e ->
