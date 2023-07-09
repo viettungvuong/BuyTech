@@ -2,37 +2,35 @@ package com.tung.buytech
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BottomNavigationHandler(activity: Activity, navBar: BottomNavigationView) {
-    lateinit var navBar: BottomNavigationView
     //dùng class này để quản lý bottom nav bar gọn hơn
     init {
-        this.navBar=navBar
-
         var currentSelected=0
 
-        when (activity){
-            MainActivity::class.java -> {
-                currentSelected=R.id.home
+        when (activity) {
+            is MainActivity -> {
+                currentSelected = R.id.home
             }
-            Cart::class.java->{
-                currentSelected=R.id.cart
+            is Cart -> {
+                currentSelected = R.id.cart
             }
-            UserPage::class.java->{
-                currentSelected=R.id.account
+            is UserPage -> {
+                currentSelected = R.id.account
             }
-            SellPage::class.java->{
-                currentSelected=R.id.sell
+            is SellPage -> {
+                currentSelected = R.id.sell
             }
-            Favorites::class.java->{
-                currentSelected=R.id.favorite
+            is Favorites -> {
+                currentSelected = R.id.favorite
             }
         }
 
-        this.navBar.selectedItemId=currentSelected //đặt index cho bottom nav bar
+        navBar.selectedItemId=currentSelected //đặt index cho bottom nav bar
 
-        this.navBar.setOnItemSelectedListener { item ->
+        navBar.setOnItemSelectedListener { item ->
             // do stuff
             when (item.itemId) {
                 R.id.home -> {
