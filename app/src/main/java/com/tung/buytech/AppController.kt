@@ -109,6 +109,11 @@ class AppController {
             val getFavorites =  db.collection("favorites")
                 .document(Firebase.auth.currentUser!!.uid)
 
+            //tạo field cho products
+            val createField = hashMapOf(
+                "products" to data
+            )
+
            getFavorites //lấy document trên firebase
                 .get()
                 .addOnCompleteListener(OnCompleteListener {
@@ -121,19 +126,11 @@ class AppController {
                                     getFavorites.update("products", FieldValue.arrayUnion(arrayOf(data)))
                                 }
                                 else{
-                                    //tạo field products qua hashMap
-                                    val createField = hashMapOf(
-                                        "products" to data
-                                    )
 
                                     getFavorites.set(createField)
                                 }
                             }
                             else{
-                                val createField = hashMapOf(
-                                    "products" to data
-                                )
-
                                 getFavorites.set(createField)
                             }
                         }
