@@ -97,7 +97,7 @@ class AppController {
         }
 
         @JvmStatic
-        fun addToFavorite(favorites: ArrayList<Favorite>, favorite: Favorite) {
+        fun addToFavorite(favorites: LinkedList<Favorite>, favorite: Favorite) {
             favorites.add(favorite)
             //thêm vào danh sách favorites
 
@@ -106,7 +106,7 @@ class AppController {
                 "id" to favorite.productId,
             )
 
-            db.collection("Favorites")
+            db.collection("favorites")
                 .document(Firebase.auth.currentUser!!.uid) //chỗ này đặt tên cái userid
                 .set(data)
                 .addOnSuccessListener { documentReference ->
