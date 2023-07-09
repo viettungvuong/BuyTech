@@ -129,6 +129,13 @@ class AppController {
                                     getFavorites.set(createField)
                                 }
                             }
+                            else{
+                                val createField = hashMapOf(
+                                    "products" to data
+                                )
+
+                                getFavorites.set(createField)
+                            }
                         }
                     }
                 })
