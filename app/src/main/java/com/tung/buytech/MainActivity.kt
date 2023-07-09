@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.favorite -> {
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, Favorites::class.java)
                     startActivity(intent)
                 }
                 R.id.sell -> {
