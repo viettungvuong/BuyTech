@@ -77,10 +77,6 @@
         android:layout_marginTop="20dp"
         />
 
-    <androidx.fragment.app.FragmentContainerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/bar_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/bottom_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
