@@ -1,10 +1,7 @@
 package com.tung.buytech
 
-import android.content.ContentValues.TAG
 import android.util.Log
-import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,7 +12,6 @@ import com.google.firebase.storage.ktx.storage
 import com.tung.buytech.MainActivity.Companion.collectionProducts
 import java.util.*
 import java.util.concurrent.Executors
-import kotlin.collections.ArrayList
 import kotlin.coroutines.suspendCoroutine
 import kotlin.math.min
 
@@ -28,10 +24,13 @@ class AppController {
 
         @JvmStatic
         lateinit var autoComplete: AutoComplete
+
         @JvmStatic
-        var favorites= LinkedList<Favorite>()
+        var favorites = LinkedList<Favorite>()
+
         @JvmStatic
-        var cart= LinkedList<Product>() //giỏ hàng
+        var cart = LinkedList<Product>() //giỏ hàng
+
         @JvmStatic
         var updateThreads = Executors.newSingleThreadScheduledExecutor()
         //thread pool
@@ -107,15 +106,32 @@ class AppController {
                 favorite.productId,
             )
 
+            val getFavorites =  db.collection("favorites")
+                .document(Firebase.auth.currentUser!!.uid)
 
+           getFavorites //lấy document trên firebase
+                .get()
+                .addOnCompleteListener(OnCompleteListener {
+                    task->if (task.isSuccessful()) {
+                        val document=task.result
+                        if (document!=null){
+                            if (document.exists()){
+                                if (document.contains("products")){
+                                    //nếu có field Products
+                                    getFavorites.update("products", FieldValue.arrayUnion(*data))
+                                }
+                                else{
+                                    //tạo field products qua hashMap
+                                    val createField = hashMapOf(
+                                        "products" to data
+                                    )
 
-            db.collection("favorites")
-                .document(Firebase.auth.currentUser!!.uid) //chỗ này đặt tên cái userid
-                .update("products", FieldValue.arrayUnion(*data))
-                .addOnSuccessListener { documentReference ->
-                }
-                .addOnFailureListener { e ->
-                }
+                                    getFavorites.set(createField)
+                                }
+                            }
+                        }
+                    }
+                })
         }
 
     }
@@ -164,8 +180,8 @@ class AppController {
 
         fun notifyMe() {
             //thông báo khi hết hàng
-            updateSoldStatus(){
-                if (sold){
+            updateSoldStatus() {
+                if (sold) {
                     var notification = "Mặt hàng đã hết :("
                     //nếu đã hết hàng thì thông báo
                 }
@@ -245,11 +261,11 @@ class AppController {
         }
     }
 
-    class People(userId: String){
+    class People(userId: String) {
 
     }
 
-    class Message(content: String, a: People, b: People){
+    class Message(content: String, a: People, b: People) {
 
     }
 
