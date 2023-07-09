@@ -28,6 +28,7 @@ import java.util.*
 
 class SellPage  : AppCompatActivity() {
 
+    lateinit var bottomNavigationHandler: BottomNavigationHandler
     override fun onCreate(savedInstanceState: Bundle?) {
 
         var images = LinkedList<Uri>()
@@ -111,34 +112,7 @@ class SellPage  : AppCompatActivity() {
         )
 
         var navBar=findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        navBar.selectedItemId=R.id.sell
-        navBar.setOnItemSelectedListener { item ->
-            // do stuff
-            when (item.itemId) {
-                R.id.home -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.cart -> {
-                    val intent = Intent(this, Cart::class.java)
-                    startActivity(intent)
-                }
-                R.id.favorite -> {
-                    val intent = Intent(this, Favorites::class.java)
-                    startActivity(intent)
-                }
-                R.id.sell -> {
-                    val intent = Intent(this, SellPage::class.java)
-                    startActivity(intent)
-                }
-                R.id.account -> {
-                    val intent = Intent(this, UserPage::class.java)
-                    startActivity(intent)
-                }
-            }
-
-            return@setOnItemSelectedListener true
-        }
+        bottomNavigationHandler=BottomNavigationHandler(this,navBar)
 
     }
 
