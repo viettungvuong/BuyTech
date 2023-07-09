@@ -105,14 +105,16 @@ class AppController {
             val data = arrayListOf(
                 favorite.productId,
             )
+            //tạo field cho products
+            //data là arrayList
+            val createField = hashMapOf(
+                "products" to data
+            )
 
             val getFavorites =  db.collection("favorites")
                 .document(Firebase.auth.currentUser!!.uid)
 
-            //tạo field cho products
-            val createField = hashMapOf(
-                "products" to data
-            )
+
 
            getFavorites //lấy document trên firebase
                 .get()
