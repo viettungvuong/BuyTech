@@ -26,9 +26,9 @@ constructor(
     lateinit var seller: String
     lateinit var phoneNumber: String
 
-    init { //những cái trong constructor dùng được từ init
+    init { //init chính là những hành động sẽ tiến hành trong giai đoạn construct
         currentProduct = product
- //tìm các thông tin khác liên quan tới sản phẩm
+
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
