@@ -17,6 +17,9 @@
             android:name=".ChatPeople"
             android:exported="false" />
         <activity
+            android:name=".Favorites"
+            android:exported="false" />
+        <activity
             android:name=".ChatMain"
             android:exported="false" />
         <activity
