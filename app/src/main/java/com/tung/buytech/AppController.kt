@@ -102,7 +102,7 @@ class AppController {
             //thêm vào danh sách favorites
 
             // Add a new document with a generated id.
-            val data = arrayOf(
+            val data = arrayListOf(
                 favorite.productId,
             )
 
@@ -118,7 +118,7 @@ class AppController {
                             if (document.exists()){
                                 if (document.contains("products")){
                                     //nếu có field Products
-                                    getFavorites.update("products", FieldValue.arrayUnion(*data))
+                                    getFavorites.update("products", FieldValue.arrayUnion(arrayOf(data)))
                                 }
                                 else{
                                     //tạo field products qua hashMap
