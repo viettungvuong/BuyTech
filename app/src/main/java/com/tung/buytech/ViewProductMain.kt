@@ -43,7 +43,7 @@ class ViewProductMain : AppCompatActivity() {
         productPrice = findViewById(R.id.priceLabel)
         productDescription = findViewById(R.id.productDescription)
         productName.text = name
-        productPrice.text = AppController.reformatNumber(price)
+        productPrice.text = AppController.reformatNumber(price)+" VNĐ"
 
         //đặt hình ảnh sản phẩm
         val imgView = findViewById<ImageView>(R.id.imageView)
