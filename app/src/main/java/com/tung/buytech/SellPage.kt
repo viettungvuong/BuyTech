@@ -110,7 +110,7 @@ class SellPage  : AppCompatActivity() {
             }
         )
 
-        var navBar=findViewById<BottomNavigationView>(R.id.navigation)
+        var navBar=findViewById<BottomNavigationView>(R.id.bottom_navigation)
         navBar.selectedItemId=R.id.sell
         navBar.setOnItemSelectedListener { item ->
             // do stuff

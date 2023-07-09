@@ -21,7 +21,7 @@ class Cart: AppCompatActivity() {
         recyclerView.adapter = adapter
         //gán adapter vào recyclerview
 
-        var navBar=findViewById<BottomNavigationView>(R.id.navigation)
+        var navBar=findViewById<BottomNavigationView>(R.id.bottom_navigation)
         navBar.selectedItemId=R.id.cart
         navBar.setOnItemSelectedListener { item ->
             // do stuff
