@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         var navBar = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        navBar.selectedItemId=R.id.home
         navBar.setOnItemSelectedListener { item ->
             // do stuff
             when (item.itemId) {

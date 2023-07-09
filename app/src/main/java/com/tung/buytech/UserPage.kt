@@ -22,6 +22,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -70,6 +71,37 @@ class UserPage : AppCompatActivity() {
                 }
             }
         )
+
+        var navBar=findViewById<BottomNavigationView>(R.id.navigation)
+        navBar.selectedItemId=R.id.account
+        navBar.setOnItemSelectedListener { item ->
+            // do stuff
+            when (item.itemId) {
+                R.id.home -> {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.cart -> {
+                    val intent = Intent(this, Cart::class.java)
+                    startActivity(intent)
+                }
+                R.id.favorite -> {
+                    val intent = Intent(this, Favorites::class.java)
+                    startActivity(intent)
+                }
+                R.id.sell -> {
+                    val intent = Intent(this, SellPage::class.java)
+                    startActivity(intent)
+                }
+                R.id.account -> {
+                    val intent = Intent(this, UserPage::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            return@setOnItemSelectedListener true
+        }
+
     }
 
     //show một dialog để đổi password
