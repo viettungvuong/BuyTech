@@ -63,6 +63,9 @@ class ViewProductMain : AppCompatActivity() {
         val favoriteBtn = findViewById<Button>(R.id.buttonFavorite)
 
         purchaseBtn.setOnClickListener { v: View? ->
+            //val mapFragment = supportFragmentManager.findFragmentById(R.id.favorite)
+            //lấy fragment từ supportFragmentManager (fragment này ở trong layout)
+
             val purchaseScreen = PurchaseScreen(this, currentProduct!!)
             purchaseScreen.show(supportFragmentManager, "purchase_screen") //hiện fragment
             //static fragment
