@@ -65,6 +65,7 @@ class ViewProductMain : AppCompatActivity() {
         purchaseBtn.setOnClickListener { v: View? ->
             val purchaseScreen = PurchaseScreen(this, currentProduct!!)
             purchaseScreen.show(supportFragmentManager, "purchase_screen") //hiện fragment
+            //static fragment
         }
 
         favoriteBtn.setOnClickListener { v: View? ->
