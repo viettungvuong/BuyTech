@@ -36,4 +36,5 @@ class Cart: AppCompatActivity() {
 
         cart.removeAt(cart.indexOf(itemInCart))
     }
+
 }
