@@ -101,10 +101,8 @@ class ViewProductMain : AppCompatActivity() {
                     )
                     descriptionText.text = document["description"].toString() //set text
                 } else {
-                    Log.d("Docnodoc", "No such document")
                 }
             } else {
-                Log.d("Docfailed", "get failed with ", task.exception)
             }
         }
     }
