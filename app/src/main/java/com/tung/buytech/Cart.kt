@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.LinkedList
 
 class Cart: AppCompatActivity() {
 
@@ -27,5 +28,12 @@ class Cart: AppCompatActivity() {
         var navBar=findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationHandler=BottomNavigationHandler(this,navBar)
 
+    }
+
+    fun deleteFromCart(itemInCart: AppController.Product, cart: LinkedList<AppController.Product>){
+        if (!cart.contains(itemInCart))
+            return
+
+        cart.removeAt(cart.indexOf(itemInCart))
     }
 }
