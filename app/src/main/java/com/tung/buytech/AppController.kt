@@ -99,6 +99,16 @@ class AppController {
             }
         }
 
+        fun bindProduct(productId: String): Product{
+            //lấy document product
+            val getProduct = db.collection("products").document(productId)
+
+            getProduct.get().addOnSuccessListener {
+                documentSnapshot->
+                val productname=documentSnapshot["name"].toString()
+            }
+        }
+
         //cập nhật danh sách favorite
         fun updateFavorite(){
             val getFavorites = db.collection("favorites")
