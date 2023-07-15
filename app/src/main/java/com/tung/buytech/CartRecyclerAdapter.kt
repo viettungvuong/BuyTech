@@ -14,9 +14,10 @@ import java.util.*
 class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList<out AppController.Product>) :
     RecyclerView.Adapter<CartRecyclerAdapter.CartViewHolder>() {
 
+    //tạo view holder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_in_cart, //lấy layout item_in_cart làm holder
+            R.layout.item_in_cart, //lấy layout item_in_cart làm view
             parent
         )
         return CartViewHolder(itemView)
