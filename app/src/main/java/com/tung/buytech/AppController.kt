@@ -1,7 +1,9 @@
 package com.tung.buytech
 
 import android.content.ContentValues.TAG
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.ktx.auth
@@ -14,6 +16,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.tung.buytech.MainActivity.Companion.collectionProducts
 import java.util.*
+import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
 import kotlin.coroutines.suspendCoroutine
 import kotlin.math.min
@@ -99,14 +102,26 @@ class AppController {
             }
         }
 
-        fun bindProduct(productId: String): Product{
+        //completableFuture là đợi onSuccessListener rồi mới return
+        @RequiresApi(Build.VERSION_CODES.N)
+        fun bindProduct(productId: String): CompletableFuture<Product>{
             //lấy document product
             val getProduct = db.collection("products").document(productId)
 
+            val completableFuture=CompletableFuture<Product>()
+
             getProduct.get().addOnSuccessListener {
                 documentSnapshot->
-                val productname=documentSnapshot["name"].toString()
+                val productName=documentSnapshot["name"].toString()
+                val price=documentSnapshot["price"] as Long
+                val imageUrl=(documentSnapshot["image"] as ArrayList<String>).first()
+
+                val product=Product(productName,price,imageUrl,productId)
+
+                completableFuture.complete(product)
             }
+
+            return completableFuture
         }
 
         //cập nhật danh sách favorite
