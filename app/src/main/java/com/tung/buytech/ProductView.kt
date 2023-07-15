@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.tung.buytech.AppController.Companion.setProductImage
+import com.tung.buytech.AppController.Companion.findProductImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,7 +49,7 @@ class ProductView @JvmOverloads constructor(
 
         //đặt hình ảnh
         this.imageUrl=imageUrl
-        setProductImage(product.imageUrl, imageView, context)
+        findProductImage(product.imageUrl, imageView, context)
 
         setPrice(AppController.reformatNumber(product.price)+" VNĐ")
         setId(product.productId)

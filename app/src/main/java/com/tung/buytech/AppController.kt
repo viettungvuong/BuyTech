@@ -34,7 +34,7 @@ import kotlin.math.min
 class AppController {
     companion object {
         @JvmStatic
-        fun setProductImage(imageUrl: String, imageView: ImageView, context: Context) {
+        fun findProductImage(imageUrl: String, imageView: ImageView, context: Context) {
             //lấy link ảnh trên storage
             var imageFromStorage = ""
             val scope = CoroutineScope(Dispatchers.Main)

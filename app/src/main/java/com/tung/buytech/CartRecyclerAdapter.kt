@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
+import com.tung.buytech.AppController.Companion.findProductImage
 import com.tung.buytech.AppController.Companion.reformatNumber
 import java.util.*
 
@@ -64,9 +65,7 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
         }
 
         private fun setProductImage(imageUrl: String) {
-            Glide.with(context)
-                .load(imageUrl)
-                .into(imageView)
+            findProductImage(imageUrl,imageView,context)
         }
 
         private fun setLabel(label: String) {
