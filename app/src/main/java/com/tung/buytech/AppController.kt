@@ -40,7 +40,7 @@ class AppController {
             val scope = CoroutineScope(Dispatchers.Main)
             scope.launch {
                 try {
-                    imageFromStorage = AppController.getDownloadUrl(imageUrl)
+                    imageFromStorage = getDownloadUrl(imageUrl)
                     // Proceed with the rest of the code, such as creating the `ProductView` instance
                     Log.d("ImageUrlSuccess", imageFromStorage)
                     Glide.with(context)

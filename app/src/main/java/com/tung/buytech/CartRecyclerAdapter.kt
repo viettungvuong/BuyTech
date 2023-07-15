@@ -3,6 +3,7 @@ package com.tung.buytech
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,6 +78,7 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
         }
 
         fun bind(product: AppController.Product) {
+            Log.d("Image",product.imageUrl)
             setProductImage(product.imageUrl)
             setLabel(product.name)
             setPrice(product.price)
