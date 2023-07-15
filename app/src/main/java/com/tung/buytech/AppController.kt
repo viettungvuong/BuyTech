@@ -4,8 +4,7 @@ import android.content.ContentValues.TAG
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,9 +14,14 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.tung.buytech.MainActivity.Companion.collectionProducts
+import com.tung.buytech.MainActivity.Companion.fieldImage
+import com.tung.buytech.MainActivity.Companion.fieldPrice
+import com.tung.buytech.MainActivity.Companion.fieldProduct
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
+import java.util.concurrent.Future
+import kotlin.collections.ArrayList
 import kotlin.coroutines.suspendCoroutine
 import kotlin.math.min
 
@@ -102,42 +106,33 @@ class AppController {
             }
         }
 
-        //completableFuture là đợi onSuccessListener rồi mới return
-        @RequiresApi(Build.VERSION_CODES.N)
-        fun bindProduct(productId: String): CompletableFuture<Product>{
-            //lấy document product
-            val getProduct = db.collection("products").document(productId)
-
-            val completableFuture=CompletableFuture<Product>()
-
-            getProduct.get().addOnSuccessListener {
-                documentSnapshot->
-                val productName=documentSnapshot["name"].toString()
-                val price=documentSnapshot["price"] as Long
-                val imageUrl=(documentSnapshot["image"] as ArrayList<String>).first()
-
-                val product=Product(productName,price,imageUrl,productId)
-
-                completableFuture.complete(product)
-            }
-
-            return completableFuture
-        }
-
         //cập nhật danh sách favorite
-        @RequiresApi(Build.VERSION_CODES.N)
         fun updateFavorite(){
+            print("Hello")
             val getFavorites = db.collection("favorites")
                 .document(Firebase.auth.currentUser!!.uid)
 
             getFavorites.get()
                 .addOnSuccessListener {
                     documentSnapshot->
-                    for (favoriteProductId in Arrays.asList(documentSnapshot["products"])){
+                    val productList = Arrays.asList(documentSnapshot["products"])
+                    print(productList)
+                    for (favoriteProductId in productList){
+                        print(favoriteProductId)
                         //với mỗi productId, ta sẽ bind
                         //chữ join là đổi từ CompletableFuture<Product> thành Product
-                        val currentFavorite= Favorite(bindProduct(favoriteProductId.toString()).join())
-                        favorites.add(currentFavorite)
+
+                        val getProduct = db.collection("products")
+                            .document(favoriteProductId as String)
+                        getProduct.get().addOnSuccessListener {
+                            documentSnapshot2->
+                            val productName=documentSnapshot2.getString(fieldProduct)
+                            val productPrice=documentSnapshot2.getLong(fieldPrice)
+                            val productImage=(documentSnapshot2.get(fieldImage) as ArrayList<String>).first()
+
+                            favorites.add(Favorite(productName!!,productPrice!!,favoriteProductId,productImage))
+                        }
+
                     }
             }
         }

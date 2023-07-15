@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var bottomNavigationHandler: BottomNavigationHandler
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
 
