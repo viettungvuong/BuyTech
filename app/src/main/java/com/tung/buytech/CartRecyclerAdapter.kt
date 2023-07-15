@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
+import com.tung.buytech.AppController.Companion.reformatNumber
 import java.util.*
 
 class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList<out AppController.Product>) :
@@ -72,14 +73,14 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
             labelTextView.text = label
         }
 
-        private fun setPrice(price: String) {
-            priceTextView.text = price
+        private fun setPrice(price: Long) {
+            priceTextView.text = reformatNumber(price).toString()+" VNĐ"
         }
 
         fun bind(product: AppController.Product) {
             setProductImage(product.imageUrl)
             setLabel(product.name)
-            setPrice(product.price.toString())
+            setPrice(product.price)
             //gán thông tin từ product vào ItemInCart (ItemInCart là layout_
             //ItemInCart là layout của holder
         }
