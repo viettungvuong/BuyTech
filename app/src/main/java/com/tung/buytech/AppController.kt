@@ -160,8 +160,7 @@ class AppController {
                             val productName=documentSnapshot2.getString(fieldProduct)
                             val productPrice=documentSnapshot2.getLong(fieldPrice)
                             val productImage=(documentSnapshot2.get(fieldImage) as ArrayList<String>).first()
-
-                            favorites.add(Favorite(productName!!,productPrice!!,favoriteProductId,productImage))
+                            favorites.add(Favorite(productName!!,productPrice!!,productImage,favoriteProductId))
                         }
 
                     }
