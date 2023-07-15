@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
@@ -16,15 +18,16 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
 
     //tạo view holder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(
+        val view = LayoutInflater.from(parent.context).inflate(
             R.layout.item_in_cart, //lấy layout item_in_cart làm view
-            parent
+            parent,false
         )
-        return CartViewHolder(itemView)
+        return CartViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val currentItem = itemList[position] //lấy vật ở vị trí thứ position trong list
+        holder.bind(currentItem)
         holder.itemView.setOnClickListener(
             View.OnClickListener {
                 //thêm on click Listener
@@ -37,7 +40,6 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
                 context.startActivity(intent) //mở intent
             }
         )
-        holder.bind(currentItem)
     }
 
     override fun getItemCount(): Int {
@@ -47,15 +49,37 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
 
     //class chứa sản phẩm trong cart
     //dùng viewHolder của recyclerView
-    inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CartViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        val itemInCart = itemView as ItemInCart
+        val imageView: ImageView
+        val labelTextView: TextView
+        val priceTextView: TextView
         //itemincart là class chứa view hiện thông tin sản phẩm
 
+        init{
+            imageView = view.findViewById(R.id.product_image)
+            labelTextView = view.findViewById(R.id.product_label)
+            priceTextView = view.findViewById(R.id.product_price)
+        }
+
+        private fun setProductImage(imageUrl: String) {
+            Glide.with(context)
+                .load(imageUrl)
+                .into(imageView)
+        }
+
+        private fun setLabel(label: String) {
+            labelTextView.text = label
+        }
+
+        private fun setPrice(price: String) {
+            priceTextView.text = price
+        }
+
         fun bind(product: AppController.Product) {
-            itemInCart.setProductImage(product.imageUrl)
-            itemInCart.setLabel(product.name)
-            itemInCart.setPrice(product.price.toString())
+            setProductImage(product.imageUrl)
+            setLabel(product.name)
+            setPrice(product.price.toString())
             //gán thông tin từ product vào ItemInCart (ItemInCart là layout_
             //ItemInCart là layout của holder
         }
