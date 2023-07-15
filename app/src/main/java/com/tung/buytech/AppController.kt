@@ -1,10 +1,13 @@
 package com.tung.buytech
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -96,12 +99,26 @@ class AppController {
             }
         }
 
+        //cập nhật danh sách favorite
+        fun updateFavorite(){
+            val getFavorites = db.collection("favorites")
+                .document(Firebase.auth.currentUser!!.uid)
+
+            getFavorites.get()
+                .addOnSuccessListener {
+                    documentSnapshot->
+                    for (favoriteProductId in Arrays.asList(documentSnapshot["products"])){
+                        //với mỗi productId, ta sẽ bind
+                    }
+            }
+        }
+
         @JvmStatic
         fun addToFavorite(favorites: LinkedList<Favorite>, favorite: Favorite) {
             favorites.add(favorite)
             //thêm vào danh sách favorites
 
-            // Add a new document with a generated id.
+            //tạo list từ product id của favorite
             val data = arrayListOf(
                 favorite.productId,
             )
@@ -111,9 +128,10 @@ class AppController {
                 "products" to data
             )
 
+            //lấy collection favorite từ database
+            //để add vào sau này
             val getFavorites =  db.collection("favorites")
                 .document(Firebase.auth.currentUser!!.uid)
-
 
 
            getFavorites //lấy document trên firebase

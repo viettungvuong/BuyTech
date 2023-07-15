@@ -24,4 +24,6 @@ class Favorites: AppCompatActivity() {
         bottomNavigationHandler=BottomNavigationHandler(this,navBar)
 
     }
+
+
 }
