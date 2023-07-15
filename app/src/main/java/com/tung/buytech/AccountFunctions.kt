@@ -15,11 +15,10 @@ import com.google.firebase.ktx.Firebase
 
 class AccountFunctions {
     companion object{
-        lateinit var auth: FirebaseAuth
 
         @JvmStatic
         fun signIn(activity: Activity, context: Context, username: String, password: String){
-            auth.signInWithEmailAndPassword(username, password)
+            Firebase.auth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener(activity) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
@@ -47,7 +46,7 @@ class AccountFunctions {
 
         @JvmStatic
         fun signUp(activity: Activity, context: Context, username: String, password: String){
-            auth.createUserWithEmailAndPassword(username, password)
+            Firebase.auth.createUserWithEmailAndPassword(username, password)
                 .addOnCompleteListener(activity) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information

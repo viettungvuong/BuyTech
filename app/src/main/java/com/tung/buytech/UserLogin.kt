@@ -18,14 +18,16 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.tung.buytech.AccountFunctions.Companion.auth
-
-
 class UserLogin : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         FirebaseApp.initializeApp(this)
-        val currentUser = auth.currentUser
+
+        val currentUser = Firebase.auth.currentUser
+
+        if (currentUser != null) {
+            Log.d("User",currentUser.email.toString())
+        }
         if (currentUser != null) {
             //đã đăng nhập rồi
             val intent=Intent(this,MainActivity::class.java)
@@ -37,7 +39,6 @@ class UserLogin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AccountFunctions.auth= Firebase.auth //initialize authentication thư viện
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_login)
