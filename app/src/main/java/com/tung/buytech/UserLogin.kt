@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView.OnEditorActionListener
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.FirebaseApp
@@ -29,6 +30,12 @@ class UserLogin : AppCompatActivity() {
             Log.d("User",currentUser.email.toString())
         }
         if (currentUser != null) {
+            Toast.makeText(
+                this,
+                "Đã đăng nhập thành công",
+                Toast.LENGTH_SHORT,
+            ).show()
+
             //đã đăng nhập rồi
             val intent=Intent(this,MainActivity::class.java)
             startActivity(intent)
