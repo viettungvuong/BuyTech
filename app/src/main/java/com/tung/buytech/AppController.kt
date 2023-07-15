@@ -109,20 +109,23 @@ class AppController {
         //cập nhật danh sách favorite
         fun updateFavorite(){
             print("Hello")
+
+            //lấy từ collection Favorites
             val getFavorites = db.collection("favorites")
                 .document(Firebase.auth.currentUser!!.uid)
 
             getFavorites.get()
                 .addOnSuccessListener {
                     documentSnapshot->
-                    val productList = Arrays.asList(documentSnapshot["products"])
+                    val productList = documentSnapshot.get("products") as ArrayList<String>
                     print(productList)
                     for (favoriteProductId in productList){
                         print(favoriteProductId)
                         //với mỗi productId, ta sẽ bind
                         //chữ join là đổi từ CompletableFuture<Product> thành Product
 
-                        val getProduct = db.collection("products")
+                        //Lấy collection Items
+                        val getProduct = db.collection("Items")
                             .document(favoriteProductId as String)
                         getProduct.get().addOnSuccessListener {
                             documentSnapshot2->
