@@ -43,7 +43,7 @@ class ViewProductMain : AppCompatActivity() {
         productPrice = findViewById(R.id.priceLabel)
         productDescription = findViewById(R.id.productDescription)
         productName.text = name
-        productPrice.text = AppController.reformatNumber(price)
+        productPrice.text = AppController.reformatNumber(price)+" VNĐ"
 
         //đặt hình ảnh sản phẩm
         val imgView = findViewById<ImageView>(R.id.imageView)
@@ -63,8 +63,12 @@ class ViewProductMain : AppCompatActivity() {
         val favoriteBtn = findViewById<Button>(R.id.buttonFavorite)
 
         purchaseBtn.setOnClickListener { v: View? ->
+            //val mapFragment = supportFragmentManager.findFragmentById(R.id.favorite)
+            //lấy fragment từ supportFragmentManager (fragment này ở trong layout)
+
             val purchaseScreen = PurchaseScreen(this, currentProduct!!)
             purchaseScreen.show(supportFragmentManager, "purchase_screen") //hiện fragment
+            //static fragment
         }
 
         favoriteBtn.setOnClickListener { v: View? ->
@@ -97,10 +101,8 @@ class ViewProductMain : AppCompatActivity() {
                     )
                     descriptionText.text = document["description"].toString() //set text
                 } else {
-                    Log.d("Docnodoc", "No such document")
                 }
             } else {
-                Log.d("Docfailed", "get failed with ", task.exception)
             }
         }
     }

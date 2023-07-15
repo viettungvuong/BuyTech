@@ -1,11 +1,9 @@
 package com.tung.buytech
 
-import android.content.ContentValues.TAG
 import android.util.Log
-import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -14,7 +12,6 @@ import com.google.firebase.storage.ktx.storage
 import com.tung.buytech.MainActivity.Companion.collectionProducts
 import java.util.*
 import java.util.concurrent.Executors
-import kotlin.collections.ArrayList
 import kotlin.coroutines.suspendCoroutine
 import kotlin.math.min
 
@@ -28,12 +25,18 @@ class AppController {
         @JvmStatic
         lateinit var autoComplete: AutoComplete
 
-        lateinit var favorites: ArrayList<Favorite>
+        @JvmStatic
+        var favorites = LinkedList<Favorite>()
 
-        var updateThreads =  Executors.newSingleThreadScheduledExecutor()
+        @JvmStatic
+        var cart = LinkedList<Product>() //giỏ hàng
+
+        @JvmStatic
+        var updateThreads = Executors.newSingleThreadScheduledExecutor()
         //thread pool
 
-        @JvmStatic fun getDatabaseInstance(): FirebaseFirestore {
+        @JvmStatic
+        fun getDatabaseInstance(): FirebaseFirestore {
             return this.db
         }
 
@@ -55,9 +58,9 @@ class AppController {
                 val end = min(n + 1, i + 1)
                 val s = moneyString.substring(start, end)
                 strings.add(s)
-                Log.d("Number",strings[strings.size-1])
+                Log.d("Number", strings[strings.size - 1])
                 strings.add(",")
-                Log.d("Comma",strings[strings.size-1])
+                Log.d("Comma", strings[strings.size - 1])
             }
 
             if (strings[strings.size - 1] == ",") {
@@ -66,12 +69,12 @@ class AppController {
 
             strings.reverse() //đảo ngược mảng
 
-            moneyString=""
+            moneyString = ""
 
-            for (i in 0..strings.size-1){
-                moneyString+=strings[i]
+            for (i in 0..strings.size - 1) {
+                moneyString += strings[i]
             }
-            Log.d("MoneyString",moneyString)
+            Log.d("MoneyString", moneyString)
             return moneyString;
             //gio ta phai cho no xuat dung chieu
         }
@@ -94,76 +97,118 @@ class AppController {
         }
 
         @JvmStatic
-        fun addToFavorite(favorites: ArrayList<Favorite>, favorite: Favorite){
+        fun addToFavorite(favorites: LinkedList<Favorite>, favorite: Favorite) {
             favorites.add(favorite)
             //thêm vào danh sách favorites
 
             // Add a new document with a generated id.
-            val data = hashMapOf(
-                "id" to favorite.productId,
+            val data = arrayListOf(
+                favorite.productId,
+            )
+            //tạo field cho products
+            //data là arrayList
+            val createField = hashMapOf(
+                "products" to data
             )
 
-            db.collection("Favorites")
-                .document(Firebase.auth.currentUser!!.uid) //chỗ này đặt tên cái userid
-                .set(data)
-                .addOnSuccessListener { documentReference ->
-                }
-                .addOnFailureListener { e ->
-                }
+            val getFavorites =  db.collection("favorites")
+                .document(Firebase.auth.currentUser!!.uid)
+
+
+
+           getFavorites //lấy document trên firebase
+                .get()
+                .addOnCompleteListener(OnCompleteListener {
+                    task->if (task.isSuccessful()) {
+                        val document=task.result
+                        if (document!=null){
+                            if (document.exists()){
+                                if (document.contains("products")){
+                                    //nếu có field Products
+                                    getFavorites.update("products", FieldValue.arrayUnion(arrayOf(data)))
+                                }
+                                else{
+
+                                    getFavorites.set(createField)
+                                }
+                            }
+                            else{
+                                getFavorites.set(createField)
+                            }
+                        }
+                    }
+                })
         }
 
     }
 
-    open class Product(name: String, price: Long, imageUrl: String, productId: String ){
+    open class Product(name: String, price: Long, imageUrl: String, productId: String) :
+        java.io.Serializable {
         public var name: String = name
         public var price: Long = price
         public var imageUrl: String = imageUrl
-        public var productId: String= productId
+        public var productId: String = productId
         //khúc này là constructor của class
         //ktra thong tin mat hang
         //observer design pattern
-        fun updateStatus(){
-            val docRef = db.collection(collectionProducts).document(productId)
-            docRef.addSnapshotListener{
-                    snapshot,e->
-                if (snapshot!=null&&snapshot.exists()){
-                    val inStock = Integer.parseInt(snapshot.getString("In stock"))
-                    var sold= false
-                    if (inStock>0){
-                        sold=true //đã bán hết sản phẩm
+
+        public var sold = false //đã bán hay chưa
+
+        fun updateSoldStatus(callback: () -> Unit) {
+            val docRef = db.collection(collectionProducts).document(productId).get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val document = task.result
+                        if (document.exists()) {
+                            val inStock = Integer.parseInt(document.getString("stock"))
+
+                            if (inStock > 0) {
+                                this.sold = true //đã bán hết sản phẩm
+                            }
+                        }
                     }
 
                 }
-            }
         }
     }
 
     //inheritance
-    class Favorite(name: String, price: Long, imageFile: String, productId: String): Product(name,price,imageFile,productId){
-        constructor(product: Product) : this(product.name,product.price,product.imageUrl,product.productId) {
+    class Favorite(name: String, price: Long, imageFile: String, productId: String) :
+        Product(name, price, imageFile, productId) {
+        constructor(product: Product) : this(
+            product.name,
+            product.price,
+            product.imageUrl,
+            product.productId
+        ) {
             //constructor thứ hai của class
         }
 
-        fun notifyMe(){
+        fun notifyMe() {
             //thông báo khi hết hàng
-            var notification = "Mặt hàng đã hết :("
+            updateSoldStatus() {
+                if (sold) {
+                    var notification = "Mặt hàng đã hết :("
+                    //nếu đã hết hàng thì thông báo
+                }
+
+            } //dùng hàm callback để khi nào xong rồi mới báo
 
         }
     }
-
 
 
     //thread java
     //thread để kiểm tra tình trạng món hàng
-    class UpdateThread: Runnable{
+    class UpdateThread : Runnable {
         public override fun run() {
-           //threadpool
+            //threadpool
 
         }
 
     }
 
-    fun buy(){
+    fun buy() {
         //hiện purchase screen
     }
 
@@ -217,9 +262,18 @@ class AppController {
         }
 
         //khi xoá kí tự thì autocomplete bằng cách pop stack
-        fun autoCompleteRemove(): ArrayList<String>{
+        fun autoCompleteRemove(): ArrayList<String> {
             return stackAutoComplete.pop() //lấy từ stack ra
         }
     }
+
+    class People(userId: String) {
+
+    }
+
+    class Message(content: String, a: People, b: People) {
+
+    }
+
 
 }

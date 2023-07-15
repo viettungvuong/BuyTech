@@ -22,6 +22,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -29,7 +30,7 @@ import com.google.firebase.ktx.Firebase
 
 class UserPage : AppCompatActivity() {
 
-
+    lateinit var bottomNavigationHandler: BottomNavigationHandler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_page);
@@ -70,6 +71,10 @@ class UserPage : AppCompatActivity() {
                 }
             }
         )
+
+        var navBar=findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationHandler=BottomNavigationHandler(this,navBar)
+
     }
 
     //show một dialog để đổi password

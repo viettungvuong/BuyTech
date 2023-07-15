@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         return collectionProducts
     }
 
+    lateinit var bottomNavigationHandler: BottomNavigationHandler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
 
@@ -71,38 +73,13 @@ class MainActivity : AppCompatActivity() {
         )
 
         var navBar = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        navBar.setOnItemSelectedListener { item ->
-            // do stuff
-            when (item.itemId) {
-                R.id.home -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.cart -> {
-                    val intent = Intent(this, Cart::class.java)
-                    startActivity(intent)
-                }
-                R.id.favorite -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.sell -> {
-                    val intent = Intent(this, SellPage::class.java)
-                    startActivity(intent)
-                }
-                R.id.account -> {
-                    val intent = Intent(this, UserPage::class.java)
-                    startActivity(intent)
-                }
-            }
-
-            return@setOnItemSelectedListener true
-        }
+        bottomNavigationHandler=BottomNavigationHandler(this,navBar)
     }
 
     fun search(productName: String, db: FirebaseFirestore) {
-        var grid = suggestedProductsGrid()
+        var grid =  findViewById<GridLayout>(R.id.suggestedProducts)
 
+        //search và thêm vào grid
         suggestions(productName, db, grid)
     }
 
@@ -130,10 +107,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun suggestedProductsGrid(): GridLayout {
-        return findViewById(R.id.suggestedProducts)
-    }
-
+    //productview là hiện tóm tắt thông tin sản phẩm sau khi tìm kiếm
     fun productView(document: QueryDocumentSnapshot): ProductView {
         //đặt các thông tin cho productview
 
