@@ -1,9 +1,12 @@
 package com.tung.buytech
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.os.Build
 import android.util.Log
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
@@ -17,6 +20,9 @@ import com.tung.buytech.MainActivity.Companion.collectionProducts
 import com.tung.buytech.MainActivity.Companion.fieldImage
 import com.tung.buytech.MainActivity.Companion.fieldPrice
 import com.tung.buytech.MainActivity.Companion.fieldProduct
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
@@ -27,6 +33,28 @@ import kotlin.math.min
 
 class AppController {
     companion object {
+        @JvmStatic
+        fun setProductImage(imageUrl: String, imageView: ImageView, context: Context) {
+            //lấy link ảnh trên storage
+            var imageFromStorage = ""
+            val scope = CoroutineScope(Dispatchers.Main)
+            scope.launch {
+                try {
+                    imageFromStorage = AppController.getDownloadUrl(imageUrl)
+                    // Proceed with the rest of the code, such as creating the `ProductView` instance
+                    Log.d("ImageUrlSuccess", imageFromStorage)
+                    Glide.with(context)
+                        .load(imageFromStorage)
+                        .into(imageView)
+                    // Continue with the rest of the code, e.g., create `ProductView` instance
+                } catch (exception: Exception) {
+                    // Handle the exception if download URL retrieval fails
+                    println("Error retrieving download URL: ${exception.message}")
+                }
+            }
+
+        }
+
         @JvmField
         val productList: LinkedList<Product> = LinkedList()
         var db = Firebase.firestore

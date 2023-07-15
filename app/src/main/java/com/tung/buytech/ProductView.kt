@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.tung.buytech.AppController.Companion.setProductImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,7 +47,10 @@ class ProductView @JvmOverloads constructor(
 
         productPrice=product.price
 
-        setProductImage(product.imageUrl)
+        //đặt hình ảnh
+        this.imageUrl=imageUrl
+        setProductImage(product.imageUrl, imageView, context)
+
         setPrice(AppController.reformatNumber(product.price)+" VNĐ")
         setId(product.productId)
         setLabel(product.name)
@@ -54,28 +58,7 @@ class ProductView @JvmOverloads constructor(
         listener=clickProduct()
     }
 
-    fun setProductImage(imageUrl: String) {
-        this.imageUrl=imageUrl
 
-        //lấy link ảnh trên storage
-        var imageFromStorage = ""
-        val scope = CoroutineScope(Dispatchers.Main)
-        scope.launch {
-            try {
-                imageFromStorage = AppController.getDownloadUrl(imageUrl)
-                // Proceed with the rest of the code, such as creating the `ProductView` instance
-                Log.d("ImageUrlSuccess", imageFromStorage)
-                Glide.with(context)
-                    .load(imageFromStorage)
-                    .into(imageView)
-                // Continue with the rest of the code, e.g., create `ProductView` instance
-            } catch (exception: Exception) {
-                // Handle the exception if download URL retrieval fails
-                println("Error retrieving download URL: ${exception.message}")
-            }
-        }
-
-    }
 
     fun setLabel(label: String) {
         productName=label
