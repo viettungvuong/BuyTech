@@ -3,6 +3,7 @@ package com.tung.buytech
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Button
 import android.widget.GridLayout
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.internal.ViewUtils.hideKeyboard
@@ -26,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.rpc.Help.Link
 import com.tung.buytech.AppController.Companion.db
 import com.tung.buytech.AppController.Companion.getDatabaseInstance
+import com.tung.buytech.AppController.Companion.updateFavorite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var bottomNavigationHandler: BottomNavigationHandler
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
 
@@ -74,6 +78,8 @@ class MainActivity : AppCompatActivity() {
 
         var navBar = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationHandler=BottomNavigationHandler(this,navBar)
+
+        updateFavorite() //cập nhật danh sách favorite
     }
 
     fun search(productName: String, db: FirebaseFirestore) {
