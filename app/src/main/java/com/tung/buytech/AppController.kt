@@ -125,6 +125,7 @@ class AppController {
         }
 
         //cập nhật danh sách favorite
+        @RequiresApi(Build.VERSION_CODES.N)
         fun updateFavorite(){
             val getFavorites = db.collection("favorites")
                 .document(Firebase.auth.currentUser!!.uid)
@@ -134,6 +135,9 @@ class AppController {
                     documentSnapshot->
                     for (favoriteProductId in Arrays.asList(documentSnapshot["products"])){
                         //với mỗi productId, ta sẽ bind
+                        //chữ join là đổi từ CompletableFuture<Product> thành Product
+                        val currentFavorite= Favorite(bindProduct(favoriteProductId.toString()).join())
+                        favorites.add(currentFavorite)
                     }
             }
         }
