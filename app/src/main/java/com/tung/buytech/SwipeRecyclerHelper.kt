@@ -2,14 +2,12 @@ package com.tung.buytech
 
 import android.content.Context
 import android.graphics.*
-import android.os.Build
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.tung.buytech.AppController.Companion.favorites
+import kotlin.math.roundToInt
 
 
 class SwipeRecyclerHelper(adapter: CartRecyclerAdapter, context: Context): ItemTouchHelper.Callback() {
@@ -59,15 +57,26 @@ class SwipeRecyclerHelper(adapter: CartRecyclerAdapter, context: Context): ItemT
             val height = itemView.height
             val width = itemView.width
 
-            val p = Paint()
-            p.color= Color.RED
-            val background = RectF(itemView.right.toFloat() + dX/3, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
-            c.drawRect(background, p) //đặt màu đỏ
+            val ratio = (dX/3).roundToInt()
+
+            val background=ColorDrawable()
+            background.color=Color.RED
+            background.setBounds(itemView.right + ratio, itemView.top, itemView.right, itemView.bottom)
+            background.draw(c)
+
             val icon = AppCompatResources.getDrawable(context,R.drawable.remove)
-            print("Icon:"+icon)
-            val margin = (dX / 5 - width) / 2
-            val iconDest = RectF(itemView.right.toFloat() + margin, itemView.top.toFloat() + width, itemView.right.toFloat() + (margin + width), itemView.bottom.toFloat() - width)
-            icon!!.draw(c)
+
+            val intrinsicWidth = icon!!.getIntrinsicWidth();
+            val intrinsicHeight = icon!!.getIntrinsicHeight();
+            val deleteIconTop: Int = itemView.top + (height - intrinsicHeight) / 2
+            val deleteIconMargin: Int = (height - intrinsicHeight) / 2
+            val deleteIconLeft: Int = itemView.right - deleteIconMargin - intrinsicWidth
+            val deleteIconRight = itemView.right - deleteIconMargin
+            val deleteIconBottom: Int = deleteIconTop + intrinsicHeight
+
+            icon.setBounds(deleteIconLeft,deleteIconTop,deleteIconRight,deleteIconBottom)
+            icon.setTint(Color.WHITE)
+            icon.draw(c)
         }
 
         //dX/5 nghĩa là ta vuốt 1/5 chiều dài là khoảng nhỏ nhất để nhận sự kiện
