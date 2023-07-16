@@ -1,13 +1,16 @@
 package com.tung.buytech
 
-import android.graphics.Canvas
+import android.content.Context
+import android.graphics.*
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-class SwipeRecyclerHelper(adapter: CartRecyclerAdapter): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+class SwipeRecyclerHelper(adapter: CartRecyclerAdapter, context: Context): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
     lateinit var adapter: CartRecyclerAdapter
+    lateinit var context: Context
     init {
         this.adapter=adapter
+        this.context=context
     }
     override fun onMove(
         recyclerView: RecyclerView,
@@ -36,7 +39,21 @@ class SwipeRecyclerHelper(adapter: CartRecyclerAdapter): ItemTouchHelper.SimpleC
     ) {
         //nếu ta swipe
         if (actionState==ItemTouchHelper.ACTION_STATE_SWIPE){
-            val view = viewHolder.itemView
+            val itemView = viewHolder.itemView
+            val height = itemView.height
+            val width = itemView.width
+
+            val p = Paint()
+            p.color= Color.RED
+            val background = RectF(itemView.right.toFloat() + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
+            c.drawRect(background, p) //đặt màu đỏ
+            val icon = BitmapFactory.decodeResource(context.resources, R.drawable.remove)
+            val margin = (dX / 5 - width) / 2
+            val iconDest = RectF(itemView.right.toFloat() + margin, itemView.top.toFloat() + width, itemView.right.toFloat() + (margin + width), itemView.bottom.toFloat() - width)
+            c.drawBitmap(icon, null, iconDest, p)
         }
+
+        //dX/5 nghĩa là ta vuốt 1/5 chiều dài là khoảng nhỏ nhất để nhận sự kiện
+        super.onChildDraw(c, recyclerView, viewHolder, dX/5, dY, actionState, isCurrentlyActive)
     }
 }
