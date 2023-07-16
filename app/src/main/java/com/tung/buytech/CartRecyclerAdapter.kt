@@ -62,7 +62,7 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
             R.layout.item_in_cart, //lấy layout item_in_cart làm view
             parent,false
         )
-        return CartViewHolder(view)
+        return CartViewHolder(view) //trả về cart view holder ứng với layout
     }
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
