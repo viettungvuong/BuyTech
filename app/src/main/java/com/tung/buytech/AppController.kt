@@ -134,6 +134,21 @@ class AppController {
             }
         }
 
+        fun removeFavorite(favorite: Favorite){
+            if (favorites.contains(favorite)){
+                favorites.remove(favorite) //xoá favorite ra khỏi danh sách
+            }
+
+            //xoá trên firebase
+            val docRef = db.collection("favorites").document(Firebase.auth.currentUser!!.uid)
+
+            val deleteProduct = hashMapOf<String, Any>(
+                "products" to FieldValue.arrayRemove(favorite.productId)
+            )
+
+            docRef.update(deleteProduct) 
+        }
+
         //cập nhật danh sách favorite
         fun updateFavorite(){
             print("Hello")
