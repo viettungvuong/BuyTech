@@ -3,10 +3,13 @@ package com.tung.buytech
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.tung.buytech.AppController.Companion.favorites
+import com.tung.buytech.AppController.Companion.removeFavorite
 import kotlin.math.roundToInt
 
 
@@ -34,8 +37,15 @@ class SwipeRecyclerHelper(adapter: CartRecyclerAdapter, context: Context): ItemT
         //vi tri adapter position cua mot item trong recycler view
 
         //removeFromFavorite
+        removeFavorite(position)
         adapter.notifyItemRemoved(position)
         adapter.notifyItemRangeChanged(position,favorites.size-position)
+        viewHolder.itemView.visibility= View.GONE
+        Toast.makeText(
+            context,
+            "Đã xoá khỏi danh sách yêu thích",
+            Toast.LENGTH_SHORT,
+        ).show()
         //thông báo với adapter là đã xoá
 
         //bây giờ xoá phần tử
