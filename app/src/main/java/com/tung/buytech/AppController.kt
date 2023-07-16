@@ -181,19 +181,19 @@ class AppController {
             }
         }
 
+        //thêm vào favorites
         @JvmStatic
         fun addToFavorite(favorites: LinkedList<Favorite>, favorite: Favorite) {
             favorites.add(favorite)
             //thêm vào danh sách favorites
 
             //tạo list từ product id của favorite
+            //cái này chỉ để khi mà chưa document hoặc chưa có field products trong document
             val data = arrayListOf(
                 favorite.productId,
             )
-            //tạo field cho products
-            //data là arrayList
             val createField = hashMapOf(
-                "products" to data
+                "products" to data //tạo field cho products
             )
 
             //lấy collection favorite từ database
@@ -209,17 +209,19 @@ class AppController {
                         val document=task.result
                         if (document!=null){
                             if (document.exists()){
+                                //nếu có field products rồi
                                 if (document.contains("products")){
                                     //nếu có field Products
-                                    getFavorites.update("products", FieldValue.arrayUnion(arrayOf(data)))
+                                    getFavorites.update("products", FieldValue.arrayUnion(favorite.productId))
                                 }
                                 else{
-
                                     getFavorites.set(createField)
+                                    //nếu không có field products
                                 }
                             }
                             else{
                                 getFavorites.set(createField)
+                                //nếu không có document
                             }
                         }
                     }

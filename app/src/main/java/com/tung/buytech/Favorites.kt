@@ -21,6 +21,7 @@ class Favorites: AppCompatActivity() {
         bottomNavigationHandler = BottomNavigationHandler(this, navBar)
 
         if (favorites.isEmpty()){
+            //nếu favorite empty thì mới hiện
             supportFragmentManager.beginTransaction()
                 .add(R.id.container,EmptyFavoriteFragment::class.java,null)
                 .commit() //thêm vào supportFragmentManager
