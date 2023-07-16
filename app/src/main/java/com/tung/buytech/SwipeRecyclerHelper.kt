@@ -5,12 +5,16 @@ import android.graphics.*
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-class SwipeRecyclerHelper(adapter: CartRecyclerAdapter, context: Context): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+class SwipeRecyclerHelper(adapter: CartRecyclerAdapter, context: Context): ItemTouchHelper.Callback() {
     lateinit var adapter: CartRecyclerAdapter
     lateinit var context: Context
     init {
         this.adapter=adapter
         this.context=context
+    }
+    override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+        val swipeFlags = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        return makeMovementFlags(0, swipeFlags)
     }
     override fun onMove(
         recyclerView: RecyclerView,
@@ -26,8 +30,11 @@ class SwipeRecyclerHelper(adapter: CartRecyclerAdapter, context: Context): ItemT
 
         adapter.notifyItemChanged(position)
         //thông báo với adapter là có thay đổi ở vị trí
+
+        //bây giờ xoá phần tử
     }
 
+    //để khi vuốt thì nó sẽ vẽ một phần màu đỏ để bấm xoá
     override fun onChildDraw(
         c: Canvas,
         recyclerView: RecyclerView,

@@ -18,6 +18,8 @@ class Favorites: AppCompatActivity() {
         val recyclerView=findViewById<RecyclerView>(R.id.favRecyclerView)
         recyclerView.layoutManager = layoutManager
         val adapter=CartRecyclerAdapter(this,AppController.favorites)
+        val swipeHelper = SwipeRecyclerHelper(adapter,this)
+        swipeHelper.
         recyclerView.adapter=adapter
 
         var navBar=findViewById<BottomNavigationView>(R.id.bottom_navigation)
