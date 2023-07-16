@@ -1,5 +1,6 @@
 package com.tung.buytech
 
+import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
@@ -21,6 +22,21 @@ class SwipeRecyclerHelper(adapter: CartRecyclerAdapter): ItemTouchHelper.SimpleC
         //vi tri adapter position cua mot item trong recycler view
 
         adapter.notifyItemChanged(position)
-        //thong bao co thay doi
+        //thông báo với adapter là có thay đổi ở vị trí
+    }
+
+    override fun onChildDraw(
+        c: Canvas,
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        dX: Float,
+        dY: Float,
+        actionState: Int,
+        isCurrentlyActive: Boolean
+    ) {
+        //nếu ta swipe
+        if (actionState==ItemTouchHelper.ACTION_STATE_SWIPE){
+            val view = viewHolder.itemView
+        }
     }
 }

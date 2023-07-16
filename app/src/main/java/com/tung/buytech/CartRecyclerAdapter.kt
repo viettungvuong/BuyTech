@@ -19,39 +19,8 @@ import java.util.*
 class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList<out AppController.Product>) :
     RecyclerView.Adapter<CartRecyclerAdapter.CartViewHolder>() {
 
-    //tạo view holder
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_in_cart, //lấy layout item_in_cart làm view
-            parent,false
-        )
-        return CartViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
-        val currentItem = itemList[position] //lấy vật ở vị trí thứ position trong list
-        holder.bind(currentItem)
-        holder.itemView.setOnClickListener(
-            View.OnClickListener {
-                //thêm on click Listener
-                val product =  itemList[position]
-                val intent: Intent= Intent(context,ViewProductMain::class.java)
-                intent.putExtra("ProductName",product.name)
-                intent.putExtra("ProductPrice",product.price)
-                intent.putExtra("ProductId",product.productId)
-                intent.putExtra("ProductImage",product.imageUrl)
-                context.startActivity(intent) //mở intent
-            }
-        )
-    }
-
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
-
-
-    //class chứa sản phẩm trong cart
-    //dùng viewHolder của recyclerView
+    //class hiển thị sản phẩm trong cart
+    //kế thừa viewHolder của recyclerView
     inner class CartViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val imageView: ImageView
@@ -86,5 +55,38 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
             //ItemInCart là layout của holder
         }
     }
+
+    //tạo view holder
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(
+            R.layout.item_in_cart, //lấy layout item_in_cart làm view
+            parent,false
+        )
+        return CartViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
+        val currentItem = itemList[position] //lấy vật ở vị trí thứ position trong list
+        holder.bind(currentItem)
+        holder.itemView.setOnClickListener(
+            View.OnClickListener {
+                //thêm on click Listener
+                val product =  itemList[position]
+                val intent: Intent= Intent(context,ViewProductMain::class.java)
+                intent.putExtra("ProductName",product.name)
+                intent.putExtra("ProductPrice",product.price)
+                intent.putExtra("ProductId",product.productId)
+                intent.putExtra("ProductImage",product.imageUrl)
+                context.startActivity(intent) //mở intent
+            }
+        )
+    }
+
+    override fun getItemCount(): Int {
+        return itemList.size
+    }
+
+
+
 
 }
