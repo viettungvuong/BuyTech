@@ -54,7 +54,7 @@ class SwipeRecyclerHelper(adapter: CartRecyclerAdapter, context: Context): ItemT
 
             val p = Paint()
             p.color= Color.RED
-            val background = RectF(itemView.right.toFloat() + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
+            val background = RectF(itemView.right.toFloat() + dX/5, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
             c.drawRect(background, p) //đặt màu đỏ
             val icon =
                 AppCompatResources.getDrawable(context, R.drawable.remove)?.toBitmap()
