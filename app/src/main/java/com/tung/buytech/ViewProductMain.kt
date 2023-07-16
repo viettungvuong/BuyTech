@@ -11,6 +11,7 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.bumptech.glide.Glide
 import com.tung.buytech.AppController.Companion.addToFavorite
+import com.tung.buytech.AppController.Companion.findProductImage
 import com.tung.buytech.AppController.Companion.getDatabaseInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,11 +27,12 @@ class ViewProductMain : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_product)
 
-        val intent = intent
+        val intent = getIntent()
         val name = intent.getStringExtra("ProductName")!!
         val price = intent.getLongExtra("ProductPrice",0)
         val productId = intent.getStringExtra("ProductId")!!
         val productImage = intent.getStringExtra("ProductImage")!!
+        Log.d("ImageUrl",productImage)
 
         //tạo product tương ứng
         currentProduct=AppController.Product(name,price,productImage,productId)
@@ -47,7 +49,7 @@ class ViewProductMain : AppCompatActivity() {
 
         //đặt hình ảnh sản phẩm
         val imgView = findViewById<ImageView>(R.id.imageView)
-        getImage(productImage, imgView)
+        findProductImage(productImage, imgView, this)
 
         //mô tả sản phẩm
         getDescription(productId, productDescription) //lấy mô tả sản phẩm
@@ -107,25 +109,5 @@ class ViewProductMain : AppCompatActivity() {
         }
     }
 
-    //đặt hình ảnh
-    fun getImage(imageUrl: String, imageView: ImageView) {
 
-        //lấy link ảnh trên storage
-        var imageFromStorage = ""
-        val scope = CoroutineScope(Dispatchers.Main)
-        scope.launch {
-            try {
-                imageFromStorage = AppController.getDownloadUrl(imageUrl)
-                // Proceed with the rest of the code, such as creating the `ProductView` instance
-                Log.d("ImageUrlSuccess", imageFromStorage)
-                Glide.with(this@ViewProductMain)
-                    .load(imageFromStorage)
-                    .into(imageView)
-                // Continue with the rest of the code, e.g., create `ProductView` instance
-            } catch (exception: Exception) {
-                // Handle the exception if download URL retrieval fails
-                println("Error retrieving download URL: ${exception.message}")
-            }
-        }
-    }
 }

@@ -131,6 +131,7 @@ class MainActivity : AppCompatActivity() {
 
 
         var product = AppController.Product(name, price, imageUrl, id)
+        Log.d("BeforeImageUrl1",imageUrl)
         val res = ProductView(this, product)
         return res
     }

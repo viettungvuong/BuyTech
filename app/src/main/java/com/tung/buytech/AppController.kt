@@ -237,7 +237,6 @@ class AppController {
         public var imageUrl: String = imageUrl
         public var productId: String = productId
         //khúc này là constructor của class
-        //ktra thong tin mat hang
         //observer design pattern
 
         public var sold = false //đã bán hay chưa

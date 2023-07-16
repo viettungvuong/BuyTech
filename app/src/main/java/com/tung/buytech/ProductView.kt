@@ -25,12 +25,7 @@ class ProductView @JvmOverloads constructor(
     private val labelTextView: TextView
     private val priceTextView: TextView
 
-    private var productName: String=""
-    private var productPrice: Long=0
-
-    private var productId: String=""
-    private var imageUrl: String=""
-
+    lateinit var currentProduct: AppController.Product
 
     private var listener: OnClickListener? = null //thêm listener để productView bấm được
     init {
@@ -38,22 +33,21 @@ class ProductView @JvmOverloads constructor(
         // Inflate the layout for the custom view
         LayoutInflater.from(context).inflate(R.layout.product_view, this, true)
 
-        val currentProduct = product
+
+        currentProduct=product
 
         // Get references to the child views
         imageView = findViewById(R.id.product_image)
         labelTextView = findViewById(R.id.product_label)
         priceTextView = findViewById(R.id.product_price)
 
-        productPrice=product.price
 
         //đặt hình ảnh
-        this.imageUrl=imageUrl
-        findProductImage(product.imageUrl, imageView, context)
+        findProductImage(currentProduct.imageUrl, imageView, context)
 
-        setPrice(AppController.reformatNumber(product.price)+" VNĐ")
-        setId(product.productId)
-        setLabel(product.name)
+        setPrice(AppController.reformatNumber(currentProduct.price)+" VNĐ")
+        setId(currentProduct.productId)
+        setLabel(currentProduct.name)
 
         listener=clickProduct()
     }
@@ -61,7 +55,7 @@ class ProductView @JvmOverloads constructor(
 
 
     fun setLabel(label: String) {
-        productName=label
+
         labelTextView.text = label
     }
 
@@ -71,7 +65,7 @@ class ProductView @JvmOverloads constructor(
 
 
     fun setId(id: String){
-        productId=id
+
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
@@ -97,10 +91,10 @@ class ProductView @JvmOverloads constructor(
     fun clickProduct(): OnClickListener{
         return View.OnClickListener {
             val intent: Intent= Intent(context,ViewProductMain::class.java)
-            intent.putExtra("ProductName",productName)
-            intent.putExtra("ProductPrice",productPrice)
-            intent.putExtra("ProductId",productId)
-            intent.putExtra("ProductImage",imageUrl)
+            intent.putExtra("ProductName",currentProduct.name)
+            intent.putExtra("ProductPrice",currentProduct.price)
+            intent.putExtra("ProductId",currentProduct.productId)
+            intent.putExtra("ProductImage",currentProduct.imageUrl)
             context.startActivity(intent) //mở intent
         }
     }
