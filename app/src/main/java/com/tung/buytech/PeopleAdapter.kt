@@ -5,7 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.tung.buytech.AppController.Companion.messageFromUsers
+import com.tung.buytech.ChatFunctions.Companion.getMostRecentMessage
+import com.tung.buytech.ChatFunctions.Companion.messageFromUsers
 import java.util.*
 
 class PeopleAdapter(private val list: LinkedList<AppController.People>): RecyclerView.Adapter<PeopleAdapter.PeopleHolder>()  {
@@ -20,7 +21,7 @@ class PeopleAdapter(private val list: LinkedList<AppController.People>): Recycle
         }
         fun bind(people: AppController.People){
             chatName.text=people.name
-            ChatMain.getMostRecentMessage(messageFromUsers,people,{lastMessageContent,lastTimestamp->
+            getMostRecentMessage(messageFromUsers,people,{lastMessageContent,lastTimestamp->
                 lastMessage.text=lastMessageContent
                 lastSent.text=lastTimestamp
             })

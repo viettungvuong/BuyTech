@@ -61,8 +61,7 @@ class AppController {
         var db = Firebase.firestore
         val storageRef = Firebase.storage.reference
 
-        @JvmStatic
-        var messageFromUsers=db.collection("message"+Firebase.auth.currentUser!!.uid)
+
 
         @JvmStatic
         lateinit var autoComplete: AutoComplete

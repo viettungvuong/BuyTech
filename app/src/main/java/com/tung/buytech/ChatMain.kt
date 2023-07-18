@@ -3,6 +3,7 @@ package com.tung.buytech
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
@@ -14,24 +15,13 @@ import com.tung.buytech.AppController.Companion.db
 import com.tung.buytech.AppController.Companion.messageFromUsers
 
 class ChatMain : AppCompatActivity() {
-    companion object{
-        @JvmStatic
-        //lấy tin nhắn gần nhất
-        fun getMostRecentMessage(messages: CollectionReference, people: AppController.People, callback: (String, String) -> Unit){
-            messages.orderBy("timestamp", Query.Direction.DESCENDING).limit(1)
-                .get() //lấy tin nhắn mới nhất
-                .addOnSuccessListener {
-                        querySnapshot->
-                    if (!querySnapshot.isEmpty){
-                        val lastDocument = querySnapshot.documents[0] //document chứa tin nhắn gần nhất
-                        callback(lastDocument.getString("content").toString(),lastDocument.getString("timestamp").toString()) //gọi callback
-                    }
-                }
-        }
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_main)
+
+        val messagesRecyclerView=findViewById<RecyclerView>(R.id.messagesList)
+        //val messageAdapter=PeopleAdapter(people)
 
         messageFromUsers.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -48,7 +38,6 @@ class ChatMain : AppCompatActivity() {
                 Log.d("Lỗi","Lỗi")
             }
         }
-
     }
 
     //lấy danh sách tất cả người đã nhắn
