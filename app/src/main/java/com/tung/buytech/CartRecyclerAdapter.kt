@@ -26,7 +26,7 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
         val imageView: ImageView
         val labelTextView: TextView
         val priceTextView: TextView
-        //itemincart là class chứa view hiện thông tin sản phẩm
+        //mọi thứ trong đây sẽ được bind vào biến view (ta đã inflate trong onCreateViewHolder)
 
         init{
             imageView = view.findViewById(R.id.product_image)
@@ -59,7 +59,7 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
     //tạo view holder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_in_cart, //lấy layout item_in_cart làm view
+            R.layout.item_in_cart, //lấy layout item_in_cart làm view cho adapter
             parent,false
         )
         return CartViewHolder(view) //trả về cart view holder ứng với layout

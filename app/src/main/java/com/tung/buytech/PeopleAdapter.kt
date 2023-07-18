@@ -14,7 +14,7 @@ class PeopleAdapter(private val list: LinkedList<AppController.People>): Recycle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.people_view,parent)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.people_view,parent) //lấy view cho adapter
         return PeopleHolder(itemView)
     }
 
