@@ -13,6 +13,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.tung.buytech.AppController.Companion.db
 import com.tung.buytech.ChatFunctions.Companion.messageFromUsers
+import com.tung.buytech.ChatFunctions.Companion.people
 
 class ChatMain : AppCompatActivity() {
 
@@ -43,9 +44,10 @@ class ChatMain : AppCompatActivity() {
     //lấy danh sách tất cả người đã nhắn
     fun getAllPeopleMessaged(messages: CollectionReference){
         messages.get().addOnSuccessListener {
-            people ->
-            for (person in people){
-                //lấy từng id ra
+            documents ->
+            for (document in documents){
+                //lấy từng id của document ra (cũng là tên user id)
+                people.add(AppController.People(document.id))
             }
         }
     }

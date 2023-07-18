@@ -12,7 +12,7 @@ class ChatFunctions {
         var messageFromUsers= AppController.db.collection("message"+ Firebase.auth.currentUser!!.uid)
 
         @JvmField
-        var people = LinkedList<AppController.People>()
+        var people = LinkedList<AppController.People>() //danh sách những người đã nhắn tin
 
         @JvmStatic
         //lấy tin nhắn gần nhất
