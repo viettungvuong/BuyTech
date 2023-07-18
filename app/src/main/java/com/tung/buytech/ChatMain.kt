@@ -8,20 +8,19 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.tung.buytech.AppController.Companion.db
+import com.tung.buytech.AppController.Companion.messageFromUser
 
 class ChatMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_main)
 
-        val collectionReference = db.collection("message"+Firebase.auth.currentUser!!.uid)
-
-        collectionReference.get().addOnCompleteListener { task ->
+        messageFromUser.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val querySnapshot = task.result
                 if (querySnapshot != null && !querySnapshot.isEmpty) {
                     //nếu có collection
-                    getAllPeopleMessaged(collectionReference)
+                    getAllPeopleMessaged(messageFromUser)
                 } else {
                     //nếu không có collection
 
@@ -41,5 +40,10 @@ class ChatMain : AppCompatActivity() {
                 //lấy từng id ra
             }
         }
+    }
+
+    //lấy tin nhắn gần nhất
+    fun getMostRecentMessage(people: AppController.People){
+
     }
 }

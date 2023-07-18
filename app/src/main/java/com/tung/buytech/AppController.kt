@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.*
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
@@ -59,6 +60,9 @@ class AppController {
         val productList: LinkedList<Product> = LinkedList()
         var db = Firebase.firestore
         val storageRef = Firebase.storage.reference
+
+        @JvmStatic
+        var messageFromUser=db.collection("message"+Firebase.auth.currentUser!!.uid)
 
         @JvmStatic
         lateinit var autoComplete: AutoComplete
@@ -355,8 +359,10 @@ class AppController {
     }
 
     class People(userId: String) {
+        lateinit var userId: String
         lateinit var name: String
         init {
+            this.userId=userId
             //lấy user từ database
             db.collection("users").document(userId).get().addOnSuccessListener {
                 document->
