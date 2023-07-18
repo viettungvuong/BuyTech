@@ -11,6 +11,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.tung.buytech.AppController.Companion.db
 
 
 class AccountFunctions {
@@ -56,6 +57,13 @@ class AccountFunctions {
                             "Tạo tài khoản thành công",
                             Toast.LENGTH_SHORT,
                         ).show()
+
+                        //update lên firebase
+                        val userData = hashMapOf(
+                            "name" to "A"
+                        )
+                        val accountFirebase = db.collection("users").document(Firebase.auth.currentUser!!.uid).set(userData)
+
                         val intent =
                             Intent(context,MainActivity::class.java)
                         activity.startActivity(intent)
