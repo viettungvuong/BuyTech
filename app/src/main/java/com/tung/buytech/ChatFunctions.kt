@@ -12,10 +12,10 @@ class ChatFunctions {
         var messageFromUsers= AppController.db.collection("message"+ Firebase.auth.currentUser!!.uid)
 
         @JvmField
-        var people = LinkedList<AppController.People>() //danh sách những người đã nhắn tin
+        var peopleProducts = LinkedList<AppController.PeopleProduct>() //danh sách những người đã nhắn tin
 
         @JvmStatic
-        //lấy tin nhắn gần nhất
+        //lấy tin nhắn gần nhất từ một người
         fun getMostRecentMessage(messages: CollectionReference, people: AppController.People, callback: (String, String) -> Unit){
             messages.orderBy("timestamp", Query.Direction.DESCENDING).limit(1)
                 .get() //lấy tin nhắn mới nhất

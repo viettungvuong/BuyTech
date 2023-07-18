@@ -14,7 +14,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.tung.buytech.AppController.Companion.db
 import com.tung.buytech.ChatFunctions.Companion.messageFromUsers
-import com.tung.buytech.ChatFunctions.Companion.people
+import com.tung.buytech.ChatFunctions.Companion.peopleProducts
 
 class ChatMain : AppCompatActivity() {
 
@@ -23,7 +23,7 @@ class ChatMain : AppCompatActivity() {
         setContentView(R.layout.activity_chat_main)
 
         val messagesRecyclerView=findViewById<RecyclerView>(R.id.messagesList)
-        val messageAdapter=PeopleAdapter(people)
+        val messageAdapter=PeopleAdapter(peopleProducts)
 
         messageFromUsers.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -49,7 +49,8 @@ class ChatMain : AppCompatActivity() {
             documents ->
             for (document in documents){
                 //lấy từng id của document ra (cũng là tên user id)
-                people.add(AppController.People(document.id))
+                val splitName = document.id.split("-")
+                peopleProducts.add(AppController.PeopleProduct(document.id))
 
             }
             callback()
