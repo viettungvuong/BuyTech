@@ -231,6 +231,20 @@ class AppController {
                 })
         }
 
+        @JvmStatic
+        fun bindProductById(productId: String, callback: (Product) -> Unit){
+            db.collection("Items").document(productId).get().addOnSuccessListener {
+                    document->
+                lateinit var currentProduct: Product
+
+                val productName = document.getString(fieldProduct)
+                val productPrice = document.getLong(fieldPrice)
+                val productImageUrl = (document.get(fieldImage) as ArrayList<String>).first()
+
+                callback(Product(productName!!,productPrice!!,productImageUrl,productId))
+            }
+        }
+
     }
 
     open class Product(name: String, price: Long, imageUrl: String, productId: String) :
@@ -382,6 +396,7 @@ class AppController {
     class Message(content: String, a: People, b: People) {
 
     }
+
 
 
 }

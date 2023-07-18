@@ -26,6 +26,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.rpc.Help.Link
+import com.tung.buytech.AppController.Companion.bindProductById
 import com.tung.buytech.AppController.Companion.db
 import com.tung.buytech.AppController.Companion.getDatabaseInstance
 import com.tung.buytech.AppController.Companion.updateFavorite
@@ -103,7 +104,10 @@ class MainActivity : AppCompatActivity() {
                 // Process the query results
                 for (document in querySnapshot) {
                     // Access other fields as needed
-                    grid.addView(productView(document)) //them product view vao grid layout
+                    bindProductById(document.id,{
+                        bindedProduct->grid.addView(productView(bindedProduct)) //them product view vao grid layout
+                    })
+
                 }
             }
             .addOnFailureListener { exception ->
@@ -113,27 +117,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     //productview là hiện tóm tắt thông tin sản phẩm sau khi tìm kiếm
-    fun productView(document: QueryDocumentSnapshot): ProductView {
-        //đặt các thông tin cho productview
+    fun productView(product: AppController.Product): ProductView {
+        //tạo productView từ product
 
-        Log.d("ID:", document.id)
-        val id = document.id //lấy tên của document
-        val name = document.getString(fieldProduct).toString() //dat label cho productview
-        var price = document.getLong(fieldPrice)
-        if (price == null) {
-            price = 0
-        }
+       return ProductView(this,product)
 
-        //lấy tên file ảnh
-        var imageUrl = ""
-        imageUrl = (document.get(fieldImage) as ArrayList<String>).first()
-        //lấy phần tử đầu tiên của array field "Image"
-
-
-        var product = AppController.Product(name, price, imageUrl, id)
-        Log.d("BeforeImageUrl1",imageUrl)
-        val res = ProductView(this, product)
-        return res
     }
 
 
