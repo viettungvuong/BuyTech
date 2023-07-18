@@ -136,6 +136,7 @@ class AppController {
             }
         }
 
+        //xoá khỏi favorite
         fun removeFavorite(position: Int){
             val removed = favorites.get(position)
             favorites.removeAt(position)
@@ -145,6 +146,27 @@ class AppController {
 
             val deleteProduct = hashMapOf<String, Any>(
                 "products" to FieldValue.arrayRemove(removed.productId)
+            )
+
+            docRef.update(deleteProduct)
+        }
+
+        fun removeFavorite(favorite: Favorite){
+            //linear search sẽ tốt hơn
+            var i=0
+            while (i< favorites.size){
+                if (favorites[i].productId==favorite.productId){
+                    break
+                }
+                i++
+            }
+            favorites.removeAt(i)
+
+            //xoá trên firebase
+            val docRef = db.collection("favorites").document(Firebase.auth.currentUser!!.uid)
+
+            val deleteProduct = hashMapOf<String, Any>(
+                "products" to FieldValue.arrayRemove(favorite.productId)
             )
 
             docRef.update(deleteProduct)

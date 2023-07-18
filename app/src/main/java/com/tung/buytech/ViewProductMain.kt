@@ -17,6 +17,7 @@ import com.tung.buytech.AppController.Companion.favorites
 import com.tung.buytech.AppController.Companion.findProductImage
 import com.tung.buytech.AppController.Companion.getDatabaseInstance
 import com.tung.buytech.AppController.Companion.isAlreadyFavorite
+import com.tung.buytech.AppController.Companion.removeFavorite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -70,7 +71,7 @@ class ViewProductMain : AppCompatActivity() {
         val favoriteBtn = findViewById<ImageButton>(R.id.buttonFavorite)
 
         //kiểm tra sản phẩm có trong favorite
-        val isAlreadyFavorite = isAlreadyFavorite(currentProduct!!)
+        var isAlreadyFavorite = isAlreadyFavorite(currentProduct!!)
         Log.d("isALREADYfavorite",isAlreadyFavorite.toString())
         if (isAlreadyFavorite){
             favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.already_favorite))
@@ -85,12 +86,26 @@ class ViewProductMain : AppCompatActivity() {
 
         favoriteBtn.setOnClickListener { v: View? ->
             //thêm vào favorite
-            val favorite= AppController.Favorite(currentProduct!!)
-            addToFavorite(AppController.favorites,favorite)
+            if (!isAlreadyFavorite){
+                val favorite= AppController.Favorite(currentProduct!!)
+                addToFavorite(favorites,favorite)
 
-            val duration = Toast.LENGTH_SHORT
-            val toast = Toast.makeText(this, "Đã thêm vào danh sách yêu thích", duration) // in Activity
-            toast.show()
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(this, "Đã thêm vào danh sách yêu thích", duration) // in Activity
+                toast.show()
+
+                favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.already_favorite))
+
+            } //bỏ khỏi favorite
+            else{
+                removeFavorite(AppController.Favorite(currentProduct))
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(this, "Đã xoá khỏi danh sách yêu thích", duration) // in Activity
+                toast.show()
+
+                favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.favorite_btn))
+            }
+            isAlreadyFavorite=!isAlreadyFavorite
         }
 
         val bottomNavBar = findViewById<BottomNavigationView>(R.id.bottom_navigation)
