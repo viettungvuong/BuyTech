@@ -41,14 +41,14 @@ class ViewProductMain : AppCompatActivity() {
         val productPrice: TextView
         val productDescription: TextView
 
-        productName = findViewById(R.id.productLabel)
-        productPrice = findViewById(R.id.priceLabel)
-        productDescription = findViewById(R.id.productDescription)
+        productName = findViewById(R.id.product_title)
+        productPrice = findViewById(R.id.product_price)
+        productDescription = findViewById(R.id.product_description)
         productName.text = name
         productPrice.text = AppController.reformatNumber(price)+" VNĐ"
 
         //đặt hình ảnh sản phẩm
-        val imgView = findViewById<ImageView>(R.id.imageView)
+        val imgView = findViewById<ImageView>(R.id.product_image)
         findProductImage(productImage, imgView, this)
 
         //mô tả sản phẩm
@@ -62,7 +62,7 @@ class ViewProductMain : AppCompatActivity() {
         layoutParams.marginStart = 50
         productDescription.layoutParams = layoutParams
         val purchaseBtn = findViewById<Button>(R.id.buttonPurchase)
-        val favoriteBtn = findViewById<Button>(R.id.buttonFavorite)
+        val favoriteBtn = findViewById<ImageButton>(R.id.buttonFavorite)
 
         purchaseBtn.setOnClickListener { v: View? ->
             val purchaseScreen = PurchaseScreen(this, currentProduct!!)
