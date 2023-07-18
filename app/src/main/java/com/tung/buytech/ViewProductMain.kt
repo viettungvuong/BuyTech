@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.bumptech.glide.Glide
 import com.tung.buytech.AppController.Companion.addToFavorite
+import com.tung.buytech.AppController.Companion.favorites
 import com.tung.buytech.AppController.Companion.findProductImage
 import com.tung.buytech.AppController.Companion.getDatabaseInstance
 import kotlinx.coroutines.CoroutineScope
@@ -63,6 +65,13 @@ class ViewProductMain : AppCompatActivity() {
         productDescription.layoutParams = layoutParams
         val purchaseBtn = findViewById<Button>(R.id.buttonPurchase)
         val favoriteBtn = findViewById<ImageButton>(R.id.buttonFavorite)
+
+        //kiểm tra sản phẩm có trong favorite
+        val isAlreadyFavorite = favorites.contains(AppController.Favorite(currentProduct!!))
+        if (isAlreadyFavorite){
+            favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.already_favorite))
+        }
+        //chỉnh button báo hiệu sản phẩm này đã có trong Favorite
 
         purchaseBtn.setOnClickListener { v: View? ->
             val purchaseScreen = PurchaseScreen(this, currentProduct!!)
