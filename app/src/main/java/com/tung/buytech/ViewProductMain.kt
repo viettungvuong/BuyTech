@@ -16,6 +16,7 @@ import com.tung.buytech.AppController.Companion.addToFavorite
 import com.tung.buytech.AppController.Companion.favorites
 import com.tung.buytech.AppController.Companion.findProductImage
 import com.tung.buytech.AppController.Companion.getDatabaseInstance
+import com.tung.buytech.AppController.Companion.isAlreadyFavorite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,8 +24,8 @@ import kotlinx.coroutines.launch
 
 class ViewProductMain : AppCompatActivity() {
     companion object{
-        @JvmField
-        var currentProduct: AppController.Product?=null
+        @JvmStatic
+        lateinit var currentProduct: AppController.Product
     }
     lateinit var bottomNavigationHandler: BottomNavigationHandler
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +70,8 @@ class ViewProductMain : AppCompatActivity() {
         val favoriteBtn = findViewById<ImageButton>(R.id.buttonFavorite)
 
         //kiểm tra sản phẩm có trong favorite
-        val isAlreadyFavorite = favorites.contains(AppController.Favorite(currentProduct!!))
+        val isAlreadyFavorite = isAlreadyFavorite(currentProduct!!)
+        Log.d("isALREADYfavorite",isAlreadyFavorite.toString())
         if (isAlreadyFavorite){
             favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.already_favorite))
         }

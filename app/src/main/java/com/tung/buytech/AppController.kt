@@ -62,7 +62,6 @@ class AppController {
         val storageRef = Firebase.storage.reference
 
 
-
         @JvmStatic
         lateinit var autoComplete: AutoComplete
 
@@ -254,6 +253,24 @@ class AppController {
                 bindedProduct->
                 callback(PeopleProduct(People(peopleId),bindedProduct)) //trả về peopleProduct
             })
+        }
+
+        //kiểm tra một product nào đó có là favorite hay chưa
+        @JvmStatic
+        fun isAlreadyFavorite(currentProduct: Product): Boolean{
+            val currentProductId = currentProduct.productId
+            val temp = favorites.toList().sortedBy { it.productId }
+
+            var i=0
+            while (i<temp.size&&temp[i].productId<=currentProductId){
+                if (temp[i].productId==currentProductId){
+                    return true
+                }
+
+                i++
+            }
+
+            return false
         }
 
     }
