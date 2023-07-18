@@ -12,7 +12,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.tung.buytech.AppController.Companion.db
-import com.tung.buytech.AppController.Companion.messageFromUsers
+import com.tung.buytech.ChatFunctions.Companion.messageFromUsers
 
 class ChatMain : AppCompatActivity() {
 
