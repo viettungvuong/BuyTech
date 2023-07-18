@@ -357,7 +357,11 @@ class AppController {
     class People(userId: String) {
         lateinit var name: String
         init {
-            
+            //lấy user từ database
+            db.collection("users").document(userId).get().addOnSuccessListener {
+                document->
+                this.name=document.getString("name").toString() 
+            }
         }
     }
 

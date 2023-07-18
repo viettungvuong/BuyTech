@@ -18,7 +18,7 @@ class PeopleAdapter(private val list: LinkedList<AppController.People>): Recycle
             lastSent=peopleView.findViewById(R.id.time)
         }
         fun bind(people: AppController.People){
-            chatName.text=people
+            chatName.text=people.name
         }
     }
 
