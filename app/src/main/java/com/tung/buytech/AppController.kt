@@ -370,6 +370,15 @@ class AppController {
         }
     }
 
+    class PeopleProduct(people: People, product: Product){
+        lateinit var people: People
+        lateinit var product: Product
+        init {
+            this.people=people
+            this.product=product
+        }
+    }
+
     class Message(content: String, a: People, b: People) {
 
     }
