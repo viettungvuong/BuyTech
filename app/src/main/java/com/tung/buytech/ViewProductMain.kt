@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tung.buytech.AppController.Companion.addToFavorite
 import com.tung.buytech.AppController.Companion.favorites
 import com.tung.buytech.AppController.Companion.findProductImage
@@ -25,6 +26,7 @@ class ViewProductMain : AppCompatActivity() {
         @JvmField
         var currentProduct: AppController.Product?=null
     }
+    lateinit var bottomNavigationHandler: BottomNavigationHandler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_product)
@@ -88,6 +90,9 @@ class ViewProductMain : AppCompatActivity() {
             val toast = Toast.makeText(this, "Đã thêm vào danh sách yêu thích", duration) // in Activity
             toast.show()
         }
+
+        val bottomNavBar = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationHandler = BottomNavigationHandler(this,bottomNavBar)
     }
 
     fun getDescription(productId: String?, descriptionText: TextView) { //lấy description
