@@ -3,13 +3,22 @@ package com.tung.buytech
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 class PeopleAdapter(private val list: LinkedList<AppController.People>): RecyclerView.Adapter<PeopleAdapter.PeopleHolder>()  {
     inner class PeopleHolder(val peopleView: View): RecyclerView.ViewHolder(peopleView){
+        lateinit var chatName: TextView
+        lateinit var lastMessage: TextView
+        lateinit var lastSent: TextView
+        init {
+            chatName=peopleView.findViewById(R.id.name)
+            lastMessage=peopleView.findViewById(R.id.lastMessage)
+            lastSent=peopleView.findViewById(R.id.time)
+        }
         fun bind(people: AppController.People){
-
+            chatName.text=people
         }
     }
 

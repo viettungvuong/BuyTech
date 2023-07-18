@@ -355,7 +355,10 @@ class AppController {
     }
 
     class People(userId: String) {
-
+        lateinit var name: String
+        init {
+            
+        }
     }
 
     class Message(content: String, a: People, b: People) {
