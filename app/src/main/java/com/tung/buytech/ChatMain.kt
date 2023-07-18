@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
+import com.tung.buytech.AppController.Companion.bindProductPeople
 import com.tung.buytech.AppController.Companion.db
 import com.tung.buytech.ChatFunctions.Companion.messageFromUsers
 import com.tung.buytech.ChatFunctions.Companion.peopleProducts
@@ -49,8 +50,9 @@ class ChatMain : AppCompatActivity() {
             documents ->
             for (document in documents){
                 //lấy từng id của document ra (cũng là tên user id)
-                val splitName = document.id.split("-")
-                peopleProducts.add(AppController.PeopleProduct(document.id))
+                bindProductPeople(document.id, {
+                    bindedPeopleProduct -> peopleProducts.add(bindedPeopleProduct)
+                })
 
             }
             callback()

@@ -245,6 +245,17 @@ class AppController {
             }
         }
 
+        @JvmStatic
+        fun bindProductPeople(documentName: String, callback: (PeopleProduct) -> Unit){
+            val list=documentName.split("-")
+            val productId=list[1]
+            val peopleId=list[0]
+            bindProductById(productId,{
+                bindedProduct->
+                callback(PeopleProduct(People(peopleId),bindedProduct)) //trả về peopleProduct
+            })
+        }
+
     }
 
     open class Product(name: String, price: Long, imageUrl: String, productId: String) :
