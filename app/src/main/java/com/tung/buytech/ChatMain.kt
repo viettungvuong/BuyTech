@@ -38,7 +38,7 @@ class ChatMain : AppCompatActivity() {
 
                 }
             } else {
-                Log.d("Lỗi","Lỗi")
+                //Log.d("Lỗi","Lỗi")
             }
         }
 

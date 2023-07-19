@@ -38,7 +38,6 @@ class ViewProductMain : AppCompatActivity() {
         val price = intent.getLongExtra("ProductPrice",0)
         val productId = intent.getStringExtra("ProductId")!!
         val productImage = intent.getStringExtra("ProductImage")!!
-        Log.d("ImageUrl",productImage)
 
         //tạo product tương ứng
         currentProduct=AppController.Product(name,price,productImage,productId)
@@ -72,7 +71,6 @@ class ViewProductMain : AppCompatActivity() {
 
         //kiểm tra sản phẩm có trong favorite
         var isAlreadyFavorite = isAlreadyFavorite(currentProduct!!)
-        Log.d("isALREADYfavorite",isAlreadyFavorite.toString())
         if (isAlreadyFavorite){
             favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.already_favorite))
         }
@@ -85,26 +83,26 @@ class ViewProductMain : AppCompatActivity() {
         }
 
         favoriteBtn.setOnClickListener { v: View? ->
-            //thêm vào favorite
+            //thêm vào favorite (do chưa có trong favorite)
+            val duration = Toast.LENGTH_SHORT
+            lateinit var toast: Toast
             if (!isAlreadyFavorite){
                 val favorite= AppController.Favorite(currentProduct!!)
                 addToFavorite(favorites,favorite)
 
-                val duration = Toast.LENGTH_SHORT
-                val toast = Toast.makeText(this, "Đã thêm vào danh sách yêu thích", duration) // in Activity
-                toast.show()
+                toast = Toast.makeText(this, "Đã thêm vào danh sách yêu thích", duration) // in Activity
 
                 favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.already_favorite))
 
-            } //bỏ khỏi favorite
+            } //bỏ khỏi favorite (do đã có trong favorite)
             else{
                 removeFavorite(AppController.Favorite(currentProduct))
-                val duration = Toast.LENGTH_SHORT
-                val toast = Toast.makeText(this, "Đã xoá khỏi danh sách yêu thích", duration) // in Activity
+                toast = Toast.makeText(this, "Đã xoá khỏi danh sách yêu thích", duration) // in Activity
                 toast.show()
 
                 favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.favorite_btn))
             }
+            toast.show()
             isAlreadyFavorite=!isAlreadyFavorite
         }
 
@@ -120,17 +118,13 @@ class ViewProductMain : AppCompatActivity() {
 
         // Retrieve the document
         val document = docRef.get() //Task là một dạng asynchronous (ví dụ như Runnable)
-        docRef.get().addOnCompleteListener { task ->
+        document.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val document = task.result
                 if (document.exists()) {
-                    Log.d("Docexists", "DocumentSnapshot data: " + document.data)
-                    Log.d(
-                        "Docexists2",
-                        "DocumentSnapshot data: " + document["description"]
-                    )
                     descriptionText.text = document["description"].toString() //set text
                 } else {
+                    //không có document
                 }
             } else {
             }

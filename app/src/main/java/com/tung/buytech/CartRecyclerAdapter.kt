@@ -47,7 +47,7 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
         }
 
         fun bind(product: AppController.Product) {
-            Log.d("Image",product.imageUrl)
+            //Log.d("Image",product.imageUrl)
             setProductImage(product.imageUrl)
             setLabel(product.name)
             setPrice(product.price)

@@ -33,7 +33,6 @@ class ProductView @JvmOverloads constructor(
         // Inflate the layout for the custom view
         LayoutInflater.from(context).inflate(R.layout.product_view, this, true)
 
-
         currentProduct=product
 
         // Get references to the child views

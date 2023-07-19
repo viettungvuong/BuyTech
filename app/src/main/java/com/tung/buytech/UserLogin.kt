@@ -27,7 +27,7 @@ class UserLogin : AppCompatActivity() {
         val currentUser = Firebase.auth.currentUser
 
         if (currentUser != null) {
-            Log.d("User",currentUser.email.toString())
+            //Log.d("User",currentUser.email.toString())
         }
         if (currentUser != null) {
             Toast.makeText(
@@ -114,7 +114,7 @@ class UserLogin : AppCompatActivity() {
         return View.OnClickListener {
             val user = userInput.text.toString()
             val password=passwordInput.text.toString()
-            Log.d("Sign in", signIn.toString())
+            //Log.d("Sign in", signIn.toString())
 
             if (signIn){
                 AccountFunctions.signIn(this, this, user, password)

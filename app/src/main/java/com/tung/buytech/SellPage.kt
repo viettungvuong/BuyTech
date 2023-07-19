@@ -73,7 +73,7 @@ class SellPage  : AppCompatActivity() {
         val pickMultipleMedia =
             registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
                 if (uris.isNotEmpty()) {
-                    Log.d("PhotoPicker", "Number of items selected: ${uris.size}")
+                    //Log.d("PhotoPicker", "Number of items selected: ${uris.size}")
                     for (uri in uris){
 
                         var newImg=ImageView(this)
@@ -90,7 +90,7 @@ class SellPage  : AppCompatActivity() {
                         images.add(uri)  //thêm tên file vào
                     }
                 } else {
-                    Log.d("PhotoPicker", "No media selected")
+                    //Log.d("PhotoPicker", "No media selected")
                 }
             }
         //cho chọn tối đa 5 items
@@ -123,7 +123,7 @@ class SellPage  : AppCompatActivity() {
            pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
        }
        catch (e: java.lang.Exception){
-           Log.d("Exception",e.toString())
+           //Log.d("Exception",e.toString())
        }
 
     }

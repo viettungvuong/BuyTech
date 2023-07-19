@@ -43,7 +43,7 @@ class AppController {
                 try {
                     imageFromStorage = getDownloadUrl(imageUrl)
                     // Proceed with the rest of the code, such as creating the `ProductView` instance
-                    Log.d("ImageUrlSuccess", imageFromStorage)
+                    //Log.d("ImageUrlSuccess", imageFromStorage)
                     Glide.with(context)
                         .load(imageFromStorage)
                         .into(imageView)
@@ -82,7 +82,7 @@ class AppController {
 
         @JvmStatic
         //reformat định dạng số
-        public fun reformatNumber(money: Long): String {
+        fun reformatNumber(money: Long): String {
             if (money <= 100)
                 return money.toString()
 
@@ -95,12 +95,10 @@ class AppController {
 
             for (i in n downTo 0 step 3) {
                 val start = Integer.max(i - 2, 0)
-                val end = min(n + 1, i + 1)
+                val end = Integer.min(n + 1, i + 1)
                 val s = moneyString.substring(start, end)
                 strings.add(s)
-                Log.d("Number", strings[strings.size - 1])
                 strings.add(",")
-                Log.d("Comma", strings[strings.size - 1])
             }
 
             if (strings[strings.size - 1] == ",") {
@@ -114,7 +112,7 @@ class AppController {
             for (i in 0..strings.size - 1) {
                 moneyString += strings[i]
             }
-            Log.d("MoneyString", moneyString)
+
             return moneyString;
             //gio ta phai cho no xuat dung chieu
         }
@@ -225,13 +223,12 @@ class AppController {
             val getFavorites =  db.collection("favorites")
                 .document(Firebase.auth.currentUser!!.uid)
 
-
            getFavorites //lấy document trên firebase
                 .get()
                 .addOnCompleteListener(OnCompleteListener {
                     task->if (task.isSuccessful()) {
                         val document=task.result
-                        if (document!=null){
+                        if (document!=null){ //có document
                             if (document.exists()){
                                 //nếu có field products rồi
                                 if (document.contains("products")){
@@ -256,8 +253,6 @@ class AppController {
         fun bindProductById(productId: String, callback: (Product) -> Unit){
             db.collection("Items").document(productId).get().addOnSuccessListener {
                     document->
-                lateinit var currentProduct: Product
-
                 val productName = document.getString(fieldProduct)
                 val productPrice = document.getLong(fieldPrice)
                 val productImageUrl = (document.get(fieldImage) as ArrayList<String>).first()

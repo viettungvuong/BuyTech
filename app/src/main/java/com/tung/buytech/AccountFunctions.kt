@@ -23,7 +23,7 @@ class AccountFunctions {
                 .addOnCompleteListener(activity) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithEmail:success")
+                        //Log.d(TAG, "signInWithEmail:success")
                         Toast.makeText(
                             context,
                             "Đã đăng nhập thành công",
@@ -51,7 +51,7 @@ class AccountFunctions {
                 .addOnCompleteListener(activity) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success")
+                        //Log.d(TAG, "createUserWithEmail:success")
                         Toast.makeText(
                             context,
                             "Tạo tài khoản thành công",
