@@ -175,9 +175,8 @@ class AppController {
                 .addOnSuccessListener {
                     documentSnapshot->
                     val productList = documentSnapshot.get("products") as ArrayList<String>
-                    print(productList)
+
                     for (favoriteProductId in productList){
-                        print(favoriteProductId)
                         //với mỗi productId, ta sẽ bind
                         //chữ join là đổi từ CompletableFuture<Product> thành Product
 
@@ -200,7 +199,7 @@ class AppController {
         @JvmStatic
         fun addToFavorite(favorites: LinkedList<Favorite>, favorite: Favorite) {
             favorites.add(favorite)
-            //thêm vào danh sách favorites
+            //thêm vào danh sách favorites local
 
             //tạo list từ product id của favorite
             //cái này chỉ để khi mà chưa document hoặc chưa có field products trong document
@@ -213,8 +212,9 @@ class AppController {
 
             //lấy collection favorite từ database
             //để add vào sau này
-            val getFavorites =  db.collection("favorites")
+            val getFavorites =  db.collection("users")
                 .document(Firebase.auth.currentUser!!.uid)
+                .collection("favorites")
 
            getFavorites //lấy document trên firebase
                 .get()
