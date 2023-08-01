@@ -1,47 +1,13 @@
 package com.tung.buytech
 
-import android.accounts.Account
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.Button
-import android.widget.GridLayout
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.internal.ViewUtils.hideKeyboard
-import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.FirebaseApp
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.firestore.ktx.firestore
 
-import com.google.firebase.ktx.*
-import com.google.firebase.storage.FirebaseStorage
-import com.google.rpc.Help.Link
-import com.tung.buytech.AppController.Companion.bindProductById
-import com.tung.buytech.AppController.Companion.db
-import com.tung.buytech.AppController.Companion.getDatabaseInstance
 import com.tung.buytech.AppController.Companion.fetchFavorites
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.lang.Integer.max
-import java.lang.Integer.parseInt
-import java.lang.Long.parseLong
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.coroutines.suspendCoroutine
-import kotlin.math.min
 
 const val homeFragmentTag="Home"
 const val cartFragmentTag="Cart"
@@ -139,7 +105,7 @@ class BottomNavigationHandler(activity: Activity, navBar: BottomNavigationView) 
                     tag = homeFragmentTag
                 }
                 R.id.cart -> {
-                    selectedFragment = Cart()
+                    selectedFragment = CartPage()
                     tag = cartFragmentTag
                 }
                 R.id.favorite -> {

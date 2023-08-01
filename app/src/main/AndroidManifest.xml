@@ -61,7 +61,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-        <activity android:name=".Cart" />
+        <activity android:name=".CartPage" />
         <activity android:name=".SellPage" />
     </application>
 

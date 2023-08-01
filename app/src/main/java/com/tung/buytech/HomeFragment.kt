@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.tung.buytech.AppController.Companion.hideKeyboard
 
 class HomeFragment: Fragment() {
     lateinit var grid: GridLayout
@@ -73,8 +74,4 @@ class HomeFragment: Fragment() {
     }
 
 
-    fun View.hideKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(windowToken, 0)
-    }
 }
