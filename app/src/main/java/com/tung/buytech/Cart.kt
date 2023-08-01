@@ -37,7 +37,7 @@ class Cart
         return rootView
     }
 
-    fun deleteFromCart(itemInCart: AppController.Product, cart: LinkedList<AppController.Product>) {
+    fun deleteFromCart(itemInCart: Product, cart: LinkedList<Product>) {
         if (!cart.contains(itemInCart))
             return
 

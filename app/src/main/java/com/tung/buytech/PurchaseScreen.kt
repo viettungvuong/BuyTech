@@ -18,10 +18,10 @@ import com.tung.buytech.AppController.Companion.getDatabaseInstance
 
 class PurchaseScreen
 constructor(
-    context: Context, product: AppController.Product
+    context: Context, product: Product
 ) : DialogFragment(R.layout.activity_purchase_screen) {
 
-    lateinit var currentProduct: AppController.Product
+    lateinit var currentProduct: Product
     lateinit var location: String
     lateinit var seller: String
     lateinit var phoneNumber: String
@@ -60,7 +60,7 @@ constructor(
         return builder.create()
     }
 
-    fun loadInformation(product: AppController.Product, callback: () -> Unit){
+    fun loadInformation(product: Product, callback: () -> Unit){
         val docRef = getDatabaseInstance().collection("Products").document(product.productId).get()
 
         docRef.addOnCompleteListener { task ->

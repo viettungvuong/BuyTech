@@ -18,14 +18,14 @@ import kotlinx.coroutines.launch
 
 
 class ProductView @JvmOverloads constructor(
-    context: Context, product: AppController.Product
+    context: Context, product: Product
 ) : LinearLayout(context) {
 
     private val imageView: ImageView
     private val labelTextView: TextView
     private val priceTextView: TextView
 
-    lateinit var currentProduct: AppController.Product
+    lateinit var currentProduct: Product
 
     private var listener: OnClickListener? = null //thêm listener để productView bấm được
     init {
