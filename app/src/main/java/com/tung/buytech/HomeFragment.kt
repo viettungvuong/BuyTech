@@ -40,7 +40,7 @@ class HomeFragment: Fragment() {
         )
 
 
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return view
     }
 
 
