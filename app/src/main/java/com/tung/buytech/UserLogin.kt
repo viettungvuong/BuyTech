@@ -20,15 +20,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 class UserLogin : AppCompatActivity() {
-    override fun onStart() {
-        super.onStart()
-
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_login)
 

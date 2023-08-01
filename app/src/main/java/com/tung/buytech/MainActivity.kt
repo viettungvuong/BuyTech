@@ -95,12 +95,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        FirebaseApp.initializeApp(this)
         fetchFavorites() //cập nhật danh sách favorite
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationHandler =
             BottomNavigationHandler(this, bottomNavigationView) //handler bottom navigation view
+
+        supportFragmentManager.beginTransaction().replace(R.id.fragment,HomeFragment()).addToBackStack(
+            homeFragmentTag).commit()
     }
 
     override fun onBackPressed() {
