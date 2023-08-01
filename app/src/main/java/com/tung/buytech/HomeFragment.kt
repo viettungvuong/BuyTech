@@ -23,7 +23,7 @@ class HomeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_main, container, false)
+        val view = inflater.inflate(R.layout.home, container, false)
 
         var searchBtn = view.findViewById<Button>(R.id.search)
         var searchBar = view.findViewById<TextInputEditText>(R.id.productSearch)
@@ -61,7 +61,7 @@ class HomeFragment: Fragment() {
             .whereEqualTo(MainActivity.fieldProduct, productName)
             .get()
             .addOnSuccessListener { querySnapshot ->
-                // Process the query results
+                //lấy từng sản phẩm thoả điều kiện
                 for (document in querySnapshot) {
                     // Access other fields as needed
                     AppController.bindProductById(document.id) { bindedProduct ->
@@ -69,10 +69,6 @@ class HomeFragment: Fragment() {
                     }
 
                 }
-            }
-            .addOnFailureListener { exception ->
-                // Handle any errors
-                println("Error getting documents: $exception")
             }
     }
 
