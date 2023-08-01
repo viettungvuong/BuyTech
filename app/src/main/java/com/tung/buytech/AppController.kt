@@ -28,6 +28,8 @@ import kotlin.collections.ArrayList
 import kotlin.coroutines.suspendCoroutine
 import kotlin.math.min
 
+const val fieldProductId = "productId"
+
 class AppController {
     companion object {
         @JvmStatic
@@ -131,16 +133,13 @@ class AppController {
         //xoá khỏi favorite
         fun removeFavorite(position: Int){
             val removed = favorites.get(position)
+            val productId = removed.productId
+
             favorites.removeAt(position)
 
             //xoá trên firebase
-            val docRef = db.collection("favorites").document(Firebase.auth.currentUser!!.uid)
-
-            val deleteProduct = hashMapOf<String, Any>(
-                "products" to FieldValue.arrayRemove(removed.productId)
-            )
-
-            docRef.update(deleteProduct)
+            db.collection("users")
+                .document(Firebase.auth.currentUser!!.uid).collection("favorites").document(productId).delete()
         }
 
         fun removeFavorite(favorite: Favorite){
@@ -155,44 +154,27 @@ class AppController {
             favorites.removeAt(i)
 
             //xoá trên firebase
-            val docRef = db.collection("favorites").document(Firebase.auth.currentUser!!.uid)
-
-            val deleteProduct = hashMapOf<String, Any>(
-                "products" to FieldValue.arrayRemove(favorite.productId)
-            )
-
-            docRef.update(deleteProduct)
+           db.collection("users")
+                .document(Firebase.auth.currentUser!!.uid).collection("favorites").document(favorite.productId).delete()
         }
 
-        //cập nhật danh sách favorite
-        fun updateFavorite(){
+        //tải danh sách favorite xuống
+        fun fetchFavorites() {
 
             //lấy từ collection Favorites
-            val getFavorites = db.collection("favorites")
-                .document(Firebase.auth.currentUser!!.uid)
+            val getFavorites = db.collection("users")
+                .document(Firebase.auth.currentUser!!.uid).collection("favorites")
 
             getFavorites.get()
-                .addOnSuccessListener {
-                    documentSnapshot->
-                    val productList = documentSnapshot.get("products") as ArrayList<String>
+                .addOnSuccessListener { documentSnapshot ->
+                    for (document in documentSnapshot){
+                        val productId = document.id
 
-                    for (favoriteProductId in productList){
-                        //với mỗi productId, ta sẽ bind
-                        //chữ join là đổi từ CompletableFuture<Product> thành Product
-
-                        //Lấy collection Items
-                        val getProduct = db.collection("Items")
-                            .document(favoriteProductId as String)
-                        getProduct.get().addOnSuccessListener {
-                            documentSnapshot2->
-                            val productName=documentSnapshot2.getString(fieldProduct)
-                            val productPrice=documentSnapshot2.getLong(fieldPrice)
-                            val productImage=(documentSnapshot2.get(fieldImage) as ArrayList<String>).first()
-                            favorites.add(Favorite(productName!!,productPrice!!,productImage,favoriteProductId))
+                        bindProductById(productId){
+                            product ->  favorites.add(Favorite(product))
                         }
-
                     }
-            }
+                }
         }
 
         //thêm vào favorites
@@ -201,45 +183,13 @@ class AppController {
             favorites.add(favorite)
             //thêm vào danh sách favorites local
 
-            //tạo list từ product id của favorite
-            //cái này chỉ để khi mà chưa document hoặc chưa có field products trong document
-            val data = arrayListOf(
-                favorite.productId,
-            )
-            val createField = hashMapOf(
-                "products" to data //tạo field cho products
+            val productDoc = hashMapOf(
+                fieldProductId to favorite.productId
             )
 
-            //lấy collection favorite từ database
-            //để add vào sau này
-            val getFavorites =  db.collection("users")
-                .document(Firebase.auth.currentUser!!.uid)
-                .collection("favorites")
-
-           getFavorites //lấy document trên firebase
-                .get()
-                .addOnCompleteListener(OnCompleteListener {
-                    task->if (task.isSuccessful()) {
-                        val document=task.result
-                        if (document!=null){ //có document
-                            if (document.exists()){
-                                //nếu có field products rồi
-                                if (document.contains("products")){
-                                    //nếu có field Products
-                                    getFavorites.update("products", FieldValue.arrayUnion(favorite.productId))
-                                }
-                                else{
-                                    getFavorites.set(createField)
-                                    //nếu không có field products
-                                }
-                            }
-                            else{
-                                getFavorites.set(createField)
-                                //nếu không có document
-                            }
-                        }
-                    }
-                })
+            //add vào collection trên firebase
+             db.collection("users")
+                .document(Firebase.auth.currentUser!!.uid).collection("favorites").document(favorite.productId).set(productDoc)
         }
 
         @JvmStatic
@@ -259,10 +209,9 @@ class AppController {
             val list=documentName.split("-")
             val productId=list[1]
             val peopleId=list[0]
-            bindProductById(productId,{
-                bindedProduct->
-                callback(PeopleProduct(People(peopleId),bindedProduct)) //trả về peopleProduct
-            })
+            bindProductById(productId) { bindedProduct ->
+                callback(PeopleProduct(People(peopleId), bindedProduct)) //trả về peopleProduct
+            }
         }
 
         //kiểm tra một product nào đó có là favorite hay chưa

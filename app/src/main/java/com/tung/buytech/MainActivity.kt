@@ -31,7 +31,7 @@ import com.google.rpc.Help.Link
 import com.tung.buytech.AppController.Companion.bindProductById
 import com.tung.buytech.AppController.Companion.db
 import com.tung.buytech.AppController.Companion.getDatabaseInstance
-import com.tung.buytech.AppController.Companion.updateFavorite
+import com.tung.buytech.AppController.Companion.fetchFavorites
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         FirebaseApp.initializeApp(this)
-        updateFavorite() //cập nhật danh sách favorite
+        fetchFavorites() //cập nhật danh sách favorite
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationHandler =
