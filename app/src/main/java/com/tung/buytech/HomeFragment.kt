@@ -57,8 +57,8 @@ class HomeFragment: Fragment() {
         //ta sẽ cho biết giá trung bình, giá cao nhất và giá rẻ nhất
         grid.removeAllViews() //xoá hết mọi view
 
-        db.collection(MainActivity.collectionProducts)
-            .whereEqualTo(MainActivity.fieldProduct, productName)
+        db.collection(collectionProducts)
+            .whereEqualTo(fieldProduct, productName)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 //lấy từng sản phẩm thoả điều kiện

@@ -49,14 +49,12 @@ const val favoriteFragmentTag="Favorite"
 const val sellFragmentTag="Sell"
 const val accountFragmentTag="Account"
 
+const val collectionProducts = "Items"
+const val fieldProduct = "name"
+const val fieldPrice = "price"
+const val fieldImage = "image"
+
 class MainActivity : AppCompatActivity() {
-    companion object {
-        @JvmField
-        var collectionProducts = "Items"
-        var fieldProduct = "name"
-        var fieldPrice = "price"
-        var fieldImage = "image"
-    }
 
     private lateinit var bottomNavigationHandler: BottomNavigationHandler
 
