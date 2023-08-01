@@ -16,7 +16,7 @@ import com.tung.buytech.AppController.Companion.findProductImage
 import com.tung.buytech.AppController.Companion.reformatNumber
 import java.util.*
 
-class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList<out AppController.Product>) :
+class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList<out Product>) :
     RecyclerView.Adapter<CartRecyclerAdapter.CartViewHolder>() {
 
     //class hiển thị sản phẩm trong cart
@@ -46,7 +46,7 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
             priceTextView.text = reformatNumber(price).toString()+" VNĐ"
         }
 
-        fun bind(product: AppController.Product) {
+        fun bind(product: Product) {
             //Log.d("Image",product.imageUrl)
             setProductImage(product.imageUrl)
             setLabel(product.name)
@@ -73,12 +73,9 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
         holder.itemView.setOnClickListener(
             View.OnClickListener {
                 //thêm on click Listener
-                val product =  itemList[position]
-                val intent: Intent= Intent(context,ViewProductMain::class.java)
-                intent.putExtra("ProductName",product.name)
-                intent.putExtra("ProductPrice",product.price)
-                intent.putExtra("ProductId",product.productId)
-                intent.putExtra("ProductImage",product.imageUrl)
+                val product =  itemList[position] //chỗ này thêm copy constructor
+                val intent= Intent(context,ViewProductMain::class.java)
+                intent.putExtra("Product",product)
                 context.startActivity(intent) //mở intent
             }
         )

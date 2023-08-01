@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 class ViewProductMain : AppCompatActivity() {
     companion object{
         @JvmStatic
-        lateinit var currentProduct: AppController.Product
+        lateinit var currentProduct: Product
     }
     lateinit var bottomNavigationHandler: BottomNavigationHandler
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,30 +34,25 @@ class ViewProductMain : AppCompatActivity() {
         setContentView(R.layout.activity_view_product)
 
         val intent = getIntent()
-        val name = intent.getStringExtra("ProductName")!!
-        val price = intent.getLongExtra("ProductPrice",0)
-        val productId = intent.getStringExtra("ProductId")!!
-        val productImage = intent.getStringExtra("ProductImage")!!
+        currentProduct=intent.getSerializableExtra("Product") as Product
 
-        //tạo product tương ứng
-        currentProduct=AppController.Product(name,price,productImage,productId)
 
         val productName: TextView
         val productPrice: TextView
         val productDescription: TextView
-
         productName = findViewById(R.id.product_title)
         productPrice = findViewById(R.id.product_price)
         productDescription = findViewById(R.id.product_description)
-        productName.text = name
-        productPrice.text = AppController.reformatNumber(price)+" VNĐ"
+
+        productName.text = currentProduct.name
+        productPrice.text = AppController.reformatNumber(currentProduct.price)+" VNĐ"
 
         //đặt hình ảnh sản phẩm
         val imgView = findViewById<ImageView>(R.id.product_image)
-        findProductImage(productImage, imgView, this)
+        findProductImage(currentProduct.imageUrl, imgView, this)
 
         //mô tả sản phẩm
-        getDescription(productId, productDescription) //lấy mô tả sản phẩm
+        getDescription(currentProduct.productId, productDescription) //lấy mô tả sản phẩm
         productDescription.textSize = 20f
         val layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -87,7 +82,7 @@ class ViewProductMain : AppCompatActivity() {
             val duration = Toast.LENGTH_SHORT
             lateinit var toast: Toast
             if (!isAlreadyFavorite){
-                val favorite= AppController.Favorite(currentProduct!!)
+                val favorite= Favorite(currentProduct!!)
                 addToFavorite(favorites,favorite)
 
                 toast = Toast.makeText(this, "Đã thêm vào danh sách yêu thích", duration) // in Activity
@@ -96,7 +91,7 @@ class ViewProductMain : AppCompatActivity() {
 
             } //bỏ khỏi favorite (do đã có trong favorite)
             else{
-                removeFavorite(AppController.Favorite(currentProduct))
+                removeFavorite(Favorite(currentProduct))
                 toast = Toast.makeText(this, "Đã xoá khỏi danh sách yêu thích", duration) // in Activity
                 toast.show()
 
@@ -112,7 +107,7 @@ class ViewProductMain : AppCompatActivity() {
 
     fun getDescription(productId: String?, descriptionText: TextView) { //lấy description
         val db = getDatabaseInstance() //truy cập kotlin từ file java
-        val docRef = db.collection(MainActivity.collectionProducts).document(
+        val docRef = db.collection(collectionProducts).document(
             productId!!
         )
 

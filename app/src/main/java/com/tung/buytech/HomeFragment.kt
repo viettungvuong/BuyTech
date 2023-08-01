@@ -65,19 +65,11 @@ class HomeFragment: Fragment() {
                 for (document in querySnapshot) {
                     // Access other fields as needed
                     AppController.bindProductById(document.id) { bindedProduct ->
-                        grid.addView(productView(bindedProduct)) //them product view vao grid layout
+                        grid.addView(ProductView(requireContext(),bindedProduct)) //them product view vao grid layout
                     }
 
                 }
             }
-    }
-
-    //productview là hiện tóm tắt thông tin sản phẩm sau khi tìm kiếm
-    fun productView(product: AppController.Product): ProductView {
-        //tạo productView từ product
-
-        return ProductView(requireContext(),product)
-
     }
 
 

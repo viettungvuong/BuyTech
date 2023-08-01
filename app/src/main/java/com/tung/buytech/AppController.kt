@@ -17,10 +17,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import com.tung.buytech.MainActivity.Companion.collectionProducts
-import com.tung.buytech.MainActivity.Companion.fieldImage
-import com.tung.buytech.MainActivity.Companion.fieldPrice
-import com.tung.buytech.MainActivity.Companion.fieldProduct
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -289,129 +285,13 @@ class AppController {
 
     }
 
-    open class Product(name: String, price: Long, imageUrl: String, productId: String) :
-        java.io.Serializable {
-        public var name: String = name
-        public var price: Long = price
-        public var imageUrl: String = imageUrl
-        public var productId: String = productId
-        //khúc này là constructor của class
-        //observer design pattern
 
-        public var sold = false //đã bán hay chưa
-
-        fun updateSoldStatus(callback: () -> Unit) {
-            val docRef = db.collection(collectionProducts).document(productId).get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val document = task.result
-                        if (document.exists()) {
-                            val inStock = Integer.parseInt(document.getString("stock"))
-
-                            if (inStock > 0) {
-                                this.sold = true //đã bán hết sản phẩm
-                            }
-                        }
-                    }
-
-                }
-        }
-    }
-
-    //inheritance
-    class Favorite(name: String, price: Long, imageFile: String, productId: String) :
-        Product(name, price, imageFile, productId) {
-        constructor(product: Product) : this(
-            product.name,
-            product.price,
-            product.imageUrl,
-            product.productId
-        ) {
-            //constructor thứ hai của class
-        }
-
-        fun notifyMe() {
-            //thông báo khi hết hàng
-            updateSoldStatus() {
-                if (sold) {
-                    var notification = "Mặt hàng đã hết :("
-                    //nếu đã hết hàng thì thông báo
-                }
-
-            } //dùng hàm callback để khi nào xong rồi mới báo
-
-        }
-    }
-
-
-    //thread java
-    //thread để kiểm tra tình trạng món hàng
-    class UpdateThread : Runnable {
-        public override fun run() {
-            //threadpool
-
-        }
-
-    }
 
     fun buy() {
         //hiện purchase screen
     }
 
 
-    class AutoComplete {
-        lateinit var stackAutoComplete: Stack<ArrayList<String>>
-        //stack là để phòng trường hợp người dùng xoá từ thì phải pop ra để lấy lại cái vừa trc đó
-
-        init {
-            lateinit var currentListOfTagsAndKeywords: ArrayList<String>
-
-            //duyệt trong collection Products
-            val collectionRef = getDatabaseInstance().collection("Products").get()
-
-            collectionRef.addOnSuccessListener { result ->
-                for (document in result) {
-                    //thêm tag của một sản phẩm
-                    val currentWords = document["tag"] as LinkedList<String>
-
-                    for (word in currentWords) {
-                        currentListOfTagsAndKeywords.add(word)
-                    }
-                }
-            }
-
-            //sort lại danh sách các từ khoá có thể ở hiện tại theo thứ tự chữ cái
-            currentListOfTagsAndKeywords.sorted()
-
-            stackAutoComplete.add(currentListOfTagsAndKeywords)
-            //thêm list ban đầu vào stack
-        } //cái init này hoạt động như là một constructor
-
-        //khi nhập thêm một kí tự mới thì sẽ gọi hàm này
-        fun autoCompleteAdd(currentlyTyping: String, pos: Int): ArrayList<String> {
-            var currentList = stackAutoComplete.peek()
-            //bài này ta dùng thuật toán 2 pointer vì đã sort list lại rồi
-            //ta chỉ cần tìm phạm vi (từ đầu đến cuối) của các từ khoá có thể có của những kí tự đang nhập
-            //ta sẽ lấy kí tự ở vị trí pos của left và right để so với kí tự hiện tại của currentlyTyping
-            while (currentList.isNotEmpty() && currentList.first()[pos] != currentlyTyping.last()) {
-                currentList.removeFirst()
-            }
-
-            while (currentList.isNotEmpty() && currentList.last()[pos] != currentlyTyping.last()) {
-                currentList.removeLast();
-            }
-
-            stackAutoComplete.push(currentList)
-            //thêm vào stack
-
-            return currentList
-        }
-
-        //khi xoá kí tự thì autocomplete bằng cách pop stack
-        fun autoCompleteRemove(): ArrayList<String> {
-            return stackAutoComplete.pop() //lấy từ stack ra
-        }
-    }
 
     class People(userId: String) {
         lateinit var userId: String
