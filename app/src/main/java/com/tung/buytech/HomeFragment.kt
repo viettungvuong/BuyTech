@@ -1,5 +1,6 @@
 package com.tung.buytech
 
+import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.animation.ObjectAnimator
 import android.os.Bundle
@@ -32,7 +33,7 @@ class HomeFragment: Fragment() {
 
 
         searchBtn.setOnClickListener {
-            moveEditTextToStart(view.findViewById(R.id.search_section))
+            moveToStart(view)
             var toSearch = searchBar.text.toString() //lay string tu searchbar
             search(toSearch, AppController.db)
             searchBtn.hideKeyboard()
@@ -43,7 +44,7 @@ class HomeFragment: Fragment() {
         return view
     }
 
-    private fun moveEditTextToStart(view: View) {
+    private fun moveToStart(view: View) {
         val textViewAnimator = AnimatorInflater.loadAnimator(requireContext(),R.animator.search_bar_animator)
         textViewAnimator.setTarget(view)
         textViewAnimator.start()
