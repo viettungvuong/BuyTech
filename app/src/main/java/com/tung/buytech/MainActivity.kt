@@ -50,89 +50,16 @@ class MainActivity : AppCompatActivity() {
         var fieldImage = "image"
     }
 
-
-    public fun getCollectionName(): String {
-        return collectionProducts
-    }
-
     lateinit var bottomNavigationHandler: BottomNavigationHandler
-
-
-    override fun onStart() {
-        super.onStart()
-        FirebaseApp.initializeApp(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        var searchBtn = findViewById<Button>(R.id.search)
-        var searchBar = findViewById<TextInputEditText>(R.id.productSearch)
-
-
-        searchBtn.setOnClickListener(
-            View.OnClickListener {
-                var toSearch = searchBar.text.toString() //lay string tu searchbar
-                search(toSearch, db)
-                searchBtn.hideKeyboard()
-            }
-        )
-
-        var navBar = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationHandler=BottomNavigationHandler(this,navBar)
-
+        FirebaseApp.initializeApp(this)
         updateFavorite() //cập nhật danh sách favorite
     }
 
-    fun search(productName: String, db: FirebaseFirestore) {
-        var grid =  findViewById<GridLayout>(R.id.suggestedProducts)
-
-        //search và thêm vào grid
-        suggestions(productName, db, grid)
-    }
-
-
-
-    //hiện kết quả tìm kiếm
-    fun suggestions(productName: String, db: FirebaseFirestore, grid: GridLayout) {
-        //chiến thuật là ta sẽ gom lại những cái sản phẩm có tên đó
-        //ta sẽ cho biết giá trung bình, giá cao nhất và giá rẻ nhất
-        grid.removeAllViews() //xoá hết mọi view
-
-        db.collection(collectionProducts)
-            .whereEqualTo(fieldProduct, productName)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                // Process the query results
-                for (document in querySnapshot) {
-                    // Access other fields as needed
-                    bindProductById(document.id) { bindedProduct ->
-                        grid.addView(productView(bindedProduct)) //them product view vao grid layout
-                    }
-
-                }
-            }
-            .addOnFailureListener { exception ->
-                // Handle any errors
-                println("Error getting documents: $exception")
-            }
-    }
-
-    //productview là hiện tóm tắt thông tin sản phẩm sau khi tìm kiếm
-    fun productView(product: AppController.Product): ProductView {
-        //tạo productView từ product
-
-       return ProductView(this,product)
-
-    }
-
-
-    fun View.hideKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(windowToken, 0)
-    }
 }
 
 class BottomNavigationHandler(activity: Activity, navBar: BottomNavigationView) {
