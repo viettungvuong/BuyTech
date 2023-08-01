@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         var fieldImage = "image"
     }
 
-    lateinit var bottomNavigationHandler: BottomNavigationHandler
+    private lateinit var bottomNavigationHandler: BottomNavigationHandler
 
     private fun setBottomNavChecked(){
         //xử lý trên bottom navigation view hiển thị là đang chọn cái gì
