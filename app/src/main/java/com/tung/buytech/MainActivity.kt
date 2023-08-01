@@ -1,5 +1,6 @@
 package com.tung.buytech
 
+import android.accounts.Account
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -14,6 +15,7 @@ import android.widget.Button
 import android.widget.GridLayout
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.google.android.material.textfield.TextInputEditText
@@ -52,6 +54,11 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var bottomNavigationHandler: BottomNavigationHandler
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -62,35 +69,51 @@ class MainActivity : AppCompatActivity() {
 
 }
 
+const val homeFragmentTag="Home"
+const val cartFragmentTag="Cart"
+const val favoriteFragmentTag="Favorite"
+const val sellFragmentTag="Sell"
+const val accountFragmentTag="Account"
+
 class BottomNavigationHandler(activity: Activity, navBar: BottomNavigationView) {
     //dùng class này để quản lý bottom nav bar gọn hơn
     init {
-        var currentSelected=0
-        navBar.selectedItemId=currentSelected //đặt index cho bottom nav bar
+        var currentSelected = 0
+        navBar.selectedItemId = currentSelected //đặt index cho bottom nav bar
 
         navBar.setOnItemSelectedListener { item ->
-            // do stuff
+            //khi bấm vào sẽ mở fragment tương ứng
+            lateinit var selectedFragment: Fragment
+
+            var tag = ""
+
             when (item.itemId) {
                 R.id.home -> {
-                    val intent = Intent(activity, MainActivity::class.java)
-                    activity.startActivity(intent)
+                    selectedFragment = HomeFragment()
+                    tag = homeFragmentTag
                 }
                 R.id.cart -> {
-                    val intent = Intent(activity, Cart::class.java)
-                    activity.startActivity(intent)
+                    selectedFragment = Cart()
+                    tag = cartFragmentTag
                 }
                 R.id.favorite -> {
-                    val intent = Intent(activity, Favorites::class.java)
-                    activity.startActivity(intent)
+                    selectedFragment = Favorites()
+                    tag = favoriteFragmentTag
                 }
-                R.id.sell -> {
-                    val intent = Intent(activity, SellPage::class.java)
-                    activity.startActivity(intent)
+                R.id.sell ->{
+                    selectedFragment=SellPage()
+                    tag = sellFragmentTag
                 }
                 R.id.account -> {
-                    val intent = Intent(activity, UserPage::class.java)
-                    activity.startActivity(intent)
+                    selectedFragment=UserPage()
+                    tag = accountFragmentTag
                 }
+            }
+
+            if (selectedFragment != null) {
+                (activity as FragmentActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment, selectedFragment)
+                    .addToBackStack(tag).commit() //hiện fragment lên
             }
 
             return@setOnItemSelectedListener true
