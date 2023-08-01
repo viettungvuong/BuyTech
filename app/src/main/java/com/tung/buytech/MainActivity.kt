@@ -57,12 +57,16 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var bottomNavigationHandler: BottomNavigationHandler
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+
+    override fun onStart() {
+        super.onStart()
         FirebaseApp.initializeApp(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportActionBar?.hide()
 
         var searchBtn = findViewById<Button>(R.id.search)
         var searchBar = findViewById<TextInputEditText>(R.id.productSearch)
@@ -104,9 +108,9 @@ class MainActivity : AppCompatActivity() {
                 // Process the query results
                 for (document in querySnapshot) {
                     // Access other fields as needed
-                    bindProductById(document.id,{
-                        bindedProduct->grid.addView(productView(bindedProduct)) //them product view vao grid layout
-                    })
+                    bindProductById(document.id) { bindedProduct ->
+                        grid.addView(productView(bindedProduct)) //them product view vao grid layout
+                    }
 
                 }
             }
@@ -128,5 +132,41 @@ class MainActivity : AppCompatActivity() {
     fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+}
+
+class BottomNavigationHandler(activity: Activity, navBar: BottomNavigationView) {
+    //dùng class này để quản lý bottom nav bar gọn hơn
+    init {
+        var currentSelected=0
+        navBar.selectedItemId=currentSelected //đặt index cho bottom nav bar
+
+        navBar.setOnItemSelectedListener { item ->
+            // do stuff
+            when (item.itemId) {
+                R.id.home -> {
+                    val intent = Intent(activity, MainActivity::class.java)
+                    activity.startActivity(intent)
+                }
+                R.id.cart -> {
+                    val intent = Intent(activity, Cart::class.java)
+                    activity.startActivity(intent)
+                }
+                R.id.favorite -> {
+                    val intent = Intent(activity, Favorites::class.java)
+                    activity.startActivity(intent)
+                }
+                R.id.sell -> {
+                    val intent = Intent(activity, SellPage::class.java)
+                    activity.startActivity(intent)
+                }
+                R.id.account -> {
+                    val intent = Intent(activity, UserPage::class.java)
+                    activity.startActivity(intent)
+                }
+            }
+
+            return@setOnItemSelectedListener true
+        }
     }
 }

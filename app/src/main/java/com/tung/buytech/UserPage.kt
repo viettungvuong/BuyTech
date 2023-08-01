@@ -3,11 +3,14 @@ package com.tung.buytech
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -18,6 +21,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -28,53 +32,48 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class UserPage : AppCompatActivity() {
+class UserPage : Fragment() {
 
-    lateinit var bottomNavigationHandler: BottomNavigationHandler
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.user_page);
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val rootView = inflater.inflate(R.layout.user_page, container, false)
 
-        val signOutBtn = findViewById<Button>(R.id.signOutBtn)
-        val changePasswordBtn = findViewById<Button>(R.id.changePasswordBtn)
+        val signOutBtn = rootView.findViewById<Button>(R.id.signOutBtn)
+        val changePasswordBtn = rootView.findViewById<Button>(R.id.changePasswordBtn)
 
-        val userText = findViewById<TextView>(R.id.userText)
+        val userText = rootView.findViewById<TextView>(R.id.userText)
 
-        var userName = "" //hiện cái gì ở màn hình (phần tên)
+        var userName = "" // Display name on the screen (e.g., email)
 
         val user = Firebase.auth.currentUser
-        if (user==null){
-            userName="Chưa đăng nhập"
+        if (user == null) {
+            userName = "Chưa đăng nhập"
+        } else {
+            userName = user!!.email.toString()
         }
-        else{
-            userName=user!!.email.toString()
+
+        userText.text = userName
+
+        signOutBtn.setOnClickListener {
+            AccountFunctions.signOut(requireContext())
         }
 
-        userText.setText(userName)
-
-        signOutBtn.setOnClickListener(
-            View.OnClickListener {
-                AccountFunctions.signOut(this)
+        changePasswordBtn.setOnClickListener {
+            if (Firebase.auth.currentUser != null) {
+                // User must be signed in before changing the password, so show confirmation dialog first.
+                confirmAccountDialog()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Chưa đăng nhập nên không thể đổi mật khẩu",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        )
+        }
 
-        changePasswordBtn.setOnClickListener(
-            View.OnClickListener {
-                if (Firebase.auth.currentUser!=null) //phải đăng nhập tài khoản rồi mới được
-                      confirmAccountDialog() //xác thực trước
-                else{
-                    Toast.makeText(
-                        this,
-                        "Chưa đăng nhập nên không thể đổi mật khẩu",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                }
-            }
-        )
-
-        var navBar=findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationHandler=BottomNavigationHandler(this,navBar)
-
+        return rootView
     }
 
     //show một dialog để đổi password
@@ -96,12 +95,12 @@ class UserPage : AppCompatActivity() {
             false
         })
 
-        val dialogBuilder = AlertDialog.Builder(this)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .setTitle("Thay đổi mật khẩu")
             .setPositiveButton("Thay đổi") { dialogInterface: DialogInterface, _: Int ->
 
-                AccountFunctions.changePassword(this, newPasswordEditText.text.toString())
+                AccountFunctions.changePassword(requireContext(), newPasswordEditText.text.toString())
                 dialogInterface.dismiss()
             }
             .setNegativeButton("Huỷ") { dialogInterface: DialogInterface, _: Int ->
@@ -132,7 +131,7 @@ class UserPage : AppCompatActivity() {
             false
         })
 
-        val dialogBuilder = AlertDialog.Builder(this)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .setTitle("Xác nhận tác khoản")
             .setPositiveButton("Xác nhận") { dialogInterface: DialogInterface, _: Int ->
@@ -150,7 +149,7 @@ class UserPage : AppCompatActivity() {
 
                 if (!reauthenticateSuccess){
                     Toast.makeText(
-                        this,
+                        requireContext(),
                         "Không thể xác minh tài khoản",
                         Toast.LENGTH_SHORT,
                     ).show()

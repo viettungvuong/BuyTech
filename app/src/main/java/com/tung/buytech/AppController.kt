@@ -42,12 +42,10 @@ class AppController {
             scope.launch {
                 try {
                     imageFromStorage = getDownloadUrl(imageUrl)
-                    // Proceed with the rest of the code, such as creating the `ProductView` instance
                     //Log.d("ImageUrlSuccess", imageFromStorage)
                     Glide.with(context)
                         .load(imageFromStorage)
                         .into(imageView)
-                    // Continue with the rest of the code, e.g., create `ProductView` instance
                 } catch (exception: Exception) {
                     // Handle the exception if download URL retrieval fails
                     println("Error retrieving download URL: ${exception.message}")
@@ -172,7 +170,6 @@ class AppController {
 
         //cập nhật danh sách favorite
         fun updateFavorite(){
-            print("Hello")
 
             //lấy từ collection Favorites
             val getFavorites = db.collection("favorites")

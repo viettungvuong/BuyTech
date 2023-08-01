@@ -76,10 +76,10 @@ class ViewProductMain : AppCompatActivity() {
         }
         //chỉnh button báo hiệu sản phẩm này đã có trong Favorite
 
+        //hỏi mua
         purchaseBtn.setOnClickListener { v: View? ->
             val purchaseScreen = PurchaseScreen(this, currentProduct!!)
-            purchaseScreen.show(supportFragmentManager, "purchase_screen") //hiện fragment
-            //static fragment
+            supportFragmentManager.beginTransaction().replace(R.id.fragment,purchaseScreen).commit() //hiện fragment lên
         }
 
         favoriteBtn.setOnClickListener { v: View? ->

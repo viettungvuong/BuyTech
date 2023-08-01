@@ -22,6 +22,16 @@ import com.google.firebase.ktx.Firebase
 class UserLogin : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
+
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_user_login)
+
         FirebaseApp.initializeApp(this)
 
         val currentUser = Firebase.auth.currentUser
@@ -41,15 +51,6 @@ class UserLogin : AppCompatActivity() {
             startActivity(intent)
             //vào luôn main activity
         }
-
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_login)
-
 
         val userInput = findViewById<TextInputEditText>(R.id.username)
         val passwordInput = findViewById<TextInputEditText>(R.id.password)
