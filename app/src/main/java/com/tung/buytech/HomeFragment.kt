@@ -1,20 +1,19 @@
 package com.tung.buytech
 
-import android.content.Context
+import android.animation.AnimatorInflater
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.GridLayout
-import android.widget.GridView
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tung.buytech.AppController.Companion.hideKeyboard
+
 
 class HomeFragment: Fragment() {
     lateinit var grid: GridLayout
@@ -32,16 +31,22 @@ class HomeFragment: Fragment() {
         grid = view.findViewById(R.id.suggestedProducts) //phần đề xuất sản phẩm
 
 
-        searchBtn.setOnClickListener(
-            View.OnClickListener {
-                var toSearch = searchBar.text.toString() //lay string tu searchbar
-                search(toSearch, AppController.db)
-                searchBtn.hideKeyboard()
-            }
-        )
+        searchBtn.setOnClickListener {
+            moveEditTextToStart(view.findViewById(R.id.search_section))
+            var toSearch = searchBar.text.toString() //lay string tu searchbar
+            search(toSearch, AppController.db)
+            searchBtn.hideKeyboard()
+        }
+
 
 
         return view
+    }
+
+    private fun moveEditTextToStart(view: View) {
+        val textViewAnimator = AnimatorInflater.loadAnimator(requireContext(),R.animator.search_bar_animator)
+        textViewAnimator.setTarget(view)
+        textViewAnimator.start()
     }
 
 
