@@ -80,6 +80,12 @@ class MainActivity : AppCompatActivity() {
         drawerLayout=findViewById(R.id.drawer_layout)
         navigationView=findViewById(R.id.navigation_view)
 
+        val toggle = ActionBarDrawerToggle(
+            this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
         val drawerButton = findViewById<ImageButton>(R.id.drawer_button)
         drawerButton.setOnClickListener {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)){
@@ -88,6 +94,10 @@ class MainActivity : AppCompatActivity() {
             else{
                 drawerLayout.openDrawer(GravityCompat.START)
             }
+        }
+
+        navigationView.setOnClickListener{
+
         }
     }
 
