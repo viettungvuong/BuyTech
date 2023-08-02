@@ -3,9 +3,14 @@ package com.tung.buytech
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 import com.tung.buytech.AppController.Companion.fetchFavorites
 
@@ -23,6 +28,8 @@ const val fieldImage = "image"
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigationHandler: BottomNavigationHandler
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
 
     private fun setBottomNavChecked(){
         //xử lý trên bottom navigation view hiển thị là đang chọn cái gì
@@ -69,6 +76,19 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction().replace(R.id.fragment,HomeFragment()).addToBackStack(
             homeFragmentTag).commit()
+
+        drawerLayout=findViewById(R.id.drawer_layout)
+        navigationView=findViewById(R.id.navigation_view)
+
+        val drawerButton = findViewById<ImageButton>(R.id.drawer_button)
+        drawerButton.setOnClickListener {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
+            else{
+                drawerLayout.openDrawer(GravityCompat.START)
+            }
+        }
     }
 
     override fun onBackPressed() {
