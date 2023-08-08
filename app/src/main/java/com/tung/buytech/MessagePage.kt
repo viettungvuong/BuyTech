@@ -19,15 +19,26 @@ class MessagePage : AppCompatActivity() {
             ).get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    val content = document.get("content") as List<String> //nội dung tin nhắn
-                    val sender = document.get("sender").toString()
-                    val receive = document.get("receive").toString()
+                    val contents = document.get("content") as List<Map<String,Any>> //nội dung tin nhắn là array of map
+                    val a= document.get("a").toString()
+                    val b = document.get("b").toString()
                     val productId = document.get("productId").toString()
-                    //tìm product
+
+                    val messageContents = ArrayList<MessageContent>()
+
+                    //đổi content
+                    for (content in contents){
+                        val text = content["text"].toString()
+                        val sender = content["sender"].toString()
+                        val recipient = content["recipient"].toString()
+                        val time = content["time"].toString() //convert to datetime
+
+                        messageContents.add(MessageContent(text,sender,recipient,time))
+                    }
 
                     AppController.bindProductById(productId){
                         bindedProduct->
-                        val message=Message(content,sender, receive,bindedProduct)
+                        val message=Message(messageContents,a,b,bindedProduct)
                     }
 
                 }

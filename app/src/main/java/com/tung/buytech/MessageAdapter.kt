@@ -10,7 +10,9 @@ class MessageAdapter(private val list: LinkedList<Message>): RecyclerView.Adapte
     inner class MessageHolder(val messageView: View): RecyclerView.ViewHolder(messageView){
 
         fun bind(message: Message){
+            for (content in message.getContent){
 
+            }
         }
     }
 

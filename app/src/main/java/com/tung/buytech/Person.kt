@@ -1,6 +1,9 @@
 package com.tung.buytech
 
-class Person(var userId: String) {
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+
+open class Person(var userId: String) {
     lateinit var name: String
     init {
         this.userId=userId
