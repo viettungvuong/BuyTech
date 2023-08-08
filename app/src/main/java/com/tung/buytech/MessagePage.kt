@@ -25,7 +25,11 @@ class MessagePage : AppCompatActivity() {
                     val productId = document.get("productId").toString()
                     //tìm product
 
-                    val message=Message(content,sender, receive,)
+                    AppController.bindProductById(productId){
+                        bindedProduct->
+                        val message=Message(content,sender, receive,bindedProduct)
+                    }
+
                 }
             }
     }

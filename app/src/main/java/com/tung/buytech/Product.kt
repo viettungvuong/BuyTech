@@ -1,11 +1,7 @@
 package com.tung.buytech
 
-open class Product(name: String, price: Long, imageUrl: String, productId: String) :
+open class Product(var name: String, var price: Long, var imageUrl: String, var productId: String) :
     java.io.Serializable {
-    public var name: String = name
-    public var price: Long = price
-    public var imageUrl: String = imageUrl
-    public var productId: String = productId
     //khúc này là constructor của class
     //observer design pattern
 
