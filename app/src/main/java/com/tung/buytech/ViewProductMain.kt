@@ -81,6 +81,7 @@ class ViewProductMain : AppCompatActivity() {
             //thêm vào favorite (do chưa có trong favorite)
             val duration = Toast.LENGTH_SHORT
             lateinit var toast: Toast
+
             if (!isAlreadyFavorite){
                 val favorite= Favorite(currentProduct!!)
                 addToFavorite(favorites,favorite)
@@ -106,12 +107,11 @@ class ViewProductMain : AppCompatActivity() {
     }
 
     fun getDescription(productId: String?, descriptionText: TextView) { //lấy description
-        val db = getDatabaseInstance() //truy cập kotlin từ file java
-        val docRef = db.collection(collectionProducts).document(
+        val docRef = getDatabaseInstance().collection(collectionProducts).document(
             productId!!
         )
 
-        // Retrieve the document
+        //lấy document
         val document = docRef.get() //Task là một dạng asynchronous (ví dụ như Runnable)
         document.addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -120,6 +120,9 @@ class ViewProductMain : AppCompatActivity() {
                     descriptionText.text = document["description"].toString() //set text
                 } else {
                     //không có document
+                    val toast = Toast.makeText(this,"Không có sản phẩm",Toast.LENGTH_SHORT)
+                    toast.show()
+                    this.finish()
                 }
             } else {
             }
