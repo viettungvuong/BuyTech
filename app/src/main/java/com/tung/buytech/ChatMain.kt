@@ -12,10 +12,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
-import com.tung.buytech.AppController.Companion.bindProductPeople
+import com.tung.buytech.AppController.Companion.bindProductPerson
 import com.tung.buytech.AppController.Companion.db
 import com.tung.buytech.ChatFunctions.Companion.messageFromUsers
-import com.tung.buytech.ChatFunctions.Companion.peopleProducts
+import com.tung.buytech.ChatFunctions.Companion.PersonProducts
 
 class ChatMain : AppCompatActivity() {
 
@@ -24,14 +24,14 @@ class ChatMain : AppCompatActivity() {
         setContentView(R.layout.activity_chat_main)
 
         val messagesRecyclerView=findViewById<RecyclerView>(R.id.messagesList)
-        val messageAdapter=PeopleAdapter(peopleProducts)
+        val messageAdapter=PersonAdapter(PersonProducts)
 
         messageFromUsers.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val querySnapshot = task.result
                 if (querySnapshot != null && !querySnapshot.isEmpty) {
                     //nếu có collection
-                    getAllPeopleMessaged(messageFromUsers,
+                    getAllPersonMessaged(messageFromUsers,
                         {messagesRecyclerView.adapter=messageAdapter})
                 } else {
                     //nếu không có collection
@@ -45,13 +45,13 @@ class ChatMain : AppCompatActivity() {
     }
 
     //lấy danh sách tất cả người đã nhắn
-    fun getAllPeopleMessaged(messages: CollectionReference, callback: ()->Unit){
+    fun getAllPersonMessaged(messages: CollectionReference, callback: ()->Unit){
         messages.get().addOnSuccessListener {
             documents ->
             for (document in documents){
                 //lấy từng id của document ra (cũng là tên user id)
-                bindProductPeople(document.id, {
-                    bindedPeopleProduct -> peopleProducts.add(bindedPeopleProduct)
+                bindProductPerson(document.id, {
+                    bindedPersonProduct -> PersonProducts.add(bindedPersonProduct)
                 })
 
             }

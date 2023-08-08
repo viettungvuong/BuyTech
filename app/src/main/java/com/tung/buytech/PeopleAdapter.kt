@@ -9,19 +9,19 @@ import com.tung.buytech.ChatFunctions.Companion.getMostRecentMessage
 import com.tung.buytech.ChatFunctions.Companion.messageFromUsers
 import java.util.*
 
-class PeopleAdapter(private val list: LinkedList<AppController.PeopleProduct>): RecyclerView.Adapter<PeopleAdapter.PeopleHolder>()  {
-    inner class PeopleHolder(val peopleView: View): RecyclerView.ViewHolder(peopleView){
+class PersonAdapter(private val list: LinkedList<PersonProduct>): RecyclerView.Adapter<PersonAdapter.PersonHolder>()  {
+    inner class PersonHolder(val PersonView: View): RecyclerView.ViewHolder(PersonView){
         lateinit var chatName: TextView
         lateinit var lastMessage: TextView
         lateinit var lastSent: TextView
         init {
-            chatName=peopleView.findViewById(R.id.name)
-            lastMessage=peopleView.findViewById(R.id.lastMessage)
-            lastSent=peopleView.findViewById(R.id.time)
+            chatName=PersonView.findViewById(R.id.name)
+            lastMessage=PersonView.findViewById(R.id.lastMessage)
+            lastSent=PersonView.findViewById(R.id.time)
         }
-        fun bind(peopleProduct: AppController.PeopleProduct){
-            chatName.text=peopleProduct.people.name+" - "+peopleProduct.product.name
-            getMostRecentMessage(messageFromUsers,peopleProduct,{lastMessageContent,lastTimestamp->
+        fun bind(PersonProduct: PersonProduct){
+            chatName.text=PersonProduct.getPerson.name+" - "+PersonProduct.getProduct.name
+            getMostRecentMessage(messageFromUsers,PersonProduct,{lastMessageContent,lastTimestamp->
                 lastMessage.text=lastMessageContent
                 lastSent.text=lastTimestamp
             })
@@ -29,16 +29,16 @@ class PeopleAdapter(private val list: LinkedList<AppController.PeopleProduct>): 
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.people_view,parent) //lấy view cho adapter
-        return PeopleHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.person_view,parent) //lấy view cho adapter
+        return PersonHolder(itemView)
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    override fun onBindViewHolder(holder: PeopleHolder, position: Int) {
+    override fun onBindViewHolder(holder: PersonHolder, position: Int) {
         val currentItem = list[position] //lấy vật ở vị trí thứ position trong list
         holder.bind(currentItem)
     }

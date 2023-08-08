@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import java.util.LinkedList
 
-class MessageAdapter(private val list: LinkedList<AppController.Message>): RecyclerView.Adapter<MessageAdapter.MessageHolder>() {
+class MessageAdapter(private val list: LinkedList<Message>): RecyclerView.Adapter<MessageAdapter.MessageHolder>() {
     inner class MessageHolder(val messageView: View): RecyclerView.ViewHolder(messageView){
 
-        fun bind(message: AppController.Message){
+        fun bind(message: Message){
 
         }
     }

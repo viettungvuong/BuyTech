@@ -208,12 +208,12 @@ class AppController {
         }
 
         @JvmStatic
-        fun bindProductPeople(documentName: String, callback: (PeopleProduct) -> Unit){
+        fun bindProductPerson(documentName: String, callback: (PersonProduct) -> Unit){
             val list=documentName.split("-")
             val productId=list[1]
-            val peopleId=list[0]
+            val PersonId=list[0]
             bindProductById(productId) { bindedProduct ->
-                callback(PeopleProduct(People(peopleId), bindedProduct)) //trả về peopleProduct
+                callback(PersonProduct(Person(PersonId), bindedProduct)) //trả về PersonProduct
             }
         }
 
@@ -244,32 +244,6 @@ class AppController {
     }
 
 
-
-    class People(userId: String) {
-        lateinit var userId: String
-        lateinit var name: String
-        init {
-            this.userId=userId
-            //lấy user từ database
-            db.collection("users").document(userId).get().addOnSuccessListener {
-                document->
-                this.name=document.getString("name").toString()
-            }
-        }
-    }
-
-    class PeopleProduct(people: People, product: Product){
-        lateinit var people: People
-        lateinit var product: Product
-        init {
-            this.people=people
-            this.product=product
-        }
-    }
-
-    class Message(content: String, a: People, b: People) {
-
-    }
 
 
 

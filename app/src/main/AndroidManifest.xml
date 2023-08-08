@@ -17,7 +17,7 @@
             android:name=".TagOverview"
             android:exported="false" />
         <activity
-            android:name=".ChatPeople"
+            android:name=".ChatPerson"
             android:exported="false" />
         <activity
             android:name=".Favorites"

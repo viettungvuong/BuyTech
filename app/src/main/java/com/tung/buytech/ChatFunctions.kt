@@ -12,12 +12,12 @@ class ChatFunctions {
         var messageFromUsers= AppController.db.collection("message"+ Firebase.auth.currentUser!!.uid)
 
         @JvmField
-        var peopleProducts = LinkedList<AppController.PeopleProduct>() //danh sách những người đã nhắn tin
+        var PersonProducts = LinkedList<PersonProduct>() //danh sách những người đã nhắn tin
 
         @JvmStatic
         //lấy tin nhắn gần nhất từ một người
-        fun getMostRecentMessage(messages: CollectionReference, peopleProduct: AppController.PeopleProduct, callback: (String, String) -> Unit){
-            messages.document(peopleProduct.people.userId+" "+peopleProduct.product.productId)
+        fun getMostRecentMessage(messages: CollectionReference, PersonProduct: PersonProduct, callback: (String, String) -> Unit){
+            messages.document(PersonProduct.getPerson.userId+" "+PersonProduct.getProduct.productId)
                 .collection("messages")
                 .orderBy("timestamp", Query.Direction.DESCENDING).limit(1)
                 .get() //lấy tin nhắn mới nhất
