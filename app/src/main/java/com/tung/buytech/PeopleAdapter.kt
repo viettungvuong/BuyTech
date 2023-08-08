@@ -21,10 +21,10 @@ class PersonAdapter(private val list: LinkedList<PersonProduct>): RecyclerView.A
         }
         fun bind(PersonProduct: PersonProduct){
             chatName.text=PersonProduct.getPerson.name+" - "+PersonProduct.getProduct.name
-            getMostRecentMessage(messageFromUsers,PersonProduct,{lastMessageContent,lastTimestamp->
-                lastMessage.text=lastMessageContent
-                lastSent.text=lastTimestamp
-            })
+            getMostRecentMessage(messageFromUsers,PersonProduct) { lastMessageContent, lastTimestamp ->
+                lastMessage.text = lastMessageContent
+                lastSent.text = lastTimestamp
+            }
             //callback để lấy nội dung tin nhắn cuối cùng
         }
     }

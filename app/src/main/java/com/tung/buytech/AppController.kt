@@ -30,6 +30,18 @@ import kotlin.collections.ArrayList
 import kotlin.coroutines.suspendCoroutine
 import kotlin.math.min
 
+const val homeFragmentTag="Home"
+const val cartFragmentTag="Cart"
+const val favoriteFragmentTag="Favorite"
+const val sellFragmentTag="Sell"
+const val accountFragmentTag="Account"
+
+const val collectionProducts = "Items"
+const val collectionUsers= "Users"
+
+const val fieldProduct = "name"
+const val fieldPrice = "price"
+const val fieldImage = "image"
 const val fieldProductId = "productId"
 
 class AppController {
@@ -55,7 +67,7 @@ class AppController {
         }
 
         @JvmField
-        val productList: LinkedList<Product> = LinkedList()
+        val productList= LinkedList<Product>()
         var db = Firebase.firestore
         val storageRef = Firebase.storage.reference
 

@@ -10,6 +10,8 @@ class Person(var userId: String) {
             this.name=document.getString("name").toString()
         }
     }
+
+
 }
 
 class PersonProduct(private var person: Person, private var product: Product){

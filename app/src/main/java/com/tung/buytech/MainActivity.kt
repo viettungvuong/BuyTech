@@ -14,16 +14,7 @@ import com.google.android.material.navigation.NavigationView
 
 import com.tung.buytech.AppController.Companion.fetchFavorites
 
-const val homeFragmentTag="Home"
-const val cartFragmentTag="Cart"
-const val favoriteFragmentTag="Favorite"
-const val sellFragmentTag="Sell"
-const val accountFragmentTag="Account"
 
-const val collectionProducts = "Items"
-const val fieldProduct = "name"
-const val fieldPrice = "price"
-const val fieldImage = "image"
 
 class MainActivity : AppCompatActivity() {
 

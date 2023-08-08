@@ -35,7 +35,7 @@ class HomeFragment: Fragment() {
         searchBtn.setOnClickListener {
             moveToStart(view)
             var toSearch = searchBar.text.toString() //lay string tu searchbar
-            search(toSearch, AppController.db)
+            search(toSearch)
             searchBtn.hideKeyboard()
         }
 
@@ -51,20 +51,20 @@ class HomeFragment: Fragment() {
     }
 
 
-    fun search(productName: String, db: FirebaseFirestore) {
+    fun search(productName: String) {
         //search sản phẩm và thêm product view vào grid
-        suggestions(productName, db, grid)
+        suggestions(productName, grid)
     }
 
 
 
     //hiện kết quả tìm kiếm
-    fun suggestions(productName: String, db: FirebaseFirestore, grid: GridLayout) {
+    fun suggestions(productName: String, grid: GridLayout) {
         //chiến thuật là ta sẽ gom lại những cái sản phẩm có tên đó
         //ta sẽ cho biết giá trung bình, giá cao nhất và giá rẻ nhất
         grid.removeAllViews() //xoá hết mọi view
 
-        db.collection(collectionProducts)
+        AppController.db.collection(collectionProducts)
             .whereEqualTo(fieldProduct, productName)
             .get()
             .addOnSuccessListener { querySnapshot ->
