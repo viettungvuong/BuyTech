@@ -29,7 +29,7 @@ class HomeFragment: Fragment() {
         var searchBtn = view.findViewById<Button>(R.id.search)
         var searchBar = view.findViewById<TextInputEditText>(R.id.productSearch)
 
-        grid = view.findViewById(R.id.suggestedProducts) //phần đề xuất sản phẩm
+        grid = view.findViewById(R.id.suggestedProducts) //phần đề xuất sản phẩm (grid layout)
 
 
         searchBtn.setOnClickListener {
