@@ -1,6 +1,7 @@
 package com.tung.buytech
 
 import com.google.type.DateTime
+import java.time.LocalDateTime
 
 class Message(private var content: List<MessageContent>, private var person1: String, private var person2: String, private var product: Product) {
     val getContent: List<MessageContent>
@@ -16,4 +17,4 @@ class Message(private var content: List<MessageContent>, private var person1: St
         get() = product
 }
 
-class MessageContent(val text: String, val senderId: String, val recipientId: String, val time: DateTime)
+class MessageContent(val text: String, val senderId: String, val recipientId: String, val time: LocalDateTime)

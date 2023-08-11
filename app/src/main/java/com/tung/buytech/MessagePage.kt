@@ -1,12 +1,18 @@
 package com.tung.buytech
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Filter
 import com.google.firebase.ktx.Firebase
+import com.google.type.DateTime
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class MessagePage : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     fun fetchMessages(product: Product){ //lấy tin nhắn
         val userId = Firebase.auth.currentUser?.uid
 
@@ -33,7 +39,10 @@ class MessagePage : AppCompatActivity() {
                         val recipient = content["recipient"].toString()
                         val time = content["time"].toString() //convert to datetime
 
-                        messageContents.add(MessageContent(text,sender,recipient,time))
+                        val formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yy")
+
+                        messageContents.add(MessageContent(text,sender,recipient,
+                            LocalDateTime.parse(time,formatter)))
                     }
 
                     AppController.bindProductById(productId){
