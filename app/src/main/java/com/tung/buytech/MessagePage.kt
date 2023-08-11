@@ -8,6 +8,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Filter
 import com.google.firebase.ktx.Firebase
 import com.google.type.DateTime
+import com.tung.buytech.AppController.Companion.formatter
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -38,8 +39,6 @@ class MessagePage : AppCompatActivity() {
                         val sender = content["sender"].toString()
                         val recipient = content["recipient"].toString()
                         val time = content["time"].toString() //convert to datetime
-
-                        val formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yy")
 
                         messageContents.add(MessageContent(text,sender,recipient,
                             LocalDateTime.parse(time,formatter)))

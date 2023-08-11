@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
@@ -42,8 +43,13 @@ const val fieldPrice = "price"
 const val fieldImage = "image"
 const val fieldProductId = "productId"
 
+
 class AppController {
     companion object {
+        @RequiresApi(Build.VERSION_CODES.O)
+        @JvmField
+        val formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yy")
+
         @JvmStatic
         fun findProductImage(imageUrl: String, imageView: ImageView, context: Context) {
             //lấy link ảnh trên storage
