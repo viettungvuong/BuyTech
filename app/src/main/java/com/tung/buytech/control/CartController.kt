@@ -14,7 +14,7 @@ class CartController {
         var carts = ArrayList<Cart>()
 
         @JvmStatic
-        fun retrieveAllCarts(callback: ()->Unit){
+        fun retrieveAllCarts(){
             db.collection(collectionUsers).document(Firebase.auth.currentUser!!.uid).get().addOnSuccessListener {
                 document -> numberOfCarts=(document.getLong("number-of-carts")?:0L).toInt()
             }
@@ -32,12 +32,8 @@ class CartController {
                         carts.add(currentCart!!) //thêm vào danh sách các cart
                     }
 
-                    callback()
+                    cart=carts[numberOfCarts] //resume cart
                 }
-        }
-
-        fun resumeCart(){
-            cart=carts[numberOfCarts]
         }
     }
 
