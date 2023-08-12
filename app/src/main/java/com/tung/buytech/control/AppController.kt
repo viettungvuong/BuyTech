@@ -1,9 +1,7 @@
-package com.tung.buytech
+package com.tung.buytech.control
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -16,18 +14,15 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import com.tung.buytech.objects.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
-import java.util.concurrent.Future
 import kotlin.collections.ArrayList
 import kotlin.coroutines.suspendCoroutine
-import kotlin.math.min
 
 const val homeFragmentTag="Home"
 const val cartFragmentTag="Cart"
@@ -79,7 +74,7 @@ class AppController {
 
         var favorites = LinkedList<Favorite>()
 
-        var cart = LinkedList<Product>() //giỏ hàng
+        var cart = Cart() //giỏ hàng
 
         var updateThreads = Executors.newSingleThreadScheduledExecutor()
         //thread pool
@@ -92,7 +87,7 @@ class AppController {
 
         @JvmStatic
         fun getDatabaseInstance(): FirebaseFirestore {
-            return this.db
+            return db
         }
 
         @JvmStatic

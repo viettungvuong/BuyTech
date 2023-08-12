@@ -1,9 +1,11 @@
-package com.tung.buytech
+package com.tung.buytech.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.tung.buytech.objects.Message
+import com.tung.buytech.R
 import java.util.LinkedList
 
 class MessageAdapter(private val list: LinkedList<Message>): RecyclerView.Adapter<MessageAdapter.MessageHolder>() {

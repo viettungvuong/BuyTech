@@ -1,19 +1,20 @@
-package com.tung.buytech
+package com.tung.buytech.fragments
 
-import android.animation.Animator
 import android.animation.AnimatorInflater
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.GridLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.firestore.FirebaseFirestore
-import com.tung.buytech.AppController.Companion.hideKeyboard
+import com.tung.buytech.*
+import com.tung.buytech.activities.ProductView
+import com.tung.buytech.control.AppController
+import com.tung.buytech.control.AppController.Companion.hideKeyboard
+import com.tung.buytech.control.collectionProducts
+import com.tung.buytech.control.fieldProduct
 
 
 class HomeFragment: Fragment() {
@@ -45,7 +46,9 @@ class HomeFragment: Fragment() {
     }
 
     private fun moveToStart(view: View) {
-        val textViewAnimator = AnimatorInflater.loadAnimator(requireContext(),R.animator.search_bar_animator)
+        val textViewAnimator = AnimatorInflater.loadAnimator(requireContext(),
+            R.animator.search_bar_animator
+        )
         textViewAnimator.setTarget(view)
         textViewAnimator.start()
     }
@@ -72,7 +75,12 @@ class HomeFragment: Fragment() {
                 for (document in querySnapshot) {
                     // Access other fields as needed
                     AppController.bindProductById(document.id) { bindedProduct ->
-                        grid.addView(ProductView(requireContext(),bindedProduct)) //them product view vao grid layout
+                        grid.addView(
+                            ProductView(
+                                requireContext(),
+                                bindedProduct
+                            )
+                        ) //them product view vao grid layout
                     }
 
                 }

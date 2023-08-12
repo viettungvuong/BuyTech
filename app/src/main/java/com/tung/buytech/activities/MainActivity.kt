@@ -1,4 +1,4 @@
-package com.tung.buytech
+package com.tung.buytech.activities
 
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
@@ -11,9 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.tung.buytech.CartPage
+import com.tung.buytech.R
+import com.tung.buytech.control.*
 
-import com.tung.buytech.AppController.Companion.fetchFavorites
-
+import com.tung.buytech.control.AppController.Companion.fetchFavorites
+import com.tung.buytech.fragments.Favorites
+import com.tung.buytech.fragments.HomeFragment
+import com.tung.buytech.fragments.UserPage
 
 
 class MainActivity : AppCompatActivity() {
@@ -65,14 +70,15 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationHandler =
             BottomNavigationHandler(this, bottomNavigationView) //handler bottom navigation view
 
-        supportFragmentManager.beginTransaction().replace(R.id.fragment,HomeFragment()).addToBackStack(
-            homeFragmentTag).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment, HomeFragment()).addToBackStack(
+            homeFragmentTag
+        ).commit()
 
         drawerLayout=findViewById(R.id.drawer_layout)
         navigationView=findViewById(R.id.navigation_view)
 
         val toggle = ActionBarDrawerToggle(
-            this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close
+            this,drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -134,11 +140,11 @@ class BottomNavigationHandler(activity: Activity, navBar: BottomNavigationView) 
                     tag = favoriteFragmentTag
                 }
                 R.id.sell ->{
-                    selectedFragment=SellPage()
+                    selectedFragment= SellPage()
                     tag = sellFragmentTag
                 }
                 R.id.account -> {
-                    selectedFragment=UserPage()
+                    selectedFragment= UserPage()
                     tag = accountFragmentTag
                 }
             }

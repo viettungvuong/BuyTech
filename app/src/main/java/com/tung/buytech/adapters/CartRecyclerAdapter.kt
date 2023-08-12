@@ -1,19 +1,18 @@
-package com.tung.buytech
+package com.tung.buytech.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
-import com.tung.buytech.AppController.Companion.findProductImage
-import com.tung.buytech.AppController.Companion.reformatNumber
+import com.tung.buytech.control.AppController.Companion.findProductImage
+import com.tung.buytech.control.AppController.Companion.reformatNumber
+import com.tung.buytech.objects.Product
+import com.tung.buytech.R
+import com.tung.buytech.activities.ViewProductMain
 import java.util.*
 
 class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList<out Product>) :
@@ -74,7 +73,7 @@ class CartRecyclerAdapter(val context: Context, private val itemList: LinkedList
             View.OnClickListener {
                 //thêm on click Listener
                 val product =  itemList[position] //chỗ này thêm copy constructor
-                val intent= Intent(context,ViewProductMain::class.java)
+                val intent= Intent(context, ViewProductMain::class.java)
                 intent.putExtra("Product",product)
                 context.startActivity(intent) //mở intent
             }

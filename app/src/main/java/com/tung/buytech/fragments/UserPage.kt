@@ -1,36 +1,24 @@
-package com.tung.buytech
+package com.tung.buytech.fragments
 
-import android.app.Activity
-import android.content.ContentValues
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.tung.buytech.control.AccountFunctions
+import com.tung.buytech.R
 
 class UserPage : Fragment() {
 
@@ -100,7 +88,10 @@ class UserPage : Fragment() {
             .setTitle("Thay đổi mật khẩu")
             .setPositiveButton("Thay đổi") { dialogInterface: DialogInterface, _: Int ->
 
-                AccountFunctions.changePassword(requireContext(), newPasswordEditText.text.toString())
+                AccountFunctions.changePassword(
+                    requireContext(),
+                    newPasswordEditText.text.toString()
+                )
                 dialogInterface.dismiss()
             }
             .setNegativeButton("Huỷ") { dialogInterface: DialogInterface, _: Int ->

@@ -1,9 +1,10 @@
-package com.tung.buytech
+package com.tung.buytech.control
 
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
+import com.tung.buytech.objects.PersonProduct
 import java.util.LinkedList
 
 class ChatFunctions {

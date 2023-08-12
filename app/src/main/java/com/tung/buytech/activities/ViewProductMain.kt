@@ -1,26 +1,23 @@
-package com.tung.buytech
+package com.tung.buytech.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
-import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.tung.buytech.AppController.Companion.addToFavorite
-import com.tung.buytech.AppController.Companion.favorites
-import com.tung.buytech.AppController.Companion.findProductImage
-import com.tung.buytech.AppController.Companion.getDatabaseInstance
-import com.tung.buytech.AppController.Companion.isAlreadyFavorite
-import com.tung.buytech.AppController.Companion.removeFavorite
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.tung.buytech.R
+import com.tung.buytech.control.AppController
+import com.tung.buytech.control.AppController.Companion.addToFavorite
+import com.tung.buytech.control.AppController.Companion.favorites
+import com.tung.buytech.control.AppController.Companion.findProductImage
+import com.tung.buytech.control.AppController.Companion.getDatabaseInstance
+import com.tung.buytech.control.AppController.Companion.isAlreadyFavorite
+import com.tung.buytech.control.AppController.Companion.removeFavorite
+import com.tung.buytech.control.collectionProducts
+import com.tung.buytech.fragments.PurchaseScreen
+import com.tung.buytech.objects.Favorite
+import com.tung.buytech.objects.Product
 
 
 class ViewProductMain : AppCompatActivity() {
@@ -34,7 +31,7 @@ class ViewProductMain : AppCompatActivity() {
         setContentView(R.layout.activity_view_product)
 
         val intent = getIntent()
-        currentProduct=intent.getSerializableExtra("Product") as Product
+        currentProduct =intent.getSerializableExtra("Product") as Product
 
 
         val productName: TextView
@@ -67,7 +64,9 @@ class ViewProductMain : AppCompatActivity() {
         //kiểm tra sản phẩm có trong favorite
         var isAlreadyFavorite = isAlreadyFavorite(currentProduct!!)
         if (isAlreadyFavorite){
-            favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.already_favorite))
+            favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,
+                R.drawable.already_favorite
+            ))
         }
         //chỉnh button báo hiệu sản phẩm này đã có trong Favorite
 
@@ -88,7 +87,9 @@ class ViewProductMain : AppCompatActivity() {
 
                 toast = Toast.makeText(this, "Đã thêm vào danh sách yêu thích", duration) // in Activity
 
-                favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.already_favorite))
+                favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,
+                    R.drawable.already_favorite
+                ))
 
             } //bỏ khỏi favorite (do đã có trong favorite)
             else{
@@ -96,7 +97,9 @@ class ViewProductMain : AppCompatActivity() {
                 toast = Toast.makeText(this, "Đã xoá khỏi danh sách yêu thích", duration) // in Activity
                 toast.show()
 
-                favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.favorite_btn))
+                favoriteBtn.setImageDrawable(AppCompatResources.getDrawable(this,
+                    R.drawable.favorite_btn
+                ))
             }
             toast.show()
             isAlreadyFavorite=!isAlreadyFavorite

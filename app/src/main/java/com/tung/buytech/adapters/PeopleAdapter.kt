@@ -1,12 +1,14 @@
-package com.tung.buytech
+package com.tung.buytech.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.tung.buytech.ChatFunctions.Companion.getMostRecentMessage
-import com.tung.buytech.ChatFunctions.Companion.messageFromUsers
+import com.tung.buytech.control.ChatFunctions.Companion.getMostRecentMessage
+import com.tung.buytech.control.ChatFunctions.Companion.messageFromUsers
+import com.tung.buytech.objects.PersonProduct
+import com.tung.buytech.R
 import java.util.*
 
 class PersonAdapter(private val list: LinkedList<PersonProduct>): RecyclerView.Adapter<PersonAdapter.PersonHolder>()  {

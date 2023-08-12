@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.tung.buytech.adapters.CartRecyclerAdapter
+import com.tung.buytech.control.AppController
+import com.tung.buytech.objects.Product
 import java.util.LinkedList
 import kotlin.math.roundToInt
 
@@ -33,7 +36,7 @@ class CartPage
         // Set recyclerView in LinearLayoutManager
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
         recyclerView.layoutManager = layoutManager
-        val adapter = CartRecyclerAdapter(requireContext(), AppController.cart)
+        val adapter = CartRecyclerAdapter(requireContext(), AppController.cart.cartList)
         swipeRecyclerHelper=SwipeRecyclerHelper(adapter,requireContext())
 
         recyclerView.adapter = adapter

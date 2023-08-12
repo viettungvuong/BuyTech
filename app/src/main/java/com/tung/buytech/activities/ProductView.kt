@@ -1,8 +1,7 @@
-package com.tung.buytech
+package com.tung.buytech.activities
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -10,11 +9,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import com.tung.buytech.AppController.Companion.findProductImage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.tung.buytech.R
+import com.tung.buytech.control.AppController
+import com.tung.buytech.control.AppController.Companion.findProductImage
+import com.tung.buytech.objects.Product
 
 
 class ProductView @JvmOverloads constructor(
@@ -89,7 +87,7 @@ class ProductView @JvmOverloads constructor(
 
     fun clickProduct(): OnClickListener{
         return View.OnClickListener {
-            val intent: Intent= Intent(context,ViewProductMain::class.java)
+            val intent: Intent= Intent(context, ViewProductMain::class.java)
             intent.putExtra("Product",currentProduct)
             context.startActivity(intent) //mở intent
         }

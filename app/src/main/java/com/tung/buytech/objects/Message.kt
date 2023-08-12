@@ -1,6 +1,5 @@
-package com.tung.buytech
+package com.tung.buytech.objects
 
-import com.google.type.DateTime
 import java.time.LocalDateTime
 
 class Message(private var content: List<MessageContent>, private var person1: String, private var person2: String, private var product: Product) {

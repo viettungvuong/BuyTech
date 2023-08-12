@@ -1,4 +1,4 @@
-package com.tung.buytech
+package com.tung.buytech.activities
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -7,10 +7,14 @@ import androidx.annotation.RequiresApi
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Filter
 import com.google.firebase.ktx.Firebase
-import com.google.type.DateTime
-import com.tung.buytech.AppController.Companion.formatter
+import com.tung.buytech.R
+import com.tung.buytech.control.AppController
+import com.tung.buytech.control.AppController.Companion.formatter
+import com.tung.buytech.control.collectionProducts
+import com.tung.buytech.objects.Message
+import com.tung.buytech.objects.MessageContent
+import com.tung.buytech.objects.Product
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class MessagePage : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -40,13 +44,15 @@ class MessagePage : AppCompatActivity() {
                         val recipient = content["recipient"].toString()
                         val time = content["time"].toString() //convert to datetime
 
-                        messageContents.add(MessageContent(text,sender,recipient,
-                            LocalDateTime.parse(time,formatter)))
+                        messageContents.add(
+                            MessageContent(text,sender,recipient,
+                            LocalDateTime.parse(time,formatter))
+                        )
                     }
 
                     AppController.bindProductById(productId){
                         bindedProduct->
-                        val message=Message(messageContents,a,b,bindedProduct)
+                        val message= Message(messageContents,a,b,bindedProduct)
                     }
 
                 }

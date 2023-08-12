@@ -1,7 +1,6 @@
-package com.tung.buytech
+package com.tung.buytech.objects
 
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.tung.buytech.control.AppController
 
 open class Person(var userId: String) {
     lateinit var name: String

@@ -1,12 +1,15 @@
-package com.tung.buytech
+package com.tung.buytech.objects
+
+import com.tung.buytech.control.AppController
+import com.tung.buytech.control.collectionProducts
 
 open class Product(var name: String, var price: Long, var imageUrl: String, var productId: String) :
     java.io.Serializable {
-    //khúc này là constructor của class
+
+
+    var sold = false //đã bán hay chưa
+
     //observer design pattern
-
-    public var sold = false //đã bán hay chưa
-
     fun updateSoldStatus(callback: () -> Unit) {
         val docRef = AppController.db.collection(collectionProducts).document(productId).get()
             .addOnCompleteListener { task ->
@@ -23,6 +26,7 @@ open class Product(var name: String, var price: Long, var imageUrl: String, var 
 
             }
     }
+
 }
 
 class Favorite(name: String, price: Long, imageFile: String, productId: String) :

@@ -1,20 +1,17 @@
-package com.tung.buytech
+package com.tung.buytech.fragments
 
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import com.google.android.gms.tasks.Task
-import com.tung.buytech.AppController.Companion.getDatabaseInstance
+import com.tung.buytech.control.AppController.Companion.getDatabaseInstance
+import com.tung.buytech.R
+import com.tung.buytech.objects.Product
 
 class PurchaseScreen
 constructor(

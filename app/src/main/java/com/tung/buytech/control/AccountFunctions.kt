@@ -1,17 +1,15 @@
-package com.tung.buytech
+package com.tung.buytech.control
 
 import android.app.Activity
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
-import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.tung.buytech.AppController.Companion.db
+import com.tung.buytech.activities.MainActivity
+import com.tung.buytech.control.AppController.Companion.db
 
 
 class AccountFunctions {
@@ -30,7 +28,7 @@ class AccountFunctions {
                             Toast.LENGTH_SHORT,
                         ).show()
                         val intent =
-                            Intent(context,MainActivity::class.java)
+                            Intent(context, MainActivity::class.java)
                         activity.startActivity(intent)
 
                     } else {
@@ -65,7 +63,7 @@ class AccountFunctions {
                         val accountFirebase = db.collection("users").document(Firebase.auth.currentUser!!.uid).set(userData)
 
                         val intent =
-                            Intent(context,MainActivity::class.java)
+                            Intent(context, MainActivity::class.java)
                         activity.startActivity(intent)
                     } else {
                         // If sign in fails, display a message to the user.

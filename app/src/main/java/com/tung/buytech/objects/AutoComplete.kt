@@ -1,5 +1,6 @@
-package com.tung.buytech
+package com.tung.buytech.objects
 
+import com.tung.buytech.control.AppController
 import java.util.*
 import kotlin.collections.ArrayList
 
