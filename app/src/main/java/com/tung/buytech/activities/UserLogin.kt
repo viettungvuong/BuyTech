@@ -32,9 +32,6 @@ class UserLogin : AppCompatActivity() {
         val currentUser = Firebase.auth.currentUser
 
         if (currentUser != null) {
-            //Log.d("User",currentUser.email.toString())
-        }
-        if (currentUser != null) {
             Toast.makeText(
                 this,
                 "Đã đăng nhập thành công",

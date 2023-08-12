@@ -38,7 +38,6 @@ const val fieldPrice = "price"
 const val fieldImage = "image"
 const val fieldProductId = "productId"
 
-
 class AppController {
     companion object {
         @RequiresApi(Build.VERSION_CODES.O)
