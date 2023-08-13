@@ -129,8 +129,8 @@ class MessageController{
 class MessageRepository{
     //cập nhật tin nhắn realtime
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun updateMessages(): Flow<Message> = flow{
-        withContext(Dispatchers.IO){
+    suspend fun updateMessages(){
+        withContext(Dispatchers.IO) {
             val userId = Firebase.auth.currentUser?.uid
 
             AppController.db.collectionGroup("messages").where(
@@ -145,18 +145,20 @@ class MessageRepository{
                             val productId = document.document.get("productId").toString()
                             AppController.bindProductById(productId) { product ->
                                 runBlocking {
-                                    val singletonMessageController=MessageController.getSingleton()
-                                    val message = singletonMessageController.fetchMessageForProduct(product)
+                                    val singletonMessageController =
+                                        MessageController.getSingleton()
+                                    val message =
+                                        singletonMessageController.fetchMessageForProduct(product)
 
-                                    if (message!=null){
-                                        singletonMessageController.listMessages[product]=message //cập nhật tin nhắn mới
+                                    if (message != null) {
+                                        singletonMessageController.listMessages[product] =
+                                            message //cập nhật tin nhắn mới
                                     }
 
                                 }
 
                             }
                         }
-
 
 
                     }
