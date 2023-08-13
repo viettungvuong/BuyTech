@@ -7,11 +7,14 @@ import com.tung.buytech.control.AppController.Companion.db
 import com.tung.buytech.objects.Cart
 import com.tung.buytech.objects.Order
 
-class CartController {
+class CartOrderController {
     companion object{
         @JvmField
         var numberOfCarts=0
         var carts = ArrayList<Cart>()
+
+        var numberOfOrders=0
+        var orders = ArrayList<Order>()
 
         @JvmStatic
         fun retrieveAllCarts(){
@@ -33,19 +36,13 @@ class CartController {
                     }
 
                     cart=carts[numberOfCarts] //resume cart
+
+                    retrieveAllOrders() //phải lấy tất cả cart mới lấy được order
                 }
         }
-    }
-}
-
-class OrderController {
-    companion object{
-        @JvmField
-        var numberOfOrders=0
-        var orders = ArrayList<Order>()
 
         @JvmStatic
-        fun retrieveAllCarts(){
+        private fun retrieveAllOrders(){
             db.collection(collectionUsers).document(Firebase.auth.currentUser!!.uid).get().addOnSuccessListener {
                     document -> numberOfOrders=(document.getLong("number-of-orders")?:0L).toInt()
             }
@@ -60,11 +57,10 @@ class OrderController {
                             continue //bỏ qua thằng 0
                         }
                         val cartNo = (document.getLong("cart")?:0).toInt()
-                        orders.add(Order(CartController.carts[cartNo])) //thêm order mới
+                        orders.add(Order(carts[cartNo])) //thêm order mới
                     }
 
                 }
         }
     }
-
 }
