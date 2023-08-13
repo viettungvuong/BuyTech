@@ -2,6 +2,7 @@ package com.tung.buytech.objects
 
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.type.DateTime
 import com.tung.buytech.control.AppController.Companion.bindProductById
 import com.tung.buytech.control.AppController.Companion.db
 import com.tung.buytech.control.CartController
@@ -42,4 +43,9 @@ class Cart(): java.io.Serializable {
         db.collection(collectionUsers).document(Firebase.auth.currentUser!!.uid).collection("carts")
             .document(CartController.numberOfCarts.toString()).set(dataMap)
     }
+}
+
+class Order(private val cart: Cart){
+    lateinit var time: DateTime
+    lateinit var address: String
 }
