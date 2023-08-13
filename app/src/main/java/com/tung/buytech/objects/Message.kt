@@ -129,7 +129,7 @@ class MessageController{
 class MessageRepository{
     //cập nhật tin nhắn realtime
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun updateMessages(): Flow<Message> = flow{
+    suspend fun updateMessages(){
         withContext(Dispatchers.IO) {
             val userId = Firebase.auth.currentUser?.uid
 
@@ -140,7 +140,7 @@ class MessageRepository{
             ).get()
                 .addOnSuccessListener { documents ->
                     for (document in documents!!.documentChanges) { //trong những document có sự thay đổi
-                        if (document.type == DocumentChange.Type.ADDED) //khi có sự cập nhật
+                        if (document.type == DocumentChange.Type.ADDED) //khi có sự cập nhật trong đoạn chat (có tin nhắn mới)
                         {
                             val productId = document.document.get("productId").toString()
                             AppController.bindProductById(productId) { product ->
@@ -153,8 +153,6 @@ class MessageRepository{
                                     if (message != null) {
                                         singletonMessageController.listMessages[product] =
                                             message //cập nhật tin nhắn mới
-
-                                        emit(message)
                                     }
 
                                 }
