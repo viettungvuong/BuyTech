@@ -31,7 +31,7 @@ class Favorite(name: String, price: Long, imageFile: String, productId: String) 
 }
 
 class ProductRepository(private val product: Product){
-    fun updateProductSold(): Flow<Product> = flow{
+    suspend fun updateProduct(): Flow<Product> = flow{
         withContext(Dispatchers.IO){
             db.collection(collectionProducts).document(product.productId).get()
                 .addOnSuccessListener {
