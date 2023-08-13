@@ -173,7 +173,6 @@ class AppController {
 
         //tải danh sách favorite xuống
         fun fetchFavorites() {
-
             //lấy từ collection Favorites
             val getFavorites = db.collection("users")
                 .document(Firebase.auth.currentUser!!.uid).collection("favorites")

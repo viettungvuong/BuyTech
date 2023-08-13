@@ -10,7 +10,9 @@ import com.tung.buytech.control.AppController
 import com.tung.buytech.control.collectionProducts
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
@@ -54,9 +56,7 @@ class MessageController{
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun fetchAllMessages() { //tìm tất cả tin nhắn cho user hiện tại
-        val userId = Firebase.auth.currentUser?.uid
-
+    private fun messageFlow(userId: String): Flow<Pair<Product,Message>> = flow{
         AppController.db.collectionGroup("messages").where(
             Filter.or(
                 Filter.equalTo("receive", userId), Filter.equalTo("send", userId) //or query
@@ -70,14 +70,28 @@ class MessageController{
                         runBlocking {
                             val message = fetchMessageForProduct(product)
                             if (message != null) {
-                                getSingleton().listMessages[product] =
-                                    message //thêm tin nhắn vào danh sách tin nhắn
+                                emit(Pair(product,message)) //phát ra tin nhắn
                             }
                         }
 
                     }
                 }
             }
+    }
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun fetchAllMessages() { //tìm tất cả tin nhắn cho user hiện tại
+        val userId = Firebase.auth.currentUser?.uid ?: return
+
+        runBlocking {
+            launch {
+                messageFlow(userId).collect(){
+                    value->getSingleton().listMessages[value.first]=value.second //lấy giá trị được emit
+                }
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
