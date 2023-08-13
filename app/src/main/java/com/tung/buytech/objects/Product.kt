@@ -33,6 +33,7 @@ class Favorite(name: String, price: Long, imageFile: String, productId: String) 
 }
 
 class FavoritesRepository(private val favorites: LinkedList<Favorite>){
+
     suspend fun updateProduct(){
         withContext(Dispatchers.IO){
             for (favorite in favorites){
