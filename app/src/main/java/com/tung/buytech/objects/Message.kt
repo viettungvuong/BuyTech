@@ -129,7 +129,7 @@ class MessageController{
 class MessageRepository{
     //cập nhật tin nhắn realtime
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun updateMessages(){
+    suspend fun updateMessages(): Flow<Message> = flow{
         withContext(Dispatchers.IO) {
             val userId = Firebase.auth.currentUser?.uid
 
@@ -153,6 +153,8 @@ class MessageRepository{
                                     if (message != null) {
                                         singletonMessageController.listMessages[product] =
                                             message //cập nhật tin nhắn mới
+
+                                        emit(message)
                                     }
 
                                 }
