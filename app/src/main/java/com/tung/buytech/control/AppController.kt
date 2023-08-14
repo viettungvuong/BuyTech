@@ -58,7 +58,7 @@ class AppController {
                         .into(imageView)
                 } catch (exception: Exception) {
                     // Handle the exception if download URL retrieval fails
-                    println("Error retrieving download URL: ${exception.message}")
+                    println("Lỗi khi tải: ${exception.message}")
                 }
             }
 

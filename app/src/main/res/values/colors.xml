@@ -11,4 +11,6 @@
     <color name="colorPrimary">#008F4D</color>
     <color name="colorPrimaryVariant">#5F9EA0</color>
     <color name="colorOnPrimary">@color/white</color>
+
+    <color name="blue1">#52809e</color>
 </resources>

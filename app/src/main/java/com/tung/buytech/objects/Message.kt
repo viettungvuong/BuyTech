@@ -95,7 +95,7 @@ class MessageController{
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun fetchMessageForProduct(product: Product): Message?{ //lấy tin nhắn liên quan tới sản phẩm
+    suspend fun fetchMessageForProduct(product: Product): Message?{ //lấy tin nhắn liên quan tới một sản phẩm nhất định
         var message: Message?=null
         val userId = Firebase.auth.currentUser?.uid
 
